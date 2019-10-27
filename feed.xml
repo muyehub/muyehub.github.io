@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom">
   <title>Beoning</title>
   <subtitle>Take my broken heart, make it into art.</subtitle>
-  <updated>2019-10-27T21:05:05+08:00</updated>
+  <updated>2019-10-27T21:45:52+08:00</updated>
   <id>http://0.0.0.0:4321/</id>
   <generator uri="https://sparanoid.com/lab/amsf/" version="2.0.18">Almace Scaffolding</generator>
 
@@ -27,7 +27,7 @@
         <published>2019-10-27T21:02:39+08:00</published>
 
         
-          <updated>2019-10-27T21:04:35+08:00</updated>
+          <updated>2019-10-27T21:07:17+08:00</updated>
         
 
         <author>
@@ -98,8 +98,8 @@
 &lt;p&gt;&lt;img src=&quot;https://wiki.zhiyinlou.com/download/attachments/22217826/15625764606637.jpg?version=1&amp;amp;modificationDate=1562640688008&amp;amp;api=v2&quot; width=&quot;1275px&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;克隆完毕后需要在项目目录下修改和账户相同的邮箱与真实的姓名, 否则提交时会校验失败&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git config user.email changjia@100tal.com
-git config user.name changjia
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git config user.email max@max.com
+git config user.name max
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;加–global是修改全局的, 如果项目很多, 为避免一个个项目修改麻烦, 可以加这个参数.&lt;/p&gt;
 
@@ -141,8 +141,6 @@ git config user.name changjia
 
 &lt;p&gt;Abandoned表示未通过或遗弃的代码审核&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://wiki.zhiyinlou.com/download/attachments/22217826/15625877471858.jpg?version=1&amp;amp;modificationDate=1562640863116&amp;amp;api=v2&quot; width=&quot;1275px&quot; /&gt;&lt;/p&gt;
-
 &lt;p&gt;审核页面, 有 +1 和 +2 两个权限.&lt;/p&gt;
 
 &lt;p&gt;只有有 +2 权限的同学才能够把审核通过的代码 submit 到真正的远端分支中.&lt;/p&gt;
@@ -180,10 +178,6 @@ A同学提交了 a.txt 文件, 在最后一行添加了而一些内容并且审�
 &lt;p&gt;4&amp;gt; 待所有冲突解决之后, 执行git commit –amend  –no-edit 命令, 不需要对commit msg信息进行任何修改&lt;/p&gt;
 
 &lt;p&gt;5&amp;gt; 最后执行git push origin xxx, 将分支代码提交即可.&lt;/p&gt;
-
-&lt;p&gt;git config –global –add gitreview.username “max”&lt;/p&gt;
-
-&lt;p&gt;ssh -p 29418 admin@gerrit.test gerrit set-account –add-email “max@max.com” chang&lt;/p&gt;
 
           
           
