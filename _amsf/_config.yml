@@ -129,7 +129,7 @@ feed: /feed.xml
 # URLs for these fields
 #
 # Default:      https://sparanoid.com
-url: http://soundpill.cn
+url: https://muyehub.github.io
 
 # Media assets URL
 #
