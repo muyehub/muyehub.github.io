@@ -1,0 +1,31 @@
+---
+layout: default
+title: Beoning
+permalink: /
+thumb_force_logo: true
+---
+
+{%- include amsf/core -%}
+
+<!-- Article wrapper, limit width -->
+<article>
+
+  <!-- Post title -->
+  <header>
+
+    <h1 class="title">
+      {{ site.name }}
+    </h1>
+
+    <h2 class="sub-title">{{ site.description }}</h2>
+
+    <small><b>China Beijing</b>&#x30FB; <b class="amsf-version">Web developer</b>&#x30FB;view my projects on <a href="https://github.com/muyehub">GitHub</a></small>
+  </header>
+
+  <div class="page-content">
+    <h2>Recent Posts</h2>
+    {% for post in site.posts %}
+      {%- include themes/{{ site.amsf_theme }}/includes/page-item.html -%}
+    {% endfor %}
+  </div>
+</article>

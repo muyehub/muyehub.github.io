@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Beoning</title>
+  <subtitle>Take my broken heart, make it into art.</subtitle>
+  <updated>2019-10-27T21:05:05+08:00</updated>
+  <id>http://0.0.0.0:4321/</id>
+  <generator uri="https://sparanoid.com/lab/amsf/" version="2.0.18">Almace Scaffolding</generator>
+
+  <link rel="alternate" type="text/html" hreflang="en" href="http://0.0.0.0:4321/" />
+  <link rel="self" type="application/atom+xml" href="http://0.0.0.0:4321/feed.xml" />
+
+  <author>
+    <name>max</name>
+    <uri>http://0.0.0.0:4321/</uri>
+    <email>muyege@gmail.com</email>
+  </author>
+
+  
+    
+      
+
+      
+
+      <entry>
+        <title>gerrit 概念说明及使用手册</title>
+        <id>http://0.0.0.0:4321/use-gerrit.html</id>
+        <link rel="alternate" type="text/html" href="http://0.0.0.0:4321/use-gerrit.html" />
+        <published>2019-10-27T21:02:39+08:00</published>
+
+        
+          <updated>2019-10-27T21:04:35+08:00</updated>
+        
+
+        <author>
+          <name>max</name>
+          <uri>http://soundpill.cn/</uri>
+          <email>muyege@gmail.com</email>
+        </author>
+
+        <content type="html" xml:base="http://0.0.0.0:4321/">
+          
+            &lt;h1 id=&quot;gerrit-概念说明及使用手册&quot;&gt;Gerrit 概念说明及使用手册&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;#gerrit介绍&quot;&gt;Gerrit介绍&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#gerrit简介&quot;&gt;Gerrit简介&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#为什么需要gerrit&quot;&gt;为什么需要Gerrit&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#代码审核的建议&quot;&gt;代码审核的建议&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#gerrit使用&quot;&gt;Gerrit使用&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#账号登录与查看设置&quot;&gt;账号登录与查看设置&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#本地仓库设置和提交&quot;&gt;本地仓库设置和提交&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#代码审核&quot;&gt;代码审核&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#冲突解决&quot;&gt;冲突解决&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;gerrit介绍&quot;&gt;Gerrit介绍&lt;/h3&gt;
+&lt;h4 id=&quot;gerrit简介&quot;&gt;Gerrit简介&lt;/h4&gt;
+&lt;p&gt;Gerrit, 一种开放源代码的代码审查软件, 使用网页界面. 利用网页浏览器, 同一个团队的软件开发者, 可以相互审阅彼此修改后的代码, 决定是否能够提交, 回退或是继续修改. 它使用版本控制系统Git作为底层.&lt;/p&gt;
+
+&lt;p&gt;它分支自Rietveld, 作者为Google公司的Shawn Pearce, 原先是为了管理Android项目而产生. 这个软件的名称, 来自于荷兰家具设计师赫里特·里特费尔德(Gerrit Rietveld).&lt;/p&gt;
+
+&lt;p&gt;因为对访问控制表(ACL)相关的修正, 没有被集成进Rietveld, 之后Gerrit就由Rietveld分支出来, 形成独立软件项目.&lt;/p&gt;
+
+&lt;p&gt;最早它是由Python写成, 在第二版后, 改成用Java与SQL. 使用Google Web Toolkit来产生前端的JavaScript.&lt;/p&gt;
+&lt;h4 id=&quot;为什么需要gerrit&quot;&gt;为什么需要Gerrit&lt;/h4&gt;
+&lt;p&gt;首先, 代码审查可以帮助程序员了解系统功能, 从整体掌控代码质量, 其次, 通过代码审核可以及时止损, 构建更加健壮的系统代码.&lt;/p&gt;
+&lt;h4 id=&quot;代码审核的建议&quot;&gt;代码审核的建议&lt;/h4&gt;
+&lt;ol&gt;
+  &lt;li&gt;对事不对人, 大家都是同事, 在一个团队工作和气最重要. 不要在Code Review中说”你写的什么垃圾”这种话, 你可以说”这个变量名不是很好理解, 咱们换成xxx是不是更好”&lt;/li&gt;
+  &lt;li&gt;每个Review至少给一条正面评价. Gerrit中有对代码点赞的功能, 可以时不时的使用一下.&lt;/li&gt;
+  &lt;li&gt;保证发布的代码和评审意见的可读性.&lt;/li&gt;
+  &lt;li&gt;用工具进行基础问题的自动化检查. 用Tab还是空格, 用两个空格还是四个空格, 缩进风格是使用K&amp;amp;R还是Allman. 这些问题可以使用php code sniffer解决, 团队应该把精力放在代码规范, 代码性能优化等地方.&lt;/li&gt;
+  &lt;li&gt;全员参加Code Review, 并设定各部分负责人.&lt;/li&gt;
+  &lt;li&gt;每个代码PR(Pull Request)内容一定要少. Code Review效果和质量与PR代码量成反比, 提交的代码越多, Code Review的效果就越差. 所以要经常Code Review, 保证每个PR代码的量要少, 最多不超过300行/PR.&lt;/li&gt;
+  &lt;li&gt;在写新代码之前, 先Review掉需要评审的代码. 不要堆积Review, 有PR产生一定要尽快Review, 否则时间拖的长了以后Review的过程就会比较艰难.&lt;/li&gt;
+  &lt;li&gt;不要在Review中讨论需求, Review就是Review. 要明确Code Review是完善代码, 始终要以代码质量为中心要素.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;gerrit使用&quot;&gt;Gerrit使用&lt;/h3&gt;
+&lt;h4 id=&quot;账号登录与查看设置&quot;&gt;账号登录与查看设置&lt;/h4&gt;
+&lt;p&gt;首先, 需要在LDAP系统中发放账号, 拿到自己的账号后进行登录.&lt;/p&gt;
+
+&lt;p&gt;登录后在账号中点击Settings设置, 找到新增SSH kyes的设置, 将自己机器上的公钥添加进去&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://wiki.zhiyinlou.com/download/attachments/22217826/15625763488831.jpg?version=1&amp;amp;modificationDate=1562640424503&amp;amp;api=v2&quot; width=&quot;1275px&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;然后到仓库中选择属于自己的项目clone到本地&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://wiki.zhiyinlou.com/download/attachments/22217826/15625764363851.jpg?version=1&amp;amp;modificationDate=1562640609239&amp;amp;api=v2&quot; width=&quot;1275px&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;注意: 红框中的两个项目为默认项目, 是新建仓库时需要继承权限来用的, 不要动&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://wiki.zhiyinlou.com/download/attachments/22217826/15625764606637.jpg?version=1&amp;amp;modificationDate=1562640688008&amp;amp;api=v2&quot; width=&quot;1275px&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;克隆完毕后需要在项目目录下修改和账户相同的邮箱与真实的姓名, 否则提交时会校验失败&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git config user.email changjia@100tal.com
+git config user.name changjia
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;加–global是修改全局的, 如果项目很多, 为避免一个个项目修改麻烦, 可以加这个参数.&lt;/p&gt;
+
+&lt;h4 id=&quot;本地仓库设置和提交&quot;&gt;本地仓库设置和提交&lt;/h4&gt;
+&lt;p&gt;因为Gerrit的设置, 一般用户是没有直接提交到主分支或者开发分支的权限的, 必须提交到引用分支先进行代码审核, 审核通过后才能merge到对应分支. 所以, 在本地操作代码库的时候会出现push不上去的问题, 这时候我们需要在项目下设置Gerrit提供给我们的引用分支.&lt;/p&gt;
+
+&lt;p&gt;一般情况下在Gerrit权限设置里有三种类型的分支:&lt;/p&gt;
+
+&lt;p&gt;refs/* : 这是管理员才有的权限, 表示当前项目下的所有分支, 拥有此权限可以随意push到任何远端分支&lt;/p&gt;
+
+&lt;p&gt;refs/heads/* : 这是不需要经过code review的分支, 与 refs/* 同样权限&lt;/p&gt;
+
+&lt;p&gt;refs/for/* : 这是需要经过code review的分支, 提交到此分支上的代码需要经过code review, 通过后才能合并到正式分支上.&lt;/p&gt;
+
+&lt;p&gt;refs/for和refs/changes&lt;/p&gt;
+
+&lt;p&gt;向refs/for/&lt;branch-name&gt;命名空间下推送提交并不会在其中创建引用, 而是为新的提交分配一个ID, 称为review-id, 并为该review-id的访问建立如下格式的引用refs/changes/nn/&lt;review-id&gt;/m, 其中:&lt;/review-id&gt;&lt;/branch-name&gt;&lt;/p&gt;
+
+&lt;p&gt;    review-id是 Gerrit为评审任务顺序而分配的全局唯一的号码.&lt;/p&gt;
+
+&lt;p&gt;    nn为review-id的后两位数, 位数不足用零补齐. 即nn为review-id除以100的余数.&lt;/p&gt;
+
+&lt;p&gt;    m为修订号, 该review-id的首次提交修订号为1, 如果该修订被打回. 重新提交修订号会自增.&lt;/p&gt;
+
+&lt;p&gt;refs/meta/config是项目管理访问控制分支&lt;/p&gt;
+
+&lt;p&gt;我们在提交代码审核的时候需要将代码提交到gerrit为我们提供的引用分支上, 比如说: 我在dev分支上操作, 本来要push的命令需要由 git push origin dev 改为 git push origin HEAD:/refs/for/dev.&lt;/p&gt;
+
+&lt;p&gt;如果嫌每次写这么长不方便的话, 可以在项目下做如下配置, git config remote.origin.push ‘refs/heads/*:refs/for/*’, 这样每次提交的时候就会自动提交到引用分支上了.&lt;/p&gt;
+
+&lt;h4 id=&quot;代码审核&quot;&gt;代码审核&lt;/h4&gt;
+&lt;p&gt;当有代码需要审核时会在CHANGES标签中看到待审核的纪录&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://wiki.zhiyinlou.com/download/attachments/22217826/15625876603249.jpg?version=1&amp;amp;modificationDate=1562640820081&amp;amp;api=v2&quot; width=&quot;1275px&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Open表示打开的代码审核&lt;/p&gt;
+
+&lt;p&gt;Merged表示已经通过且已合并的代码审核&lt;/p&gt;
+
+&lt;p&gt;Abandoned表示未通过或遗弃的代码审核&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://wiki.zhiyinlou.com/download/attachments/22217826/15625877471858.jpg?version=1&amp;amp;modificationDate=1562640863116&amp;amp;api=v2&quot; width=&quot;1275px&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;审核页面, 有 +1 和 +2 两个权限.&lt;/p&gt;
+
+&lt;p&gt;只有有 +2 权限的同学才能够把审核通过的代码 submit 到真正的远端分支中.&lt;/p&gt;
+
+&lt;p&gt;+1 权限的同学, 多为与你一个组, 或者做同一个业务的同学, 他们对你的代码先进行一次review&lt;/p&gt;
+
+&lt;p&gt;当+2 的同学审核通过后, submit 了代码后, 本次Review 就结束了.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;然后回到你自己的本地分支, 执行一下 git pull –rebase 同步一下远端分支. 然后继续进行后续工作.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;当评审不通过时, 需要修改代码后再次提交评审, 这里分两种情况, 第一种情况是评审人员没有ABANDON的情况下, 可以修改代码后使用以下命令再次提交&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git add file
+git coomit --amend --no-edit
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;第二种情况是评审人员已经将此次评审ABANDON了, 那么就需要重新走正常流程提交评审.&lt;/p&gt;
+
+&lt;h4 id=&quot;冲突解决&quot;&gt;冲突解决&lt;/h4&gt;
+&lt;p&gt;在实际开发中, 可能其他同学提交的代码与自己修改的代码修改了同一处地方, 从而产生了冲突.&lt;/p&gt;
+
+&lt;p&gt;比如：
+A同学提交了 a.txt 文件, 在最后一行添加了而一些内容并且审核通过已经 submit了. 此时, B同学也在a.txt文件中的最后一行添加了内容, 但是没有先做 git pull –rebase 操作, 直接推到gerrit平台上则会产生冲突.&lt;/p&gt;
+
+&lt;p&gt;此时: 需要先到本地进行 git pull –rebase 操作, 更新远端代码, 解决冲突! 具体步骤如下:&lt;/p&gt;
+
+&lt;p&gt;1&amp;gt; git pull –rebase&lt;/p&gt;
+
+&lt;p&gt;2&amp;gt; 找到冲突文件, 并解决冲突, 解决完后执行 git add 文件名&lt;/p&gt;
+
+&lt;p&gt;3&amp;gt; 继续执行git rebase –continue, 如果有冲突文件继续解决.&lt;/p&gt;
+
+&lt;p&gt;4&amp;gt; 待所有冲突解决之后, 执行git commit –amend  –no-edit 命令, 不需要对commit msg信息进行任何修改&lt;/p&gt;
+
+&lt;p&gt;5&amp;gt; 最后执行git push origin xxx, 将分支代码提交即可.&lt;/p&gt;
+
+&lt;p&gt;git config –global –add gitreview.username “max”&lt;/p&gt;
+
+&lt;p&gt;ssh -p 29418 admin@gerrit.test gerrit set-account –add-email “max@max.com” chang&lt;/p&gt;
+
+          
+          
+        
+      
+        </content>
+
+        
+          <summary>Gerrit 概念说明及使用手册</summary>
+        
+      </entry>
+    
+  
+    
+      
+
+      
+
+      <entry>
+        <title>mojave下使用pyenv安装python3出错的问题</title>
+        <id>http://0.0.0.0:4321/mojave%E4%B8%8B%E4%BD%BF%E7%94%A8pyenv%E5%AE%89%E8%A3%85python3%E5%87%BA%E9%94%99%E7%9A%84%E9%97%AE%E9%A2%98.html</id>
+        <link rel="alternate" type="text/html" href="http://0.0.0.0:4321/mojave%E4%B8%8B%E4%BD%BF%E7%94%A8pyenv%E5%AE%89%E8%A3%85python3%E5%87%BA%E9%94%99%E7%9A%84%E9%97%AE%E9%A2%98.html" />
+        <published>2019-02-26T15:33:39+08:00</published>
+
+        
+          <updated>2019-10-27T20:31:39+08:00</updated>
+        
+
+        <author>
+          <name>max</name>
+          <uri>http://soundpill.cn/</uri>
+          <email>muyege@gmail.com</email>
+        </author>
+
+        <content type="html" xml:base="http://0.0.0.0:4321/">
+          
+            &lt;h2 id=&quot;使用pyenv安装python3时出现如下报错&quot;&gt;使用pyenv安装python3时出现如下报错&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;https://i.loli.net/2019/10/27/yfcsCjKokvIrSpA.jpg&quot; alt=&quot;60f1733aly1g0jo757rfnj21go0q8wnf.jpg&quot; /&gt;
+按照提示来看,好像是在提示我没有安装zlib库,但是我已经装了,没办法,google一下吧.
+(如果你因为没有安装zlib库而产生这个问题, 那就好办了, 直接brew install zlib)&lt;/p&gt;
+&lt;h2 id=&quot;google搜索到的解决方案大都是要安装xcode命令行工具&quot;&gt;google搜索到的解决方案大都是要安装xcode命令行工具&lt;/h2&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;xcode-select &lt;span class=&quot;nt&quot;&gt;--install&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;这个我也安装了, 不安装的话啥也干不了啊&lt;/p&gt;
+&lt;h2 id=&quot;最后解决方案&quot;&gt;最后解决方案&lt;/h2&gt;
+&lt;p&gt;查看一下xcode-select -v的版本
+&lt;img src=&quot;https://i.loli.net/2019/10/27/UMXsg7Il8rSdB2O.jpg&quot; alt=&quot;60f1733aly1g0jo9e0g3lj20cg0240tb.jpg&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;这个版本的xcode-select 在默认情况下不包含Mojave SDK的头文件的,需要手动安装,mojave采用了新的SDK,关于新SDK的解释,官方的文档在这里
+https://developer.apple.com/macos/whats-new/&lt;/p&gt;
+
+&lt;p&gt;接下来,我手动安装了新的SDK头文件,解决完毕&lt;/p&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;installer &lt;span class=&quot;nt&quot;&gt;-pkg&lt;/span&gt; /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg &lt;span class=&quot;nt&quot;&gt;-target&lt;/span&gt; /
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;https://i.loli.net/2019/10/27/WsRfrFkYnSMpP4X.jpg&quot; alt=&quot;60f1733aly1g0jomwysz8j21fm040n0e.jpg&quot; /&gt;&lt;/p&gt;
+
+          
+          
+        
+      
+        </content>
+
+        
+          <summary>使用pyenv安装python3时出现如下报错按照提示来看,好像是在提示我没有安装zlib库,但是我已经装了,没办法,google一下吧.(如果你因为没有安装zlib库而产生这个问题, 那就好办了, 直接brew install zlib)google搜索到的解决方案大都是要安装xcode命令行工具xcode-select --install这个我也安装了, 不安装的话啥也干不了啊最后解决方案查看一下xcode-select -v的版本</summary>
+        
+      </entry>
+    
+  
+    
+      
+
+      
+
+      <entry>
+        <title>redis中的SDS数据结构</title>
+        <id>http://0.0.0.0:4321/redis%E4%B8%AD%E7%9A%84sds%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.html</id>
+        <link rel="alternate" type="text/html" href="http://0.0.0.0:4321/redis%E4%B8%AD%E7%9A%84sds%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.html" />
+        <published>2019-02-26T15:31:32+08:00</published>
+
+        
+          <updated>2019-10-27T20:31:39+08:00</updated>
+        
+
+        <author>
+          <name>max</name>
+          <uri>http://soundpill.cn/</uri>
+          <email>muyege@gmail.com</email>
+        </author>
+
+        <content type="html" xml:base="http://0.0.0.0:4321/">
+          
+            &lt;h2 id=&quot;sdssimple-dynamic-string简单动态字符串&quot;&gt;SDS(Simple Dynamic String)简单动态字符串&lt;/h2&gt;
+&lt;p&gt;在Redis中可修改的字符串值都是采用的SDS数据结构, 而不可修改的都采用了C字符串&lt;/p&gt;
+&lt;h2 id=&quot;sds的结构&quot;&gt;SDS的结构&lt;/h2&gt;
+&lt;p&gt;有三个基本变量&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;free 纪录buf数组中未使用字节的数量&lt;/li&gt;
+  &lt;li&gt;len 纪录buf数组中已使用字节的数量, 等于SDS所保存字符串的长度&lt;/li&gt;
+  &lt;li&gt;buf 字节数组, 用于保存字符串(二进制)
+    &lt;h2 id=&quot;为什么采用sds&quot;&gt;为什么采用SDS&lt;/h2&gt;
+    &lt;p&gt;SDS是基于C字符串结构的缺点优化后的产物, 因为采用C字符串的方式会有以下一些问题：&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;获取字符串长度需要遍历字符串获取, 将需要O(N)的时间复杂度&lt;/li&gt;
+  &lt;li&gt;C字符串会有缓冲区溢出的问题&lt;/li&gt;
+  &lt;li&gt;一旦修改字符串操作发生就会重新分配内存, 修改N次就分配N次
+所以, 基于以上问题SDS结构的优点也显而易见了, 如下:&lt;/li&gt;
+  &lt;li&gt;因为结构体中标记了字符串长度, 所以获取长度的时间复杂度变成了O(1)&lt;/li&gt;
+  &lt;li&gt;SDS的API中对内存分配的机制杜绝了缓冲区溢出的问题&lt;/li&gt;
+  &lt;li&gt;同样, API中的操作也减少了修改字符串长度时所需的内存重分配次数&lt;/li&gt;
+  &lt;li&gt;二进制安全&lt;/li&gt;
+  &lt;li&gt;兼容部分C字符串函数
+    &lt;h2 id=&quot;内存分配机制&quot;&gt;内存分配机制&lt;/h2&gt;
+  &lt;/li&gt;
+  &lt;li&gt;空间预分配
+在字符串增长操作中有两种情况来预分配空间
+第一种是修改后的长度(len的值)小于1MB的情况下, free的值会和len的值相同, 来做到减少内存分配次数, 预分配以后可能会使用到的空间
+第二种是修改后的长度大于1MB的情况下, free的值会多修改为1MB, 也就是在原来基础上多出1MB的未使用空间&lt;/li&gt;
+  &lt;li&gt;惰性空间释放
+在字符串缩短操作的时候, 不会将释放的空间马上回收, 而是会写入到free中, 将缩短的长度标记为未使用空间为将来可能会使用的字符串预留位置。SDS中也有相应的API, 可以在需要时真正释放这部分空间。&lt;/li&gt;
+&lt;/ul&gt;
+
+          
+          
+        
+      
+        </content>
+
+        
+          <summary>SDS(Simple Dynamic String)简单动态字符串在Redis中可修改的字符串值都是采用的SDS数据结构, 而不可修改的都采用了C字符串SDS的结构有三个基本变量  free 纪录buf数组中未使用字节的数量  len 纪录buf数组中已使用字节的数量, 等于SDS所保存字符串的长度  buf 字节数组, 用于保存字符串(二进制)    为什么采用SDS    SDS是基于C字符串结构的缺点优化后的产物, 因为采用C字符串的方式会有以下一些问题：    获取字符串长度需要遍历字符串获取, 将需要O(N)的时间复杂度  C字符串会有缓冲区溢出的问题  一旦修改字符串操作发生就会重新分配内存, 修改N次就分配N次所以, 基于以上问题SDS结构的优点也显而易见了, 如下:  因为结构体中标记了字符串长度, 所以获取长度的时间复杂度变成了O(1)  SDS的API中对内存分配的机制杜绝了缓冲区溢出的问题  同样, API中的操作也减少了修改字符串长度时所需的内存重分配次数  二进制安全  兼容部分C字符串函数    内存分配机制    空间预分配在字符串增长操作中有两种情况来预分配空间第一种是修改后的长度(len的值)小于1MB的情况下, free的值会和len的值相同, 来做到减少内存分配次数, 预分配以后可能会使用到的空间第二种是修改后的长度大于1MB的情况下, free的值会多修改为1MB, 也就是在原来基础上多出1MB的未使用空间  惰性空间释放在字符串缩短操作的时候, 不会将释放的空间马上回收, 而是会写入到free中, 将缩短的长度标记为未使用空间为将来可能会使用的字符串预留位置。SDS中也有相应的API, 可以在需要时真正释放这部分空间。</summary>
+        
+      </entry>
+    
+  
+    
+      
+
+      
+
+      <entry>
+        <title>rebase和merge的区别</title>
+        <id>http://0.0.0.0:4321/rebase%E5%92%8Cmerge%E7%9A%84%E5%8C%BA%E5%88%AB.html</id>
+        <link rel="alternate" type="text/html" href="http://0.0.0.0:4321/rebase%E5%92%8Cmerge%E7%9A%84%E5%8C%BA%E5%88%AB.html" />
+        <published>2019-02-24T15:36:37+08:00</published>
+
+        
+          <updated>2019-10-27T20:31:39+08:00</updated>
+        
+
+        <author>
+          <name>max</name>
+          <uri>http://soundpill.cn/</uri>
+          <email>muyege@gmail.com</email>
+        </author>
+
+        <content type="html" xml:base="http://0.0.0.0:4321/">
+          
+            &lt;h4 id=&quot;变基&quot;&gt;变基&lt;/h4&gt;
+&lt;p&gt;找了一大圈, 还是官方的解释最好, 贴出来自己看吧, “变基”这个名字起的很好, 文档中的”重新播放”的解释也相当生动&lt;/p&gt;
+
+&lt;p&gt;https://git-scm.com/book/zh/v2/Git-分支-变基&lt;/p&gt;
+
+          
+          
+        
+      
+        </content>
+
+        
+          <summary>变基找了一大圈, 还是官方的解释最好, 贴出来自己看吧, “变基”这个名字起的很好, 文档中的”重新播放”的解释也相当生动</summary>
+        
+      </entry>
+    
+  
+    
+      
+
+      
+
+      <entry>
+        <title>cgi, fastcgi, php-cgi, php-fpm的关系</title>
+        <id>http://0.0.0.0:4321/cgi,-fastcgi,-php-cgi,-php-fpm.html</id>
+        <link rel="alternate" type="text/html" href="http://0.0.0.0:4321/cgi,-fastcgi,-php-cgi,-php-fpm.html" />
+        <published>2019-02-21T15:33:39+08:00</published>
+
+        
+          <updated>2019-10-27T20:31:39+08:00</updated>
+        
+
+        <author>
+          <name>max</name>
+          <uri>http://soundpill.cn/</uri>
+          <email>muyege@gmail.com</email>
+        </author>
+
+        <content type="html" xml:base="http://0.0.0.0:4321/">
+          
+            &lt;h4 id=&quot;cgi&quot;&gt;cgi&lt;/h4&gt;
+&lt;p&gt;通用网关接口, Common Gateway Interface, CGI是Web服务器运行时外部程序的规范, 按CGI编写的程序可以扩展服务器功能. 所以, 广义上的cgi是一种接口标准, 不是字面意义上的接口. 狭义上, cgi就是cgi程序, 运行在服务器上, 提供同客户端HTML页面的接口. 绝大多数的cgi程序被用来解释处理来自表单的输入信息, 并在服务器产生相应的处理, 或将相应的信息反馈给浏览器, cgi程序使网页具有交互功能. 
+cgi程序处理步骤:
+1) 通过Internet把用户请求送到web服务器.
+2) web服务器接受用户请求并交给CGI程序处理.
+3) CGI程序把处理结果传送给web服务器.
+4) web服务器把结果送回到用户.&lt;/p&gt;
+
+&lt;h4 id=&quot;fastcgi&quot;&gt;fastcgi&lt;/h4&gt;
+&lt;p&gt;快速通用网关接口, Fast Common Gateway Interface, CGI有很多缺点, 每接收一个请求就要fork一个进程处理, 只能接收一个请求作出一个响应, 请求结束后该进程就会结束. 而fastcgi会事先启动起来, 作为一个cgi的管理服务器存在, 使用进程/线程池来处理一连串的请求.
+fastcgi程序处理步骤:
+1) web服务器启动时载入fastcgi进程管理器
+2) fastcgi自身初始化, 启动多个cgi解释器进程并等待来自web server的请求
+3) 当请求来到web服务器时, web服务器通过socket请求fastcgi进程管理器, fastcgi进程管理器选择并连接到一个cgi解释器, web服务器将cgi环境变量和标准输入发送到fastcgi子进程
+4) fastcgi子进程处理请求完成后将标准输出和错误从同一连接返回给web服务器, 当fastcgi子进程结束后请求便结束.fastcgi子进程接着等待处理来自fastcgi进程管理器的下一个连接.&lt;/p&gt;
+
+&lt;h4 id=&quot;php-cgi&quot;&gt;php-cgi&lt;/h4&gt;
+&lt;p&gt;php实现的cgi程序&lt;/p&gt;
+
+&lt;h4 id=&quot;php-fpm&quot;&gt;php-fpm&lt;/h4&gt;
+&lt;p&gt;php实现的fastcgi程序&lt;/p&gt;
+
+          
+          
+        
+      
+        </content>
+
+        
+          <summary>cgi通用网关接口, Common Gateway Interface, CGI是Web服务器运行时外部程序的规范, 按CGI编写的程序可以扩展服务器功能. 所以, 广义上的cgi是一种接口标准, 不是字面意义上的接口. 狭义上, cgi就是cgi程序, 运行在服务器上, 提供同客户端HTML页面的接口. 绝大多数的cgi程序被用来解释处理来自表单的输入信息, 并在服务器产生相应的处理, 或将相应的信息反馈给浏览器, cgi程序使网页具有交互功能. cgi程序处理步骤:1) 通过Internet把用户请求送到web服务器.2) web服务器接受用户请求并交给CGI程序处理.3) CGI程序把处理结果传送给web服务器.4) web服务器把结果送回到用户.</summary>
+        
+      </entry>
+    
+  
+    
+      
+
+      
+
+      <entry>
+        <title>推荐两个实用好玩的网站</title>
+        <id>http://0.0.0.0:4321/%E6%8E%A8%E8%8D%90%E4%B8%A4%E4%B8%AA%E5%AE%9E%E7%94%A8%E5%A5%BD%E7%8E%A9%E7%9A%84%E7%BD%91%E7%AB%99.html</id>
+        <link rel="alternate" type="text/html" href="http://0.0.0.0:4321/%E6%8E%A8%E8%8D%90%E4%B8%A4%E4%B8%AA%E5%AE%9E%E7%94%A8%E5%A5%BD%E7%8E%A9%E7%9A%84%E7%BD%91%E7%AB%99.html" />
+        <published>2019-02-21T10:23:37+08:00</published>
+
+        
+          <updated>2019-10-27T20:31:39+08:00</updated>
+        
+
+        <author>
+          <name>max</name>
+          <uri>http://soundpill.cn/</uri>
+          <email>muyege@gmail.com</email>
+        </author>
+
+        <content type="html" xml:base="http://0.0.0.0:4321/">
+          
+            &lt;h3 id=&quot;在线绘图工具&quot;&gt;在线绘图工具&lt;/h3&gt;
+&lt;p&gt;有流程图，有类图，应有尽有，样式还很好看
+https://www.draw.io/&lt;/p&gt;
+
+&lt;h3 id=&quot;ai在线抠图工具&quot;&gt;AI在线抠图工具&lt;/h3&gt;
+&lt;p&gt;不说了，自己看吧
+https://www.gaoding.com/koutu&lt;/p&gt;
+
+          
+          
+        
+      
+        </content>
+
+        
+          <summary>在线绘图工具有流程图，有类图，应有尽有，样式还很好看https://www.draw.io/</summary>
+        
+      </entry>
+    
+  
+</feed>
