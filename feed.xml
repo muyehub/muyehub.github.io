@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom">
   <title>Beoning</title>
   <subtitle>Take my broken heart, make it into art.</subtitle>
-  <updated>2019-10-27T21:45:52+08:00</updated>
+  <updated>2019-11-30T15:11:33+08:00</updated>
   <id>http://0.0.0.0:4321/</id>
   <generator uri="https://sparanoid.com/lab/amsf/" version="2.0.18">Almace Scaffolding</generator>
 
@@ -21,13 +21,117 @@
       
 
       <entry>
+        <title>laravel 图片处理</title>
+        <id>http://0.0.0.0:4321/laravel%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86.html</id>
+        <link rel="alternate" type="text/html" href="http://0.0.0.0:4321/laravel%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86.html" />
+        <published>2019-11-30T15:10:12+08:00</published>
+
+        
+          <updated>2019-11-30T15:10:12+08:00</updated>
+        
+
+        <author>
+          <name>max</name>
+          <uri>http://soundpill.cn/</uri>
+          <email>muyege@gmail.com</email>
+        </author>
+
+        <content type="html" xml:base="http://0.0.0.0:4321/">
+          
+            &lt;h4 id=&quot;interventionimage&quot;&gt;intervention/image&lt;/h4&gt;
+&lt;p&gt;这是一个第三方扩展, 用来处理图片的, 功能特别强大, 可以 cover 我们这篇文章提到的需求&lt;/p&gt;
+
+&lt;p&gt;安装文档: http://image.intervention.io/getting_started/installation&lt;/p&gt;
+
+&lt;p&gt;我们首先在项目中引入这个包:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ composer require intervention/image
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;其次, laravel 中需要发布配置文件:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;php artisan vendor:publish --provider=&quot;Intervention\Image\ImageServiceProviderLaravel5&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;lumen 中需要修改 bootstrap.php, 在当中手动注册&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$app-&amp;gt;register(\Intervention\Image\ImageServiceProviderLumen::class);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;该扩展默认使用的是 GD 库, 如果你想用 Imagick 扩展需要修改文件, config/image.php&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+        &lt;span class=&quot;s1&quot;&gt;'driver'&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt;  &lt;span class=&quot;s1&quot;&gt;'imagick'&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;如果你不想要每次 use 都使用全路径, 可以按照官方所述将 Image 关键字写入 alias 中&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Laravel: config/app.php&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$providers:
+
+Intervention\Image\ImageServiceProvider::class
+
+$aliases: 
+
+'Image' =&amp;gt; Intervention\Image\Facades\Image::class
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Lumen: bootstrap/app.php&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$app-&amp;gt;withAliases(array('Intervention\Image\Facades\Image' =&amp;gt; 'Image'));
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;具体使用&quot;&gt;具体使用&lt;/h4&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;use Image;
+
+public function deal()
+{
+    $image = Image::make(public_path() . '/foo.jpg');
+    $text = '我是天才';
+    $image-&amp;gt;text($text, 620, 200, function($font) {
+        $font-&amp;gt;file(public_path() . '/SimHei.ttf');
+        $font-&amp;gt;size(200);
+        $font-&amp;gt;color('#fdf6e3');
+        $font-&amp;gt;align('center');
+        $font-&amp;gt;valign('top');
+        $font-&amp;gt;angle(0);
+    });
+    return $image-&amp;gt;response('jpg');
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;插入文字的方法是 text, 插入图片的方法是 insert, 如果文字插入后显示乱码, 考虑换一种字体, 支持中文的, 默认的好像就是乱码&lt;/p&gt;
+
+&lt;p&gt;官方文档: http://image.intervention.io/&lt;/p&gt;
+
+          
+          
+        
+      
+        </content>
+
+        
+          <summary>intervention/image这是一个第三方扩展, 用来处理图片的, 功能特别强大, 可以 cover 我们这篇文章提到的需求</summary>
+        
+      </entry>
+    
+  
+    
+      
+
+      
+
+      <entry>
         <title>gerrit 概念说明及使用手册</title>
         <id>http://0.0.0.0:4321/use-gerrit.html</id>
         <link rel="alternate" type="text/html" href="http://0.0.0.0:4321/use-gerrit.html" />
         <published>2019-10-27T21:02:39+08:00</published>
 
         
-          <updated>2019-10-27T21:07:17+08:00</updated>
+          <updated>2019-10-27T21:02:39+08:00</updated>
         
 
         <author>
@@ -203,7 +307,7 @@ A同学提交了 a.txt 文件, 在最后一行添加了而一些内容并且审�
         <published>2019-02-26T15:33:39+08:00</published>
 
         
-          <updated>2019-10-27T20:31:39+08:00</updated>
+          <updated>2019-02-26T15:33:39+08:00</updated>
         
 
         <author>
@@ -258,7 +362,7 @@ https://developer.apple.com/macos/whats-new/&lt;/p&gt;
         <published>2019-02-26T15:31:32+08:00</published>
 
         
-          <updated>2019-10-27T20:31:39+08:00</updated>
+          <updated>2019-02-26T15:31:32+08:00</updated>
         
 
         <author>
@@ -323,7 +427,7 @@ https://developer.apple.com/macos/whats-new/&lt;/p&gt;
         <published>2019-02-24T15:36:37+08:00</published>
 
         
-          <updated>2019-10-27T20:31:39+08:00</updated>
+          <updated>2019-02-24T15:36:37+08:00</updated>
         
 
         <author>
@@ -363,7 +467,7 @@ https://developer.apple.com/macos/whats-new/&lt;/p&gt;
         <published>2019-02-21T15:33:39+08:00</published>
 
         
-          <updated>2019-10-27T20:31:39+08:00</updated>
+          <updated>2019-02-21T15:33:39+08:00</updated>
         
 
         <author>
@@ -420,7 +524,7 @@ fastcgi程序处理步骤:
         <published>2019-02-21T10:23:37+08:00</published>
 
         
-          <updated>2019-10-27T20:31:39+08:00</updated>
+          <updated>2019-02-21T10:23:37+08:00</updated>
         
 
         <author>

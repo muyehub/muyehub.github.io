@@ -4,12 +4,32 @@
   
     
     {
+      "title": "laravel 图片处理",
+      "permalink": "http://0.0.0.0:4321/laravel%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86.html",
+      "link": "http://0.0.0.0:4321/laravel%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86.html",
+      "date": "2019-11-30T15:10:12+08:00",
+      
+      "author": {
+        "name": "max",
+        "url": "http://soundpill.cn/",
+        "email": "muyege@gmail.com"
+      },
+      "content": "<h4 id=\"interventionimage\">intervention/image</h4>\n<p>这是一个第三方扩展, 用来处理图片的, 功能特别强大, 可以 cover 我们这篇文章提到的需求</p>\n\n<p>安装文档: http://image.intervention.io/getting_started/installation</p>\n\n<p>我们首先在项目中引入这个包:</p>\n<div class=\"highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code>$ composer require intervention/image\n</code></pre></div></div>\n\n<p>其次, laravel 中需要发布配置文件:</p>\n<div class=\"highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code>php artisan vendor:publish --provider=\"Intervention\\Image\\ImageServiceProviderLaravel5\"\n</code></pre></div></div>\n\n<p>lumen 中需要修改 bootstrap.php, 在当中手动注册</p>\n<div class=\"highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code>$app-&gt;register(\\Intervention\\Image\\ImageServiceProviderLumen::class);\n</code></pre></div></div>\n\n<p>该扩展默认使用的是 GD 库, 如果你想用 Imagick 扩展需要修改文件, config/image.php</p>\n<div class=\"highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code><span class=\"cp\">&lt;?php</span>\n    <span class=\"k\">return</span> <span class=\"p\">[</span>\n        <span class=\"s1\">'driver'</span>    <span class=\"o\">=&gt;</span>  <span class=\"s1\">'imagick'</span>\n    <span class=\"p\">];</span>\n</code></pre></div></div>\n\n<p>如果你不想要每次 use 都使用全路径, 可以按照官方所述将 Image 关键字写入 alias 中</p>\n\n<ul>\n  <li>Laravel: config/app.php</li>\n</ul>\n\n<div class=\"highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code>$providers:\n\nIntervention\\Image\\ImageServiceProvider::class\n\n$aliases: \n\n'Image' =&gt; Intervention\\Image\\Facades\\Image::class\n</code></pre></div></div>\n\n<ul>\n  <li>Lumen: bootstrap/app.php</li>\n</ul>\n\n<div class=\"highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code>$app-&gt;withAliases(array('Intervention\\Image\\Facades\\Image' =&gt; 'Image'));\n</code></pre></div></div>\n\n<h4 id=\"具体使用\">具体使用</h4>\n<div class=\"highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code>use Image;\n\npublic function deal()\n{\n    $image = Image::make(public_path() . '/foo.jpg');\n    $text = '我是天才';\n    $image-&gt;text($text, 620, 200, function($font) {\n        $font-&gt;file(public_path() . '/SimHei.ttf');\n        $font-&gt;size(200);\n        $font-&gt;color('#fdf6e3');\n        $font-&gt;align('center');\n        $font-&gt;valign('top');\n        $font-&gt;angle(0);\n    });\n    return $image-&gt;response('jpg');\n}\n</code></pre></div></div>\n\n<p>插入文字的方法是 text, 插入图片的方法是 insert, 如果文字插入后显示乱码, 考虑换一种字体, 支持中文的, 默认的好像就是乱码</p>\n\n<p>官方文档: http://image.intervention.io/</p>",
+      "excerpt": "intervention/image\n这是一个第三方扩展, 用来处理图片的, 功能特别强大, 可以 cover 我们这篇文章提到的需求",
+      "languages": null,
+      "categories": [],
+      "tags": []
+    }
+    
+  
+
+  
+    ,
+    {
       "title": "gerrit 概念说明及使用手册",
       "permalink": "http://0.0.0.0:4321/use-gerrit.html",
       "link": "http://0.0.0.0:4321/use-gerrit.html",
       "date": "2019-10-27T21:02:39+08:00",
-      
-        "modified": "2019-10-27T21:07:17+08:00",
       
       "author": {
         "name": "max",
@@ -33,8 +53,6 @@
       "link": "http://0.0.0.0:4321/mojave%E4%B8%8B%E4%BD%BF%E7%94%A8pyenv%E5%AE%89%E8%A3%85python3%E5%87%BA%E9%94%99%E7%9A%84%E9%97%AE%E9%A2%98.html",
       "date": "2019-02-26T15:33:39+08:00",
       
-        "modified": "2019-10-27T20:31:39+08:00",
-      
       "author": {
         "name": "max",
         "url": "http://soundpill.cn/",
@@ -56,8 +74,6 @@
       "permalink": "http://0.0.0.0:4321/redis%E4%B8%AD%E7%9A%84sds%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.html",
       "link": "http://0.0.0.0:4321/redis%E4%B8%AD%E7%9A%84sds%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.html",
       "date": "2019-02-26T15:31:32+08:00",
-      
-        "modified": "2019-10-27T20:31:39+08:00",
       
       "author": {
         "name": "max",
@@ -81,8 +97,6 @@
       "link": "http://0.0.0.0:4321/rebase%E5%92%8Cmerge%E7%9A%84%E5%8C%BA%E5%88%AB.html",
       "date": "2019-02-24T15:36:37+08:00",
       
-        "modified": "2019-10-27T20:31:39+08:00",
-      
       "author": {
         "name": "max",
         "url": "http://soundpill.cn/",
@@ -105,8 +119,6 @@
       "link": "http://0.0.0.0:4321/cgi,-fastcgi,-php-cgi,-php-fpm.html",
       "date": "2019-02-21T15:33:39+08:00",
       
-        "modified": "2019-10-27T20:31:39+08:00",
-      
       "author": {
         "name": "max",
         "url": "http://soundpill.cn/",
@@ -128,8 +140,6 @@
       "permalink": "http://0.0.0.0:4321/%E6%8E%A8%E8%8D%90%E4%B8%A4%E4%B8%AA%E5%AE%9E%E7%94%A8%E5%A5%BD%E7%8E%A9%E7%9A%84%E7%BD%91%E7%AB%99.html",
       "link": "http://0.0.0.0:4321/%E6%8E%A8%E8%8D%90%E4%B8%A4%E4%B8%AA%E5%AE%9E%E7%94%A8%E5%A5%BD%E7%8E%A9%E7%9A%84%E7%BD%91%E7%AB%99.html",
       "date": "2019-02-21T10:23:37+08:00",
-      
-        "modified": "2019-10-27T20:31:39+08:00",
       
       "author": {
         "name": "max",
