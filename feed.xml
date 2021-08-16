@@ -1,4 +1,206 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom"><title>Beoning</title><subtitle>Take my broken heart, make it into art.</subtitle><updated>2021-01-18T21:51:11+08:00</updated><id>http://soundpill.cn/</id><generator uri="https://sparanoid.com/lab/amsf/" version="2.0.19">Almace Scaffolding</generator><link rel="alternate" type="text/html" hreflang="en" href="http://soundpill.cn/" /><link rel="self" type="application/atom+xml" href="http://soundpill.cn/feed.xml" /><author><name>max</name><uri>http://soundpill.cn/</uri><email>muyege@gmail.com</email></author><entry><title>一道go面试题</title><id>http://soundpill.cn/articles/2021/01/go-question.html</id><link rel="alternate" type="text/html" href="http://soundpill.cn/articles/2021/01/go-question.html" /><published>2021-01-18T21:50:43+08:00</published><updated>2021-01-18T21:50:50+08:00</updated><author><name>max</name><uri>http://soundpill.cn/</uri><email>muyege@gmail.com</email></author><content type="html" xml:base="http://soundpill.cn/">
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Beoning</title>
+  <subtitle>Take my broken heart, make it into art.</subtitle>
+  <updated>2021-08-16T19:03:30+08:00</updated>
+  <id>http://localhost:4321/</id>
+  <generator uri="https://sparanoid.com/lab/amsf/" version="2.0.19">Almace Scaffolding</generator>
+
+  <link rel="alternate" type="text/html" hreflang="en" href="http://localhost:4321/" />
+  <link rel="self" type="application/atom+xml" href="http://localhost:4321/feed.xml" />
+
+  <author>
+    <name>max</name>
+    <uri>http://localhost:4321/</uri>
+    <email>muyege@gmail.com</email>
+  </author>
+
+  
+    
+      
+
+      
+
+      <entry>
+        <title>php-tips</title>
+        <id>http://localhost:4321/articles/2021/08/php-tips.html</id>
+        <link rel="alternate" type="text/html" href="http://localhost:4321/articles/2021/08/php-tips.html" />
+        <published>2021-08-16T19:03:01+08:00</published>
+
+        
+          <updated>2021-08-16T19:03:07+08:00</updated>
+        
+
+        <author>
+          <name>max</name>
+          <uri>http://soundpill.cn/</uri>
+          <email>muyege@gmail.com</email>
+        </author>
+
+        <content type="html" xml:base="http://localhost:4321/">
+          
+            &lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;在 foreach 中不要使用 array_merge，不仅慢而且耗费内存，可以在 foreach 中对要合并的数组进行赋值，在 foreach 外部统一进行合并，具体性能差异可以参考这篇文章：&lt;a href=&quot;https://learnku.com/articles/25111&quot;&gt;不要在循环体中使用 array_merge()&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;在 foreach 中也不要使用 array_push，可以通过向数组中赋值的方式代替，比如：$students[] = $student[‘id’]， 而不是 array_push($students, $student[‘id’])，具体性能差异可以参考这篇文章：&lt;a href=&quot;https://learnku.com/articles/25110&quot;&gt;不要在循环体中使用 array_push()&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;针对一些查询较为复杂或者比较核心的逻辑里的 sql 查询，可以将 sql 语句写到注释中，这样看代码的时候不用再去拼接 sql，直接用注释中的 sql 拿来排查问题&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;如果使用 phpstorm 可以安装 php inspections 插件来进行代码的静态分析，可以帮助查找代码规范，语法漏洞，函数使用方式方面的错误。其他的一些代码质量工具可以配置使用 phpcs，phpmd，phpcs-fixer，psalm，phpstan 等。而且可以通过 phpstorm 的热键录制功能，将徽标键 + s 设置为 phpcs-fixer，format code 的快捷键，这样写完时可以通过快捷键格式化代码。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;为避免在项目中将 dd，var_dump，exit，die 等函数提交到远程版本库中，可以在项目的 .git/hooks/pre-commit 中进行控制，加入下面的代码，每次提交时可以检测到。参考的这个：&lt;a href=&quot;https://gist.github.com/victorb/8334601&quot;&gt;pre-commit&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;VAR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;git diff &lt;span class=&quot;nt&quot;&gt;--cached&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--diff-filter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ACMR | &lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-wiE&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;var_dump|echo|exit|dd|die|console.log&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-z&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\$&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;VAR&quot;&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then  &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;You've left a dd, var_dump, exit, die or console.log in one of your files! You don't really want to commit this so aborting now...&quot;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;exit &lt;/span&gt;1 &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;在 for 循环的条件中不要使用函数，例如使用 count 来计算总数，这样每次循环都会执行一遍，不太好&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;使用三元运算符时如果要做强制类型转换请记得要在运算区域加括号避免报错，例如：(string)$studentId ?? ““，这样的写法会产生歧义，如果同为字符串不会报错，如果是这样：(string)$studentId ?? null，那么就会报错。建议写成 (string)($studentId ?? null)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;如果要做判断时要确定好运算符的优先级从而确保执行顺序，以免与预期相左，例如：&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$isNew&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$student&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Stu&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;isset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$foo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;con&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;因为逻辑运算符 &amp;amp;&amp;amp; 的运算优先级大于赋值运算符 =，所以上面这段代码可能会产生与预期不符的结果，这种情况下为保证执行顺序，尽量使用括号括起来。&lt;/p&gt;
+
+&lt;p&gt;包括下面这种：&lt;/p&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;isset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$student&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'birthday'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;  &lt;span class=&quot;mf&quot;&gt;...&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;虽然逻辑运算符 ！的优先级大于比较运算符 &amp;gt;，但手册中依然建议使用括号来明确运算顺序来增加代码可读性，手册中是这么说的：&lt;/p&gt;
+
+&lt;p&gt;“括号的使用，哪怕在不是必要的场合下，通过括号的配对来明确标明运算顺序，而非靠运算符优先级和结合性来决定，通常能够增加代码的可读性。”&lt;/p&gt;
+
+          
+          
+        
+      
+        </content>
+
+        
+          <summary>  在 foreach 中不要使用 array_merge，不仅慢而且耗费内存，可以在 foreach 中对要合并的数组进行赋值，在 foreach 外部统一进行合并，具体性能差异可以参考这篇文章：不要在循环体中使用 array_merge()</summary>
+        
+      </entry>
+    
+  
+    
+      
+
+      
+
+      <entry>
+        <title>go-tips</title>
+        <id>http://localhost:4321/articles/2021/08/go-tips.html</id>
+        <link rel="alternate" type="text/html" href="http://localhost:4321/articles/2021/08/go-tips.html" />
+        <published>2021-08-16T18:40:38+08:00</published>
+
+        
+          <updated>2021-08-16T18:57:18+08:00</updated>
+        
+
+        <author>
+          <name>max</name>
+          <uri>http://soundpill.cn/</uri>
+          <email>muyege@gmail.com</email>
+        </author>
+
+        <content type="html" xml:base="http://localhost:4321/">
+          
+            &lt;ul&gt;
+  &lt;li&gt;当把时间作为一个变量传递时，可能会导致的问题，比如：&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;waitTime&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;30&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;wait&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;waitTime&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Second&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;这样子是错误的，因为 waitTime 不是 time.Duration 类型，但如果直接写 30 * time.Second 就会成功    &lt;/p&gt;
+
+&lt;p&gt;在不太了解的情况下，我手动把 waitTime 通过“诡异”的方式变成了 time.Duration 类型&lt;/p&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;waitTime&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;30&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Second&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;wait&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;waitTime&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Second&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;这种情况下 wait 的值就变成了 88 万小时，不是预想的结果，正确的写法如下：&lt;/p&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;waitTime&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;30&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;wait&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Duration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;waitTime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Second&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;当 waitGroup 使用时要清楚的知道 Done 方法的执行次数，如果是类似递归的结构，执行了多次 Done 方法，则会导致waitGroup 的计数器溢出，导致边界错误，如下：&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://img.fulitu.club/carbon.png&quot; alt=&quot;carbon.png&quot; title=&quot;carbon.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;这段代码运行时会导致 panic: sync: negative WaitGroup counter，所以我们在实际编写代码的过程中，如果有类似的情况，可以通过将有限次数的递归转换为迭代的形式来规避这种问题。总之，你需要明确的知道 Done 方法执行了几次。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;在 goroutine 使用的过程中我们是无法拿到当前 goroutine 的报错信息的，从而可能需要额外建立一个通道，将报错信息传递到某一个 channel 中，然后监听 channel 来进行错误处理。官方提供了一项实验功能，可以用来解决这个问题。官方包在这里：golang.org/x/sync/errgroup&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;在开发过程中可以使用 go vet 工具来检测可能会出现的代码漏洞，帮助查漏补缺。&lt;a href=&quot;https://www.yuque.com/muyeyu/tutkq5/zxssg1&quot;&gt;使用方式&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;在开发时要使用 internal 下的 log 包打日志才能被 ELK 捕获到，logrus 则不行，但如果命令行中的即使反馈日志，或者即时性比较强没有留存意义的日志，理当不计入 ELK 的统计当中，这时候需要用 logrus&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;字符串拼接使用哪种方式更快呢？&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;已知的四种方式分别是：1. 使用 fmt.Sprintf 函数 2. 使用加号拼接 3. 使用 strings 包 4. 使用 bytes&lt;/p&gt;
+
+          
+          
+        
+      
+        </content>
+
+        
+          <summary>  当把时间作为一个变量传递时，可能会导致的问题，比如：</summary>
+        
+      </entry>
+    
+  
+    
+      
+
+      
+
+      <entry>
+        <title>一道go面试题</title>
+        <id>http://localhost:4321/articles/2021/01/go-question.html</id>
+        <link rel="alternate" type="text/html" href="http://localhost:4321/articles/2021/01/go-question.html" />
+        <published>2021-01-18T21:50:43+08:00</published>
+
+        
+          <updated>2021-08-16T18:33:57+08:00</updated>
+        
+
+        <author>
+          <name>max</name>
+          <uri>http://soundpill.cn/</uri>
+          <email>muyege@gmail.com</email>
+        </author>
+
+        <content type="html" xml:base="http://localhost:4321/">
           
             &lt;h1 id=&quot;一道-go-面试题&quot;&gt;一道 Go 面试题&lt;/h1&gt;
 
@@ -22,7 +224,36 @@
           
         
       
-        </content><summary>一道 Go 面试题</summary></entry><entry><title>i++是原子操作吗?</title><id>http://soundpill.cn/articles/2021/01/iplusplus.html</id><link rel="alternate" type="text/html" href="http://soundpill.cn/articles/2021/01/iplusplus.html" /><published>2021-01-17T09:47:29+08:00</published><updated>2021-01-17T09:58:59+08:00</updated><author><name>max</name><uri>http://soundpill.cn/</uri><email>muyege@gmail.com</email></author><content type="html" xml:base="http://soundpill.cn/">
+        </content>
+
+        
+          <summary>一道 Go 面试题</summary>
+        
+      </entry>
+    
+  
+    
+      
+
+      
+
+      <entry>
+        <title>i++是原子操作吗?</title>
+        <id>http://localhost:4321/articles/2021/01/iplusplus.html</id>
+        <link rel="alternate" type="text/html" href="http://localhost:4321/articles/2021/01/iplusplus.html" />
+        <published>2021-01-17T09:47:29+08:00</published>
+
+        
+          <updated>2021-08-16T18:33:57+08:00</updated>
+        
+
+        <author>
+          <name>max</name>
+          <uri>http://soundpill.cn/</uri>
+          <email>muyege@gmail.com</email>
+        </author>
+
+        <content type="html" xml:base="http://localhost:4321/">
           
             &lt;h1 id=&quot;i-是原子操作吗&quot;&gt;i++ 是原子操作吗?&lt;/h1&gt;
 
@@ -40,7 +271,36 @@
           
         
       
-        </content><summary>i++ 是原子操作吗?</summary></entry><entry><title>Gerrit概念说明及使用</title><id>http://soundpill.cn/articles/2020/09/gerrit-desc.html</id><link rel="alternate" type="text/html" href="http://soundpill.cn/articles/2020/09/gerrit-desc.html" /><published>2020-09-23T18:35:52+08:00</published><updated>2020-09-23T18:35:59+08:00</updated><author><name>max</name><uri>http://soundpill.cn/</uri><email>muyege@gmail.com</email></author><content type="html" xml:base="http://soundpill.cn/">
+        </content>
+
+        
+          <summary>i++ 是原子操作吗?</summary>
+        
+      </entry>
+    
+  
+    
+      
+
+      
+
+      <entry>
+        <title>Gerrit概念说明及使用</title>
+        <id>http://localhost:4321/articles/2020/09/gerrit-desc.html</id>
+        <link rel="alternate" type="text/html" href="http://localhost:4321/articles/2020/09/gerrit-desc.html" />
+        <published>2020-09-23T18:35:52+08:00</published>
+
+        
+          <updated>2021-08-16T18:33:57+08:00</updated>
+        
+
+        <author>
+          <name>max</name>
+          <uri>http://soundpill.cn/</uri>
+          <email>muyege@gmail.com</email>
+        </author>
+
+        <content type="html" xml:base="http://localhost:4321/">
           
             &lt;h3 id=&quot;gerrit介绍&quot;&gt;Gerrit介绍&lt;/h3&gt;
 
@@ -191,7 +451,36 @@ git coomit --amend --no-edit
           
         
       
-        </content><summary>Gerrit介绍</summary></entry><entry><title>为什么没有使用索引?</title><id>http://soundpill.cn/articles/2020/09/why-index-unuse.html</id><link rel="alternate" type="text/html" href="http://soundpill.cn/articles/2020/09/why-index-unuse.html" /><published>2020-09-23T11:41:43+08:00</published><updated>2020-09-23T11:43:18+08:00</updated><author><name>max</name><uri>http://soundpill.cn/</uri><email>muyege@gmail.com</email></author><content type="html" xml:base="http://soundpill.cn/">
+        </content>
+
+        
+          <summary>Gerrit介绍</summary>
+        
+      </entry>
+    
+  
+    
+      
+
+      
+
+      <entry>
+        <title>为什么没有使用索引?</title>
+        <id>http://localhost:4321/articles/2020/09/why-index-unuse.html</id>
+        <link rel="alternate" type="text/html" href="http://localhost:4321/articles/2020/09/why-index-unuse.html" />
+        <published>2020-09-23T11:41:43+08:00</published>
+
+        
+          <updated>2021-08-16T18:33:57+08:00</updated>
+        
+
+        <author>
+          <name>max</name>
+          <uri>http://soundpill.cn/</uri>
+          <email>muyege@gmail.com</email>
+        </author>
+
+        <content type="html" xml:base="http://localhost:4321/">
           
             &lt;h1 id=&quot;为什么没有用索引&quot;&gt;为什么没有用索引?&lt;/h1&gt;
 &lt;p&gt;已知表 a 数据总量是 40w, 根据时间范围过滤出最近 7 天的数据, 语句如下:&lt;/p&gt;
@@ -215,8 +504,8 @@ git coomit --amend --no-edit
 FROM
 	`answer_records`
 WHERE
-	`updated_at` BETWEEN &apos;2020-07-14+00:00:00&apos;
-	AND &apos;2020-07-21+00:00:00&apos;
+	`updated_at` BETWEEN '2020-07-14+00:00:00'
+	AND '2020-07-21+00:00:00'
 ORDER BY
 	`created_at` DESC;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -238,7 +527,36 @@ ORDER BY
           
         
       
-        </content><summary>为什么没有用索引?已知表 a 数据总量是 40w, 根据时间范围过滤出最近 7 天的数据, 语句如下:explain SELECT	`question_id`,	`student_id`,	`teacher_id`,	`question_type`,	`question_step`,	`question_no`,	`level`,	`class_id`,	`lesson_id`,	`teacher_get_at`,	`teacher_set_at`,	`status`,	`teacher_from`,	`wrong_reason_id`,	`created_at`,	`submit_time`FROM	`answer_records`WHERE	`updated_at` BETWEEN &apos;2020-07-14+00:00:00&apos;	AND &apos;2020-07-21+00:00:00&apos;ORDER BY	`created_at` DESC;</summary></entry><entry><title>在图片上添加文字或图片</title><id>http://soundpill.cn/articles/2020/01/draw-someting-on-picture.html</id><link rel="alternate" type="text/html" href="http://soundpill.cn/articles/2020/01/draw-someting-on-picture.html" /><published>2020-01-10T15:43:41+08:00</published><updated>2020-01-10T15:47:43+08:00</updated><author><name>max</name><uri>http://soundpill.cn/</uri><email>muyege@gmail.com</email></author><content type="html" xml:base="http://soundpill.cn/">
+        </content>
+
+        
+          <summary>为什么没有用索引?已知表 a 数据总量是 40w, 根据时间范围过滤出最近 7 天的数据, 语句如下:explain SELECT	`question_id`,	`student_id`,	`teacher_id`,	`question_type`,	`question_step`,	`question_no`,	`level`,	`class_id`,	`lesson_id`,	`teacher_get_at`,	`teacher_set_at`,	`status`,	`teacher_from`,	`wrong_reason_id`,	`created_at`,	`submit_time`FROM	`answer_records`WHERE	`updated_at` BETWEEN '2020-07-14+00:00:00'	AND '2020-07-21+00:00:00'ORDER BY	`created_at` DESC;</summary>
+        
+      </entry>
+    
+  
+    
+      
+
+      
+
+      <entry>
+        <title>在图片上添加文字或图片</title>
+        <id>http://localhost:4321/articles/2020/01/draw-someting-on-picture.html</id>
+        <link rel="alternate" type="text/html" href="http://localhost:4321/articles/2020/01/draw-someting-on-picture.html" />
+        <published>2020-01-10T15:43:41+08:00</published>
+
+        
+          <updated>2021-08-16T18:33:57+08:00</updated>
+        
+
+        <author>
+          <name>max</name>
+          <uri>http://soundpill.cn/</uri>
+          <email>muyege@gmail.com</email>
+        </author>
+
+        <content type="html" xml:base="http://localhost:4321/">
           
             &lt;h4 id=&quot;interventionimage&quot;&gt;intervention/image&lt;/h4&gt;
 &lt;p&gt;这是一个第三方扩展, 用来处理图片的, 功能特别强大, 可以 cover 我们这篇文章提到的需求&lt;/p&gt;
@@ -260,7 +578,7 @@ ORDER BY
 &lt;p&gt;该扩展默认使用的是 GD 库, 如果你想用 Imagick 扩展需要修改文件, config/image.php&lt;/p&gt;
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;?php
     return [
-        &apos;driver&apos;    =&amp;gt;  &apos;imagick&apos;
+        'driver'    =&amp;gt;  'imagick'
     ];
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -276,14 +594,14 @@ Intervention\Image\ImageServiceProvider::class
 
 $aliases:
 
-&apos;Image&apos; =&amp;gt; Intervention\Image\Facades\Image::class
+'Image' =&amp;gt; Intervention\Image\Facades\Image::class
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;ul&gt;
   &lt;li&gt;Lumen: bootstrap/app.php&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$app-&amp;gt;withAliases(array(&apos;Intervention\Image\Facades\Image&apos; =&amp;gt; &apos;Image&apos;));
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$app-&amp;gt;withAliases(array('Intervention\Image\Facades\Image' =&amp;gt; 'Image'));
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h4 id=&quot;具体使用&quot;&gt;具体使用&lt;/h4&gt;
@@ -291,17 +609,17 @@ $aliases:
 
 public function deal()
 {
-    $image = Image::make(public_path() . &apos;/foo.jpg&apos;);
-    $text = &apos;我是天才&apos;;
+    $image = Image::make(public_path() . '/foo.jpg');
+    $text = '我是天才';
     $image-&amp;gt;text($text, 620, 200, function($font) {
-        $font-&amp;gt;file(public_path() . &apos;/SimHei.ttf&apos;);
+        $font-&amp;gt;file(public_path() . '/SimHei.ttf');
         $font-&amp;gt;size(200);
-        $font-&amp;gt;color(&apos;#fdf6e3&apos;);
-        $font-&amp;gt;align(&apos;center&apos;);
-        $font-&amp;gt;valign(&apos;top&apos;);
+        $font-&amp;gt;color('#fdf6e3');
+        $font-&amp;gt;align('center');
+        $font-&amp;gt;valign('top');
         $font-&amp;gt;angle(0);
     });
-    return $image-&amp;gt;response(&apos;jpg&apos;);
+    return $image-&amp;gt;response('jpg');
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -313,11 +631,40 @@ public function deal()
           
         
       
-        </content><summary>intervention/image这是一个第三方扩展, 用来处理图片的, 功能特别强大, 可以 cover 我们这篇文章提到的需求</summary></entry><entry><title>比较两个字符串是否相等</title><id>http://soundpill.cn/articles/2020/01/compare-two-string-equal.html</id><link rel="alternate" type="text/html" href="http://soundpill.cn/articles/2020/01/compare-two-string-equal.html" /><published>2020-01-10T15:34:56+08:00</published><updated>2020-01-10T15:35:13+08:00</updated><author><name>max</name><uri>http://soundpill.cn/</uri><email>muyege@gmail.com</email></author><content type="html" xml:base="http://soundpill.cn/">
+        </content>
+
+        
+          <summary>intervention/image这是一个第三方扩展, 用来处理图片的, 功能特别强大, 可以 cover 我们这篇文章提到的需求</summary>
+        
+      </entry>
+    
+  
+    
+      
+
+      
+
+      <entry>
+        <title>比较两个字符串是否相等</title>
+        <id>http://localhost:4321/articles/2020/01/compare-two-string-equal.html</id>
+        <link rel="alternate" type="text/html" href="http://localhost:4321/articles/2020/01/compare-two-string-equal.html" />
+        <published>2020-01-10T15:34:56+08:00</published>
+
+        
+          <updated>2021-08-16T18:33:57+08:00</updated>
+        
+
+        <author>
+          <name>max</name>
+          <uri>http://soundpill.cn/</uri>
+          <email>muyege@gmail.com</email>
+        </author>
+
+        <content type="html" xml:base="http://localhost:4321/">
           
             &lt;p&gt;有时候, 当用户传入一个字符串时, 你可能会需要拿着这个字符串和最终结果相对比, 如果我们使用 == 号来比较两个字符串, 可能会产生时序攻击.&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&apos;abcdef&apos; == $req-&amp;gt;code
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;'abcdef' == $req-&amp;gt;code
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;也就是说, == 号在判断两个字符串相等时, 会一位一位的判断, 如果遇到哪一位不一样, 就返回错误, 这样根据服务器运算速度, 就可以一位一位的猜出最终的结果.&lt;/p&gt;
@@ -331,7 +678,36 @@ public function deal()
           
         
       
-        </content><summary>有时候, 当用户传入一个字符串时, 你可能会需要拿着这个字符串和最终结果相对比, 如果我们使用 == 号来比较两个字符串, 可能会产生时序攻击.</summary></entry><entry><title>Homestead完整的切换php版本</title><id>http://soundpill.cn/articles/2020/01/homestead-version-switch.html</id><link rel="alternate" type="text/html" href="http://soundpill.cn/articles/2020/01/homestead-version-switch.html" /><published>2020-01-10T15:14:46+08:00</published><updated>2020-01-10T15:15:12+08:00</updated><author><name>max</name><uri>http://soundpill.cn/</uri><email>muyege@gmail.com</email></author><content type="html" xml:base="http://soundpill.cn/">
+        </content>
+
+        
+          <summary>有时候, 当用户传入一个字符串时, 你可能会需要拿着这个字符串和最终结果相对比, 如果我们使用 == 号来比较两个字符串, 可能会产生时序攻击.</summary>
+        
+      </entry>
+    
+  
+    
+      
+
+      
+
+      <entry>
+        <title>Homestead完整的切换php版本</title>
+        <id>http://localhost:4321/articles/2020/01/homestead-version-switch.html</id>
+        <link rel="alternate" type="text/html" href="http://localhost:4321/articles/2020/01/homestead-version-switch.html" />
+        <published>2020-01-10T15:14:46+08:00</published>
+
+        
+          <updated>2021-08-16T18:33:57+08:00</updated>
+        
+
+        <author>
+          <name>max</name>
+          <uri>http://soundpill.cn/</uri>
+          <email>muyege@gmail.com</email>
+        </author>
+
+        <content type="html" xml:base="http://localhost:4321/">
           
             &lt;p&gt;相信大多数人搜到的都是这篇文章
 https://learnku.com/articles/16881&lt;/p&gt;
@@ -353,7 +729,36 @@ sudo update-alternatives --set php-config /usr/bin/php-config7.1
           
         
       
-        </content><summary>相信大多数人搜到的都是这篇文章https://learnku.com/articles/16881</summary></entry><entry><title>mojave下使用pyenv安装python3出错的问题</title><id>http://soundpill.cn/articles/2019/02/mojave%E4%B8%8B%E4%BD%BF%E7%94%A8pyenv%E5%AE%89%E8%A3%85python3%E5%87%BA%E9%94%99%E7%9A%84%E9%97%AE%E9%A2%98.html</id><link rel="alternate" type="text/html" href="http://soundpill.cn/articles/2019/02/mojave%E4%B8%8B%E4%BD%BF%E7%94%A8pyenv%E5%AE%89%E8%A3%85python3%E5%87%BA%E9%94%99%E7%9A%84%E9%97%AE%E9%A2%98.html" /><published>2019-02-26T15:33:39+08:00</published><updated>2019-09-15T15:35:02+08:00</updated><author><name>max</name><uri>http://soundpill.cn/</uri><email>muyege@gmail.com</email></author><content type="html" xml:base="http://soundpill.cn/">
+        </content>
+
+        
+          <summary>相信大多数人搜到的都是这篇文章https://learnku.com/articles/16881</summary>
+        
+      </entry>
+    
+  
+    
+      
+
+      
+
+      <entry>
+        <title>mojave下使用pyenv安装python3出错的问题</title>
+        <id>http://localhost:4321/articles/2019/02/mojave%E4%B8%8B%E4%BD%BF%E7%94%A8pyenv%E5%AE%89%E8%A3%85python3%E5%87%BA%E9%94%99%E7%9A%84%E9%97%AE%E9%A2%98.html</id>
+        <link rel="alternate" type="text/html" href="http://localhost:4321/articles/2019/02/mojave%E4%B8%8B%E4%BD%BF%E7%94%A8pyenv%E5%AE%89%E8%A3%85python3%E5%87%BA%E9%94%99%E7%9A%84%E9%97%AE%E9%A2%98.html" />
+        <published>2019-02-26T15:33:39+08:00</published>
+
+        
+          <updated>2021-08-16T18:33:57+08:00</updated>
+        
+
+        <author>
+          <name>max</name>
+          <uri>http://soundpill.cn/</uri>
+          <email>muyege@gmail.com</email>
+        </author>
+
+        <content type="html" xml:base="http://localhost:4321/">
           
             &lt;h2 id=&quot;使用pyenv安装python3时出现如下报错&quot;&gt;使用pyenv安装python3时出现如下报错&lt;/h2&gt;
 &lt;p&gt;&lt;img src=&quot;https://ws1.sinaimg.cn/large/60f1733aly1g0jo757rfnj21go0q8wnf.jpg&quot; alt=&quot;&quot; /&gt;
@@ -380,7 +785,36 @@ https://developer.apple.com/macos/whats-new/&lt;/p&gt;
           
         
       
-        </content><summary>使用pyenv安装python3时出现如下报错按照提示来看,好像是在提示我没有安装zlib库,但是我已经装了,没办法,google一下吧.(如果你因为没有安装zlib库而产生这个问题, 那就好办了, 直接brew install zlib)google搜索到的解决方案大都是要安装xcode命令行工具xcode-select --install这个我也安装了, 不安装的话啥也干不了啊最后解决方案查看一下xcode-select -v的版本</summary></entry><entry><title>redis中的SDS数据结构</title><id>http://soundpill.cn/articles/2019/02/redis%E4%B8%AD%E7%9A%84sds%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.html</id><link rel="alternate" type="text/html" href="http://soundpill.cn/articles/2019/02/redis%E4%B8%AD%E7%9A%84sds%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.html" /><published>2019-02-26T15:31:32+08:00</published><updated>2019-09-15T15:32:24+08:00</updated><author><name>max</name><uri>http://soundpill.cn/</uri><email>muyege@gmail.com</email></author><content type="html" xml:base="http://soundpill.cn/">
+        </content>
+
+        
+          <summary>使用pyenv安装python3时出现如下报错按照提示来看,好像是在提示我没有安装zlib库,但是我已经装了,没办法,google一下吧.(如果你因为没有安装zlib库而产生这个问题, 那就好办了, 直接brew install zlib)google搜索到的解决方案大都是要安装xcode命令行工具xcode-select --install这个我也安装了, 不安装的话啥也干不了啊最后解决方案查看一下xcode-select -v的版本</summary>
+        
+      </entry>
+    
+  
+    
+      
+
+      
+
+      <entry>
+        <title>redis中的SDS数据结构</title>
+        <id>http://localhost:4321/articles/2019/02/redis%E4%B8%AD%E7%9A%84sds%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.html</id>
+        <link rel="alternate" type="text/html" href="http://localhost:4321/articles/2019/02/redis%E4%B8%AD%E7%9A%84sds%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.html" />
+        <published>2019-02-26T15:31:32+08:00</published>
+
+        
+          <updated>2021-08-16T18:33:57+08:00</updated>
+        
+
+        <author>
+          <name>max</name>
+          <uri>http://soundpill.cn/</uri>
+          <email>muyege@gmail.com</email>
+        </author>
+
+        <content type="html" xml:base="http://localhost:4321/">
           
             &lt;h2 id=&quot;sdssimple-dynamic-string简单动态字符串&quot;&gt;SDS(Simple Dynamic String)简单动态字符串&lt;/h2&gt;
 &lt;p&gt;在Redis中可修改的字符串值都是采用的SDS数据结构, 而不可修改的都采用了C字符串&lt;/p&gt;
@@ -416,7 +850,36 @@ https://developer.apple.com/macos/whats-new/&lt;/p&gt;
           
         
       
-        </content><summary>SDS(Simple Dynamic String)简单动态字符串在Redis中可修改的字符串值都是采用的SDS数据结构, 而不可修改的都采用了C字符串SDS的结构有三个基本变量  free 纪录buf数组中未使用字节的数量  len 纪录buf数组中已使用字节的数量, 等于SDS所保存字符串的长度  buf 字节数组, 用于保存字符串(二进制)    为什么采用SDS    SDS是基于C字符串结构的缺点优化后的产物, 因为采用C字符串的方式会有以下一些问题：    获取字符串长度需要遍历字符串获取, 将需要O(N)的时间复杂度  C字符串会有缓冲区溢出的问题  一旦修改字符串操作发生就会重新分配内存, 修改N次就分配N次所以, 基于以上问题SDS结构的优点也显而易见了, 如下:  因为结构体中标记了字符串长度, 所以获取长度的时间复杂度变成了O(1)  SDS的API中对内存分配的机制杜绝了缓冲区溢出的问题  同样, API中的操作也减少了修改字符串长度时所需的内存重分配次数  二进制安全  兼容部分C字符串函数    内存分配机制    空间预分配在字符串增长操作中有两种情况来预分配空间第一种是修改后的长度(len的值)小于1MB的情况下, free的值会和len的值相同, 来做到减少内存分配次数, 预分配以后可能会使用到的空间第二种是修改后的长度大于1MB的情况下, free的值会多修改为1MB, 也就是在原来基础上多出1MB的未使用空间  惰性空间释放在字符串缩短操作的时候, 不会将释放的空间马上回收, 而是会写入到free中, 将缩短的长度标记为未使用空间为将来可能会使用的字符串预留位置。SDS中也有相应的API, 可以在需要时真正释放这部分空间。</summary></entry><entry><title>rebase和merge的区别</title><id>http://soundpill.cn/articles/2019/02/rebase%E5%92%8Cmerge%E7%9A%84%E5%8C%BA%E5%88%AB.html</id><link rel="alternate" type="text/html" href="http://soundpill.cn/articles/2019/02/rebase%E5%92%8Cmerge%E7%9A%84%E5%8C%BA%E5%88%AB.html" /><published>2019-02-24T15:36:37+08:00</published><updated>2019-09-15T15:37:10+08:00</updated><author><name>max</name><uri>http://soundpill.cn/</uri><email>muyege@gmail.com</email></author><content type="html" xml:base="http://soundpill.cn/">
+        </content>
+
+        
+          <summary>SDS(Simple Dynamic String)简单动态字符串在Redis中可修改的字符串值都是采用的SDS数据结构, 而不可修改的都采用了C字符串SDS的结构有三个基本变量  free 纪录buf数组中未使用字节的数量  len 纪录buf数组中已使用字节的数量, 等于SDS所保存字符串的长度  buf 字节数组, 用于保存字符串(二进制)    为什么采用SDS    SDS是基于C字符串结构的缺点优化后的产物, 因为采用C字符串的方式会有以下一些问题：    获取字符串长度需要遍历字符串获取, 将需要O(N)的时间复杂度  C字符串会有缓冲区溢出的问题  一旦修改字符串操作发生就会重新分配内存, 修改N次就分配N次所以, 基于以上问题SDS结构的优点也显而易见了, 如下:  因为结构体中标记了字符串长度, 所以获取长度的时间复杂度变成了O(1)  SDS的API中对内存分配的机制杜绝了缓冲区溢出的问题  同样, API中的操作也减少了修改字符串长度时所需的内存重分配次数  二进制安全  兼容部分C字符串函数    内存分配机制    空间预分配在字符串增长操作中有两种情况来预分配空间第一种是修改后的长度(len的值)小于1MB的情况下, free的值会和len的值相同, 来做到减少内存分配次数, 预分配以后可能会使用到的空间第二种是修改后的长度大于1MB的情况下, free的值会多修改为1MB, 也就是在原来基础上多出1MB的未使用空间  惰性空间释放在字符串缩短操作的时候, 不会将释放的空间马上回收, 而是会写入到free中, 将缩短的长度标记为未使用空间为将来可能会使用的字符串预留位置。SDS中也有相应的API, 可以在需要时真正释放这部分空间。</summary>
+        
+      </entry>
+    
+  
+    
+      
+
+      
+
+      <entry>
+        <title>rebase和merge的区别</title>
+        <id>http://localhost:4321/articles/2019/02/rebase%E5%92%8Cmerge%E7%9A%84%E5%8C%BA%E5%88%AB.html</id>
+        <link rel="alternate" type="text/html" href="http://localhost:4321/articles/2019/02/rebase%E5%92%8Cmerge%E7%9A%84%E5%8C%BA%E5%88%AB.html" />
+        <published>2019-02-24T15:36:37+08:00</published>
+
+        
+          <updated>2021-08-16T18:33:57+08:00</updated>
+        
+
+        <author>
+          <name>max</name>
+          <uri>http://soundpill.cn/</uri>
+          <email>muyege@gmail.com</email>
+        </author>
+
+        <content type="html" xml:base="http://localhost:4321/">
           
             &lt;h4 id=&quot;变基&quot;&gt;变基&lt;/h4&gt;
 &lt;p&gt;找了一大圈, 还是官方的解释最好, 贴出来自己看吧, “变基”这个名字起的很好, 文档中的”重新播放”的解释也相当生动&lt;/p&gt;
@@ -427,7 +890,36 @@ https://developer.apple.com/macos/whats-new/&lt;/p&gt;
           
         
       
-        </content><summary>变基找了一大圈, 还是官方的解释最好, 贴出来自己看吧, “变基”这个名字起的很好, 文档中的”重新播放”的解释也相当生动</summary></entry><entry><title>cgi, fastcgi, php-cgi, php-fpm的关系</title><id>http://soundpill.cn/articles/2019/02/cgi,-fastcgi,-php-cgi,-php-fpm.html</id><link rel="alternate" type="text/html" href="http://soundpill.cn/articles/2019/02/cgi,-fastcgi,-php-cgi,-php-fpm.html" /><published>2019-02-21T15:33:39+08:00</published><updated>2019-09-15T15:34:35+08:00</updated><author><name>max</name><uri>http://soundpill.cn/</uri><email>muyege@gmail.com</email></author><content type="html" xml:base="http://soundpill.cn/">
+        </content>
+
+        
+          <summary>变基找了一大圈, 还是官方的解释最好, 贴出来自己看吧, “变基”这个名字起的很好, 文档中的”重新播放”的解释也相当生动</summary>
+        
+      </entry>
+    
+  
+    
+      
+
+      
+
+      <entry>
+        <title>cgi, fastcgi, php-cgi, php-fpm的关系</title>
+        <id>http://localhost:4321/articles/2019/02/cgi,-fastcgi,-php-cgi,-php-fpm.html</id>
+        <link rel="alternate" type="text/html" href="http://localhost:4321/articles/2019/02/cgi,-fastcgi,-php-cgi,-php-fpm.html" />
+        <published>2019-02-21T15:33:39+08:00</published>
+
+        
+          <updated>2021-08-16T18:33:57+08:00</updated>
+        
+
+        <author>
+          <name>max</name>
+          <uri>http://soundpill.cn/</uri>
+          <email>muyege@gmail.com</email>
+        </author>
+
+        <content type="html" xml:base="http://localhost:4321/">
           
             &lt;h4 id=&quot;cgi&quot;&gt;cgi&lt;/h4&gt;
 &lt;p&gt;通用网关接口, Common Gateway Interface, CGI是Web服务器运行时外部程序的规范, 按CGI编写的程序可以扩展服务器功能. 所以, 广义上的cgi是一种接口标准, 不是字面意义上的接口. 狭义上, cgi就是cgi程序, 运行在服务器上, 提供同客户端HTML页面的接口. 绝大多数的cgi程序被用来解释处理来自表单的输入信息, 并在服务器产生相应的处理, 或将相应的信息反馈给浏览器, cgi程序使网页具有交互功能. 
@@ -455,7 +947,36 @@ fastcgi程序处理步骤:
           
         
       
-        </content><summary>cgi通用网关接口, Common Gateway Interface, CGI是Web服务器运行时外部程序的规范, 按CGI编写的程序可以扩展服务器功能. 所以, 广义上的cgi是一种接口标准, 不是字面意义上的接口. 狭义上, cgi就是cgi程序, 运行在服务器上, 提供同客户端HTML页面的接口. 绝大多数的cgi程序被用来解释处理来自表单的输入信息, 并在服务器产生相应的处理, 或将相应的信息反馈给浏览器, cgi程序使网页具有交互功能. cgi程序处理步骤:1) 通过Internet把用户请求送到web服务器.2) web服务器接受用户请求并交给CGI程序处理.3) CGI程序把处理结果传送给web服务器.4) web服务器把结果送回到用户.</summary></entry><entry><title>推荐两个实用好玩的网站</title><id>http://soundpill.cn/articles/2019/02/%E6%8E%A8%E8%8D%90%E4%B8%A4%E4%B8%AA%E5%AE%9E%E7%94%A8%E5%A5%BD%E7%8E%A9%E7%9A%84%E7%BD%91%E7%AB%99.html</id><link rel="alternate" type="text/html" href="http://soundpill.cn/articles/2019/02/%E6%8E%A8%E8%8D%90%E4%B8%A4%E4%B8%AA%E5%AE%9E%E7%94%A8%E5%A5%BD%E7%8E%A9%E7%9A%84%E7%BD%91%E7%AB%99.html" /><published>2019-02-21T10:23:37+08:00</published><updated>2019-09-15T15:36:19+08:00</updated><author><name>max</name><uri>http://soundpill.cn/</uri><email>muyege@gmail.com</email></author><content type="html" xml:base="http://soundpill.cn/">
+        </content>
+
+        
+          <summary>cgi通用网关接口, Common Gateway Interface, CGI是Web服务器运行时外部程序的规范, 按CGI编写的程序可以扩展服务器功能. 所以, 广义上的cgi是一种接口标准, 不是字面意义上的接口. 狭义上, cgi就是cgi程序, 运行在服务器上, 提供同客户端HTML页面的接口. 绝大多数的cgi程序被用来解释处理来自表单的输入信息, 并在服务器产生相应的处理, 或将相应的信息反馈给浏览器, cgi程序使网页具有交互功能. cgi程序处理步骤:1) 通过Internet把用户请求送到web服务器.2) web服务器接受用户请求并交给CGI程序处理.3) CGI程序把处理结果传送给web服务器.4) web服务器把结果送回到用户.</summary>
+        
+      </entry>
+    
+  
+    
+      
+
+      
+
+      <entry>
+        <title>推荐两个实用好玩的网站</title>
+        <id>http://localhost:4321/articles/2019/02/%E6%8E%A8%E8%8D%90%E4%B8%A4%E4%B8%AA%E5%AE%9E%E7%94%A8%E5%A5%BD%E7%8E%A9%E7%9A%84%E7%BD%91%E7%AB%99.html</id>
+        <link rel="alternate" type="text/html" href="http://localhost:4321/articles/2019/02/%E6%8E%A8%E8%8D%90%E4%B8%A4%E4%B8%AA%E5%AE%9E%E7%94%A8%E5%A5%BD%E7%8E%A9%E7%9A%84%E7%BD%91%E7%AB%99.html" />
+        <published>2019-02-21T10:23:37+08:00</published>
+
+        
+          <updated>2021-08-16T18:33:57+08:00</updated>
+        
+
+        <author>
+          <name>max</name>
+          <uri>http://soundpill.cn/</uri>
+          <email>muyege@gmail.com</email>
+        </author>
+
+        <content type="html" xml:base="http://localhost:4321/">
           
             &lt;h3 id=&quot;在线绘图工具&quot;&gt;在线绘图工具&lt;/h3&gt;
 &lt;p&gt;有流程图，有类图，应有尽有，样式还很好看
@@ -469,4 +990,12 @@ https://www.gaoding.com/koutu&lt;/p&gt;
           
         
       
-        </content><summary>在线绘图工具有流程图，有类图，应有尽有，样式还很好看https://www.draw.io/</summary></entry></feed>
+        </content>
+
+        
+          <summary>在线绘图工具有流程图，有类图，应有尽有，样式还很好看https://www.draw.io/</summary>
+        
+      </entry>
+    
+  
+</feed>

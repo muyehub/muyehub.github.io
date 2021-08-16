@@ -1,1 +1,341 @@
-[{"title":"一道go面试题","permalink":"http://soundpill.cn/articles/2021/01/go-question.html","link":"http://soundpill.cn/articles/2021/01/go-question.html","date":"2021-01-18T21:50:43+08:00","modified":"2021-01-18T21:50:50+08:00","author":{"name":"max","url":"http://soundpill.cn/","email":"muyege@gmail.com"},"content":"<h1 id=\"一道-go-面试题\">一道 Go 面试题</h1>\n\n<p>请问下面这两段代码分别输出什么?\n<img src=\"https://img.fulitu.club/go-1.png\" alt=\"\" />\n<img src=\"https://img.fulitu.club/go-2.png\" alt=\"\" /></p>\n\n<p>直接说结果, 如果你的电脑不是奔腾, 赛扬什么的处理器, 那结果基本是固定的, 就是啥也没有.\n因为在 goroutine 反应过来之前, 程序已经执行完了, 还没来得及输出就结束了.</p>\n\n<p>要么, 你就让时间延迟几秒再结束, time.Sleep(10 * time.Second), 要么就像下面这样使用 WaitGroup 来等待 goroutine 结束\n<img src=\"https://img.fulitu.club/go-1-1.png\" alt=\"\" /></p>\n\n<p>这不是问题的重点, 重点是这两种使用匿名函数的方式, 输出会有什么不一样吗?</p>\n\n<p>首先说第一种, 没有传参的情况下, 匿名函数中是使用的引用地址来操作的, 这时候 i 可能已经加到 10 了, 所以打印出来可能会是 10 个 10, 或者中间夹杂几个其他数字什么的. (而且这时候 goroutine 总是在 i++ 之后执行, 所以是从 1 - 10, 不是 0 - 9)</p>\n\n<p>第二种情况, 显而易见就是乱序的了, 会把 0 - 9 挨个输出, 但是是乱序的</p>","excerpt":"一道 Go 面试题","languages":null,"categories":[],"tags":[]},{"title":"i++是原子操作吗?","permalink":"http://soundpill.cn/articles/2021/01/iplusplus.html","link":"http://soundpill.cn/articles/2021/01/iplusplus.html","date":"2021-01-17T09:47:29+08:00","modified":"2021-01-17T09:58:59+08:00","author":{"name":"max","url":"http://soundpill.cn/","email":"muyege@gmail.com"},"content":"<h1 id=\"i-是原子操作吗\">i++ 是原子操作吗?</h1>\n\n<p>不是, i++ 要完成的操作要先读取变量 i 的值, 对这个值加 1, 再把结果保存到 i 中. 所以不是原子操作.</p>\n\n<p>我们来看下面的代码</p>\n\n<p><img src=\"http://img.fulitu.club/waitgroup.png?123\" alt=\"\" /></p>\n\n<p>这段代码是启动 10 个线程, 每个线程对 count 执行 10 万次自增操作, 直观上来看最后 count 的结果是 100 万, 但因为自增操作不是原子性的, 所以最终的结果每次都会不一样, 会有协程做重复操作. 那应该怎么解决这个问题呢? 并发资源的读取问题最直接的解决方法就是加锁. 改良后如下:</p>\n\n<p><img src=\"http://img.fulitu.club/waitgroup-lock.png\" alt=\"\" /></p>","excerpt":"i++ 是原子操作吗?","languages":null,"categories":[],"tags":[]},{"title":"Gerrit概念说明及使用","permalink":"http://soundpill.cn/articles/2020/09/gerrit-desc.html","link":"http://soundpill.cn/articles/2020/09/gerrit-desc.html","date":"2020-09-23T18:35:52+08:00","modified":"2020-09-23T18:35:59+08:00","author":{"name":"max","url":"http://soundpill.cn/","email":"muyege@gmail.com"},"content":"<h3 id=\"gerrit介绍\">Gerrit介绍</h3>\n\n<h4 id=\"gerrit简介\">Gerrit简介</h4>\n\n<p>Gerrit, 一种开放源代码的代码审查软件, 使用网页界面. 利用网页浏览器, 同一个团队的软件开发者, 可以相互审阅彼此修改后的代码, 决定是否能够提交, 回退或是继续修改. 它使用版本控制系统Git作为底层.</p>\n\n<p>它分支自Rietveld, 作者为Google公司的Shawn Pearce, 原先是为了管理Android项目而产生. 这个软件的名称, 来自于荷兰家具设计师赫里特·里特费尔德(Gerrit Rietveld).</p>\n\n<p>因为对访问控制表(ACL)相关的修正, 没有被集成进Rietveld, 之后Gerrit就由Rietveld分支出来, 形成独立软件项目.</p>\n\n<p>最早它是由Python写成, 在第二版后, 改成用Java与SQL. 使用Google Web Toolkit来产生前端的JavaScript.</p>\n\n<h4 id=\"为什么需要gerrit\">为什么需要Gerrit</h4>\n\n<p>首先, 代码审查可以帮助程序员了解系统功能, 从整体掌控代码质量, 其次, 通过代码审核可以及时止损, 构建更加健壮的系统代码.</p>\n\n<h4 id=\"代码审核的建议来自程序员客栈\">代码审核的建议(来自<a href=\"https://www.zhihu.com/question/20046020/answer/555007256\">程序员客栈</a>)</h4>\n\n<ol>\n  <li>\n    <p>对事不对人, 大家都是同事, 在一个团队工作和气最重要. 不要在Code Review中说”你写的什么垃圾”这种话, 你可以说”这个变量名不是很好理解, 咱们换成xxx是不是更好”</p>\n  </li>\n  <li>\n    <p>每个Review至少给一条正面评价. Gerrit中有对代码点赞的功能, 可以时不时的使用一下.</p>\n  </li>\n  <li>\n    <p>保证发布的代码和评审意见的可读性.</p>\n  </li>\n  <li>\n    <p>用工具进行基础问题的自动化检查. 用Tab还是空格, 用两个空格还是四个空格, 缩进风格是使用K&amp;R还是Allman. 这些问题可以使用php code sniffer解决, 团队应该把精力放在代码规范, 代码性能优化等地方.</p>\n  </li>\n  <li>\n    <p>全员参加Code Review, 并设定各部分负责人.</p>\n  </li>\n  <li>\n    <p>每个代码PR(Pull Request)内容一定要少. Code Review效果和质量与PR代码量成反比, 提交的代码越多, Code Review的效果就越差. 所以要经常Code Review, 保证每个PR代码的量要少, 最多不超过300行/PR.</p>\n  </li>\n  <li>\n    <p>在写新代码之前, 先Review掉需要评审的代码. 不要堆积Review, 有PR产生一定要尽快Review, 否则时间拖的长了以后Review的过程就会比较艰难.</p>\n  </li>\n  <li>\n    <p>不要在Review中讨论需求, Review就是Review. 要明确Code Review是完善代码, 始终要以代码质量为中心要素.</p>\n  </li>\n</ol>\n\n<h3 id=\"gerrit使用\">Gerrit使用</h3>\n\n<h4 id=\"账号登录与查看设置\">账号登录与查看设置</h4>\n\n<p>首先, 需要在LDAP系统中发放账号, 拿到自己的账号后进行登录.</p>\n\n<p>登录后在账号中点击Settings设置, 找到新增SSH kyes的设置, 将自己机器上的公钥添加进去</p>\n\n<p><img src=\"https://upload-images.jianshu.io/upload_images/1656074-c0e5e4483b5c40c8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240\" alt=\"SSH keys设置\" /></p>\n\n<p>然后到仓库中选择属于自己的项目clone到本地</p>\n\n<p><img src=\"https://upload-images.jianshu.io/upload_images/1656074-cbd5f77ab4a78c37.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240\" alt=\"git项目列表\" /></p>\n\n<p>注意: 红框中的两个项目为默认项目, 是新建仓库时需要继承权限来用的, 不要动</p>\n\n<p><img src=\"https://upload-images.jianshu.io/upload_images/1656074-c65ca4a43345fdce.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240\" alt=\"默认项目\" /></p>\n\n<p>克隆完毕后需要在项目目录下修改和账户相同的邮箱与真实的姓名, 否则提交时会校验失败</p>\n\n<div class=\"language-plaintext highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code>git config user.email muyege@gmail.com\n\ngit config user.name muyege\n</code></pre></div></div>\n\n<p>加–global是修改全局的, 如果项目很多, 为避免一个个项目修改麻烦, 可以加这个参数.</p>\n\n<h4 id=\"本地仓库设置和提交\">本地仓库设置和提交</h4>\n\n<p>因为Gerrit的设置, 一般用户是没有直接提交到主分支或者开发分支的权限的, 必须提交到引用分支先进行代码审核, 审核通过后才能merge到对应分支. 所以, 在本地操作代码库的时候会出现push不上去的问题, 这时候我们需要在项目下设置Gerrit提供给我们的引用分支.</p>\n\n<p>一般情况下在Gerrit权限设置里有三种类型的分支:</p>\n\n<p>refs/* : 这是管理员才有的权限, 表示当前项目下的所有分支, 拥有此权限可以随意push到任何远端分支</p>\n\n<p>refs/heads/* : 这是不需要经过code review的分支, 与 refs/* 同样权限</p>\n\n<p>refs/for/* : 这是需要经过code review的分支, 提交到此分支上的代码需要经过code review, 通过后才能合并到正式分支上.</p>\n\n<p>我们在提交代码审核的时候需要将代码提交到gerrit为我们提供的引用分支上, 比如说: 我在dev分支上操作, 本来要push的命令需要由 git push origin dev 改为 git push origin HEAD:/refs/for/dev.</p>\n\n<p>如果嫌每次写这么长不方便的话, 可以在项目下做如下配置, git config remote.origin.push ‘refs/heads/*:refs/for/*’, 这样每次提交的时候就会自动提交到引用分支上了.</p>\n\n<h4 id=\"代码审核\">代码审核</h4>\n\n<p>当有代码需要审核时会在CHANGES标签中看到待审核的纪录</p>\n\n<p><img src=\"https://upload-images.jianshu.io/upload_images/1656074-cd61a43a015eef8d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240\" alt=\"审核状态\" /></p>\n\n<p>Open表示打开的代码审核</p>\n\n<p>Merged表示已经通过且已合并的代码审核</p>\n\n<p>Abandoned表示未通过或遗弃的代码审核</p>\n\n<p><img src=\"https://upload-images.jianshu.io/upload_images/1656074-bce72e437220832f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240\" alt=\"审核页面\" /></p>\n\n<p>审核页面, 有 +1 和 +2 两个权限.</p>\n\n<p>只有有 +2 权限的同学才能够把审核通过的代码 submit 到真正的远端分支中.</p>\n\n<p>+1 权限的同学, 多为与你一个组, 或者做同一个业务的同学, 他们对你的代码先进行一次review</p>\n\n<p>当+2 的同学审核通过后, submit 了代码后, 本次Review 就结束了.</p>\n\n<blockquote>\n  <p>然后回到你自己的本地分支, 执行以下 git pull –rebase 同步一下远端分支. 然后继续进行后续工作.</p>\n</blockquote>\n\n<p>当评审不通过时, 需要修改代码后再次提交评审, 这里分两种情况, 第一种情况是评审人员没有ABANDON的情况下, 可以修改代码后使用以下命令再次提交</p>\n\n<div class=\"language-plaintext highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code>\ngit add file\n\ngit coomit --amend --no-edit\n\n</code></pre></div></div>\n\n<p>第二种情况是评审人员已经将此次评审ABANDON了, 那么就需要重新走正常流程提交评审.</p>\n\n<h4 id=\"冲突解决\">冲突解决</h4>\n\n<p>在实际开发中, 可能其他同学提交的代码与自己修改的代码修改了同一处地方, 从而产生了冲突.</p>\n\n<p>比如：</p>\n\n<p>A同学提交了 a.txt 文件, 在最后一行添加了而一些内容并且审核通过已经 submit了. 此时, B同学也在a.txt文件中的最后一行添加了内容, 但是没有先做 git pull –rebase 操作, 直接推到gerrit平台上则会产生冲突.</p>\n\n<p>此时: 需要先到本地进行 git pull –rebase 操作, 更新远端代码, 解决冲突! 具体步骤如下:</p>\n\n<p>1&gt; git pull –rebase</p>\n\n<p>2&gt; 找到冲突文件, 并解决冲突, 解决完后执行 git add 文件名</p>\n\n<p>3&gt; 继续执行git rebase –continue, 如果有冲突文件继续解决.</p>\n\n<p>4&gt; 待所有冲突解决之后, 执行git commit –amend  –no-edit 命令, 不需要对commit msg信息进行任何修改</p>\n\n<p>5&gt; 最后执行git push origin xxx, 将分支代码提交即可.</p>","excerpt":"Gerrit介绍","languages":null,"categories":[],"tags":[]},{"title":"为什么没有使用索引?","permalink":"http://soundpill.cn/articles/2020/09/why-index-unuse.html","link":"http://soundpill.cn/articles/2020/09/why-index-unuse.html","date":"2020-09-23T11:41:43+08:00","modified":"2020-09-23T11:43:18+08:00","author":{"name":"max","url":"http://soundpill.cn/","email":"muyege@gmail.com"},"content":"<h1 id=\"为什么没有用索引\">为什么没有用索引?</h1>\n<p>已知表 a 数据总量是 40w, 根据时间范围过滤出最近 7 天的数据, 语句如下:</p>\n<div class=\"language-plaintext highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code>explain SELECT\n\t`question_id`,\n\t`student_id`,\n\t`teacher_id`,\n\t`question_type`,\n\t`question_step`,\n\t`question_no`,\n\t`level`,\n\t`class_id`,\n\t`lesson_id`,\n\t`teacher_get_at`,\n\t`teacher_set_at`,\n\t`status`,\n\t`teacher_from`,\n\t`wrong_reason_id`,\n\t`created_at`,\n\t`submit_time`\nFROM\n\t`answer_records`\nWHERE\n\t`updated_at` BETWEEN '2020-07-14+00:00:00'\n\tAND '2020-07-21+00:00:00'\nORDER BY\n\t`created_at` DESC;\n</code></pre></div></div>\n<p><img src=\"http://img.fulitu.club/15953253234282.jpg\" alt=\"-w883\" /></p>\n\n<p>从 explain 返回的数据来看, 这条语句并没有使用到索引, 而且 mysql 进行了全表的扫描, 这个原因就是我们要查询的数据太多了.</p>\n\n<p>因为 innodb 引擎会在检索索引后进行回表的操作, mysql 觉得你查询的数据这么多, 我一个个回表的这点时间都可以把全表扫一次了, 我就没必要用索引再去回表了, 所以就会导致这个索引没有用到.</p>\n\n<p>那我们就想用索引, 应该怎么办呢?</p>\n\n<div class=\"language-plaintext highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code>FROM\n    `answer_records` FORCE INDEX(rqx)\n</code></pre></div></div>\n\n<p>在业务层面的话, 如果时间范围比较大, 可以分批次查询, 这样就会快一点, 如果是频繁需要此类操作的话, 还是建议将时间戳提早设计进表结构里, 通过 int 类型的时间戳进行范围查找和排序会事半功倍</p>","excerpt":"为什么没有用索引?\n已知表 a 数据总量是 40w, 根据时间范围过滤出最近 7 天的数据, 语句如下:\nexplain SELECT\n\t`question_id`,\n\t`student_id`,\n\t`teacher_id`,\n\t`question_type`,\n\t`question_step`,\n\t`question_no`,\n\t`level`,\n\t`class_id`,\n\t`lesson_id`,\n\t`teacher_get_at`,\n\t`teacher_set_at`,\n\t`status`,\n\t`teacher_from`,\n\t`wrong_reason_id`,\n\t`created_at`,\n\t`submit_time`\nFROM\n\t`answer_records`\nWHERE\n\t`updated_at` BETWEEN '2020-07-14+00:00:00'\n\tAND '2020-07-21+00:00:00'\nORDER BY\n\t`created_at` DESC;","languages":null,"categories":[],"tags":[]},{"title":"在图片上添加文字或图片","permalink":"http://soundpill.cn/articles/2020/01/draw-someting-on-picture.html","link":"http://soundpill.cn/articles/2020/01/draw-someting-on-picture.html","date":"2020-01-10T15:43:41+08:00","modified":"2020-01-10T15:47:43+08:00","author":{"name":"max","url":"http://soundpill.cn/","email":"muyege@gmail.com"},"content":"<h4 id=\"interventionimage\">intervention/image</h4>\n<p>这是一个第三方扩展, 用来处理图片的, 功能特别强大, 可以 cover 我们这篇文章提到的需求</p>\n\n<p>安装文档: http://image.intervention.io/getting_started/installation</p>\n\n<p>我们首先在项目中引入这个包:</p>\n<div class=\"language-plaintext highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code>$ composer require intervention/image\n</code></pre></div></div>\n\n<p>其次, laravel 中需要发布配置文件:</p>\n<div class=\"language-plaintext highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code>php artisan vendor:publish --provider=\"Intervention\\Image\\ImageServiceProviderLaravel5\"\n</code></pre></div></div>\n\n<p>lumen 中需要修改 bootstrap.php, 在当中手动注册</p>\n<div class=\"language-plaintext highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code>$app-&gt;register(\\Intervention\\Image\\ImageServiceProviderLumen::class);\n</code></pre></div></div>\n\n<p>该扩展默认使用的是 GD 库, 如果你想用 Imagick 扩展需要修改文件, config/image.php</p>\n<div class=\"language-plaintext highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code>&lt;?php\n    return [\n        'driver'    =&gt;  'imagick'\n    ];\n</code></pre></div></div>\n\n<p>如果你不想要每次 use 都使用全路径, 可以按照官方所述将 Image 关键字写入 alias 中</p>\n\n<ul>\n  <li>Laravel: config/app.php</li>\n</ul>\n\n<div class=\"language-plaintext highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code>$providers:\n\nIntervention\\Image\\ImageServiceProvider::class\n\n$aliases:\n\n'Image' =&gt; Intervention\\Image\\Facades\\Image::class\n</code></pre></div></div>\n\n<ul>\n  <li>Lumen: bootstrap/app.php</li>\n</ul>\n\n<div class=\"language-plaintext highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code>$app-&gt;withAliases(array('Intervention\\Image\\Facades\\Image' =&gt; 'Image'));\n</code></pre></div></div>\n\n<h4 id=\"具体使用\">具体使用</h4>\n<div class=\"language-plaintext highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code>use Image;\n\npublic function deal()\n{\n    $image = Image::make(public_path() . '/foo.jpg');\n    $text = '我是天才';\n    $image-&gt;text($text, 620, 200, function($font) {\n        $font-&gt;file(public_path() . '/SimHei.ttf');\n        $font-&gt;size(200);\n        $font-&gt;color('#fdf6e3');\n        $font-&gt;align('center');\n        $font-&gt;valign('top');\n        $font-&gt;angle(0);\n    });\n    return $image-&gt;response('jpg');\n}\n</code></pre></div></div>\n\n<p>插入文字的方法是 text, 插入图片的方法是 insert, 如果文字插入后显示乱码, 考虑换一种字体, 支持中文的, 默认的好像就是乱码</p>\n\n<p>官方文档: http://image.intervention.io/</p>","excerpt":"intervention/image\n这是一个第三方扩展, 用来处理图片的, 功能特别强大, 可以 cover 我们这篇文章提到的需求","languages":null,"categories":[],"tags":[]},{"title":"比较两个字符串是否相等","permalink":"http://soundpill.cn/articles/2020/01/compare-two-string-equal.html","link":"http://soundpill.cn/articles/2020/01/compare-two-string-equal.html","date":"2020-01-10T15:34:56+08:00","modified":"2020-01-10T15:35:13+08:00","author":{"name":"max","url":"http://soundpill.cn/","email":"muyege@gmail.com"},"content":"<p>有时候, 当用户传入一个字符串时, 你可能会需要拿着这个字符串和最终结果相对比, 如果我们使用 == 号来比较两个字符串, 可能会产生时序攻击.</p>\n\n<div class=\"language-plaintext highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code>'abcdef' == $req-&gt;code\n</code></pre></div></div>\n\n<p>也就是说, == 号在判断两个字符串相等时, 会一位一位的判断, 如果遇到哪一位不一样, 就返回错误, 这样根据服务器运算速度, 就可以一位一位的猜出最终的结果.</p>\n\n<p>php 官方提供了避免时序攻击的字符串比较函数, 就是 hash_equals\n无论两个字符串是否相等, 本函数的时间消耗是恒定的.</p>\n\n<p>文档如下: https://www.php.net/manual/zh/function.hash-equals.php</p>","excerpt":"有时候, 当用户传入一个字符串时, 你可能会需要拿着这个字符串和最终结果相对比, 如果我们使用 == 号来比较两个字符串, 可能会产生时序攻击.","languages":null,"categories":[],"tags":[]},{"title":"Homestead完整的切换php版本","permalink":"http://soundpill.cn/articles/2020/01/homestead-version-switch.html","link":"http://soundpill.cn/articles/2020/01/homestead-version-switch.html","date":"2020-01-10T15:14:46+08:00","modified":"2020-01-10T15:15:12+08:00","author":{"name":"max","url":"http://soundpill.cn/","email":"muyege@gmail.com"},"content":"<p>相信大多数人搜到的都是这篇文章\nhttps://learnku.com/articles/16881</p>\n\n<p>文章中说, 使用 homestead 自带的工具 update-alternatives 进行切换就可以了, 但是我在使用后 php 的版本是切换了, 但是 pecl 安装扩展的时候安装的还是20170817目录, 这是 php7.2 的扩展包默认目录, 使用 php-config 看的时候也是 php7.2</p>\n\n<p>如何把phpize, pecl, php-config 都切换为 php7.1 呢? 请看下面</p>\n\n<div class=\"language-plaintext highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code>sudo update-alternatives --set php /usr/bin/php7.1\nsudo update-alternatives --set phar /usr/bin/phar7.1\nsudo update-alternatives --set phar.phar /usr/bin/phar.phar7.1\nsudo update-alternatives --set phpize /usr/bin/phpize7.1\nsudo update-alternatives --set php-config /usr/bin/php-config7.1\n</code></pre></div></div>\n\n<p>如果你在切换之前装了错误的扩展包到其他版本的目录下, 这样切换完之后卸载重新装, 就 ok 了</p>","excerpt":"相信大多数人搜到的都是这篇文章\nhttps://learnku.com/articles/16881","languages":null,"categories":[],"tags":[]},{"title":"mojave下使用pyenv安装python3出错的问题","permalink":"http://soundpill.cn/articles/2019/02/mojave%E4%B8%8B%E4%BD%BF%E7%94%A8pyenv%E5%AE%89%E8%A3%85python3%E5%87%BA%E9%94%99%E7%9A%84%E9%97%AE%E9%A2%98.html","link":"http://soundpill.cn/articles/2019/02/mojave%E4%B8%8B%E4%BD%BF%E7%94%A8pyenv%E5%AE%89%E8%A3%85python3%E5%87%BA%E9%94%99%E7%9A%84%E9%97%AE%E9%A2%98.html","date":"2019-02-26T15:33:39+08:00","modified":"2019-09-15T15:35:02+08:00","author":{"name":"max","url":"http://soundpill.cn/","email":"muyege@gmail.com"},"content":"<h2 id=\"使用pyenv安装python3时出现如下报错\">使用pyenv安装python3时出现如下报错</h2>\n<p><img src=\"https://ws1.sinaimg.cn/large/60f1733aly1g0jo757rfnj21go0q8wnf.jpg\" alt=\"\" />\n按照提示来看,好像是在提示我没有安装zlib库,但是我已经装了,没办法,google一下吧.\n(如果你因为没有安装zlib库而产生这个问题, 那就好办了, 直接brew install zlib)</p>\n<h2 id=\"google搜索到的解决方案大都是要安装xcode命令行工具\">google搜索到的解决方案大都是要安装xcode命令行工具</h2>\n<div class=\"language-shell highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code>xcode-select <span class=\"nt\">--install</span>\n</code></pre></div></div>\n<p>这个我也安装了, 不安装的话啥也干不了啊</p>\n<h2 id=\"最后解决方案\">最后解决方案</h2>\n<p>查看一下xcode-select -v的版本\n<img src=\"https://ws1.sinaimg.cn/large/60f1733aly1g0jo9e0g3lj20cg0240tb.jpg\" alt=\"\" /></p>\n\n<p>这个版本的xcode-select 在默认情况下不包含Mojave SDK的头文件的,需要手动安装,mojave采用了新的SDK,关于新SDK的解释,官方的文档在这里\nhttps://developer.apple.com/macos/whats-new/</p>\n\n<p>接下来,我手动安装了新的SDK头文件,解决完毕</p>\n<div class=\"language-shell highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code><span class=\"nb\">sudo </span>installer <span class=\"nt\">-pkg</span> /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg <span class=\"nt\">-target</span> /\n</code></pre></div></div>\n<p><img src=\"https://ws1.sinaimg.cn/large/60f1733aly1g0jomwysz8j21fm040n0e.jpg\" alt=\"\" /></p>","excerpt":"使用pyenv安装python3时出现如下报错\n\n按照提示来看,好像是在提示我没有安装zlib库,但是我已经装了,没办法,google一下吧.\n(如果你因为没有安装zlib库而产生这个问题, 那就好办了, 直接brew install zlib)\ngoogle搜索到的解决方案大都是要安装xcode命令行工具\nxcode-select --install\n\n这个我也安装了, 不安装的话啥也干不了啊\n最后解决方案\n查看一下xcode-select -v的版本","languages":null,"categories":[],"tags":[]},{"title":"redis中的SDS数据结构","permalink":"http://soundpill.cn/articles/2019/02/redis%E4%B8%AD%E7%9A%84sds%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.html","link":"http://soundpill.cn/articles/2019/02/redis%E4%B8%AD%E7%9A%84sds%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.html","date":"2019-02-26T15:31:32+08:00","modified":"2019-09-15T15:32:24+08:00","author":{"name":"max","url":"http://soundpill.cn/","email":"muyege@gmail.com"},"content":"<h2 id=\"sdssimple-dynamic-string简单动态字符串\">SDS(Simple Dynamic String)简单动态字符串</h2>\n<p>在Redis中可修改的字符串值都是采用的SDS数据结构, 而不可修改的都采用了C字符串</p>\n<h2 id=\"sds的结构\">SDS的结构</h2>\n<p>有三个基本变量</p>\n<ul>\n  <li>free 纪录buf数组中未使用字节的数量</li>\n  <li>len 纪录buf数组中已使用字节的数量, 等于SDS所保存字符串的长度</li>\n  <li>buf 字节数组, 用于保存字符串(二进制)\n    <h2 id=\"为什么采用sds\">为什么采用SDS</h2>\n    <p>SDS是基于C字符串结构的缺点优化后的产物, 因为采用C字符串的方式会有以下一些问题：</p>\n  </li>\n  <li>获取字符串长度需要遍历字符串获取, 将需要O(N)的时间复杂度</li>\n  <li>C字符串会有缓冲区溢出的问题</li>\n  <li>一旦修改字符串操作发生就会重新分配内存, 修改N次就分配N次\n所以, 基于以上问题SDS结构的优点也显而易见了, 如下:</li>\n  <li>因为结构体中标记了字符串长度, 所以获取长度的时间复杂度变成了O(1)</li>\n  <li>SDS的API中对内存分配的机制杜绝了缓冲区溢出的问题</li>\n  <li>同样, API中的操作也减少了修改字符串长度时所需的内存重分配次数</li>\n  <li>二进制安全</li>\n  <li>兼容部分C字符串函数\n    <h2 id=\"内存分配机制\">内存分配机制</h2>\n  </li>\n  <li>空间预分配\n在字符串增长操作中有两种情况来预分配空间\n第一种是修改后的长度(len的值)小于1MB的情况下, free的值会和len的值相同, 来做到减少内存分配次数, 预分配以后可能会使用到的空间\n第二种是修改后的长度大于1MB的情况下, free的值会多修改为1MB, 也就是在原来基础上多出1MB的未使用空间</li>\n  <li>惰性空间释放\n在字符串缩短操作的时候, 不会将释放的空间马上回收, 而是会写入到free中, 将缩短的长度标记为未使用空间为将来可能会使用的字符串预留位置。SDS中也有相应的API, 可以在需要时真正释放这部分空间。</li>\n</ul>","excerpt":"SDS(Simple Dynamic String)简单动态字符串\n在Redis中可修改的字符串值都是采用的SDS数据结构, 而不可修改的都采用了C字符串\nSDS的结构\n有三个基本变量\n\n  free 纪录buf数组中未使用字节的数量\n  len 纪录buf数组中已使用字节的数量, 等于SDS所保存字符串的长度\n  buf 字节数组, 用于保存字符串(二进制)\n    为什么采用SDS\n    SDS是基于C字符串结构的缺点优化后的产物, 因为采用C字符串的方式会有以下一些问题：\n  \n  获取字符串长度需要遍历字符串获取, 将需要O(N)的时间复杂度\n  C字符串会有缓冲区溢出的问题\n  一旦修改字符串操作发生就会重新分配内存, 修改N次就分配N次\n所以, 基于以上问题SDS结构的优点也显而易见了, 如下:\n  因为结构体中标记了字符串长度, 所以获取长度的时间复杂度变成了O(1)\n  SDS的API中对内存分配的机制杜绝了缓冲区溢出的问题\n  同样, API中的操作也减少了修改字符串长度时所需的内存重分配次数\n  二进制安全\n  兼容部分C字符串函数\n    内存分配机制\n  \n  空间预分配\n在字符串增长操作中有两种情况来预分配空间\n第一种是修改后的长度(len的值)小于1MB的情况下, free的值会和len的值相同, 来做到减少内存分配次数, 预分配以后可能会使用到的空间\n第二种是修改后的长度大于1MB的情况下, free的值会多修改为1MB, 也就是在原来基础上多出1MB的未使用空间\n  惰性空间释放\n在字符串缩短操作的时候, 不会将释放的空间马上回收, 而是会写入到free中, 将缩短的长度标记为未使用空间为将来可能会使用的字符串预留位置。SDS中也有相应的API, 可以在需要时真正释放这部分空间。","languages":null,"categories":[],"tags":[]},{"title":"rebase和merge的区别","permalink":"http://soundpill.cn/articles/2019/02/rebase%E5%92%8Cmerge%E7%9A%84%E5%8C%BA%E5%88%AB.html","link":"http://soundpill.cn/articles/2019/02/rebase%E5%92%8Cmerge%E7%9A%84%E5%8C%BA%E5%88%AB.html","date":"2019-02-24T15:36:37+08:00","modified":"2019-09-15T15:37:10+08:00","author":{"name":"max","url":"http://soundpill.cn/","email":"muyege@gmail.com"},"content":"<h4 id=\"变基\">变基</h4>\n<p>找了一大圈, 还是官方的解释最好, 贴出来自己看吧, “变基”这个名字起的很好, 文档中的”重新播放”的解释也相当生动</p>\n\n<p>https://git-scm.com/book/zh/v2/Git-分支-变基</p>","excerpt":"变基\n找了一大圈, 还是官方的解释最好, 贴出来自己看吧, “变基”这个名字起的很好, 文档中的”重新播放”的解释也相当生动","languages":null,"categories":[],"tags":[]},{"title":"cgi, fastcgi, php-cgi, php-fpm的关系","permalink":"http://soundpill.cn/articles/2019/02/cgi,-fastcgi,-php-cgi,-php-fpm.html","link":"http://soundpill.cn/articles/2019/02/cgi,-fastcgi,-php-cgi,-php-fpm.html","date":"2019-02-21T15:33:39+08:00","modified":"2019-09-15T15:34:35+08:00","author":{"name":"max","url":"http://soundpill.cn/","email":"muyege@gmail.com"},"content":"<h4 id=\"cgi\">cgi</h4>\n<p>通用网关接口, Common Gateway Interface, CGI是Web服务器运行时外部程序的规范, 按CGI编写的程序可以扩展服务器功能. 所以, 广义上的cgi是一种接口标准, 不是字面意义上的接口. 狭义上, cgi就是cgi程序, 运行在服务器上, 提供同客户端HTML页面的接口. 绝大多数的cgi程序被用来解释处理来自表单的输入信息, 并在服务器产生相应的处理, 或将相应的信息反馈给浏览器, cgi程序使网页具有交互功能. \ncgi程序处理步骤:\n1) 通过Internet把用户请求送到web服务器.\n2) web服务器接受用户请求并交给CGI程序处理.\n3) CGI程序把处理结果传送给web服务器.\n4) web服务器把结果送回到用户.</p>\n\n<h4 id=\"fastcgi\">fastcgi</h4>\n<p>快速通用网关接口, Fast Common Gateway Interface, CGI有很多缺点, 每接收一个请求就要fork一个进程处理, 只能接收一个请求作出一个响应, 请求结束后该进程就会结束. 而fastcgi会事先启动起来, 作为一个cgi的管理服务器存在, 使用进程/线程池来处理一连串的请求.\nfastcgi程序处理步骤:\n1) web服务器启动时载入fastcgi进程管理器\n2) fastcgi自身初始化, 启动多个cgi解释器进程并等待来自web server的请求\n3) 当请求来到web服务器时, web服务器通过socket请求fastcgi进程管理器, fastcgi进程管理器选择并连接到一个cgi解释器, web服务器将cgi环境变量和标准输入发送到fastcgi子进程\n4) fastcgi子进程处理请求完成后将标准输出和错误从同一连接返回给web服务器, 当fastcgi子进程结束后请求便结束.fastcgi子进程接着等待处理来自fastcgi进程管理器的下一个连接.</p>\n\n<h4 id=\"php-cgi\">php-cgi</h4>\n<p>php实现的cgi程序</p>\n\n<h4 id=\"php-fpm\">php-fpm</h4>\n<p>php实现的fastcgi程序</p>","excerpt":"cgi\n通用网关接口, Common Gateway Interface, CGI是Web服务器运行时外部程序的规范, 按CGI编写的程序可以扩展服务器功能. 所以, 广义上的cgi是一种接口标准, 不是字面意义上的接口. 狭义上, cgi就是cgi程序, 运行在服务器上, 提供同客户端HTML页面的接口. 绝大多数的cgi程序被用来解释处理来自表单的输入信息, 并在服务器产生相应的处理, 或将相应的信息反馈给浏览器, cgi程序使网页具有交互功能. \ncgi程序处理步骤:\n1) 通过Internet把用户请求送到web服务器.\n2) web服务器接受用户请求并交给CGI程序处理.\n3) CGI程序把处理结果传送给web服务器.\n4) web服务器把结果送回到用户.","languages":null,"categories":[],"tags":[]},{"title":"推荐两个实用好玩的网站","permalink":"http://soundpill.cn/articles/2019/02/%E6%8E%A8%E8%8D%90%E4%B8%A4%E4%B8%AA%E5%AE%9E%E7%94%A8%E5%A5%BD%E7%8E%A9%E7%9A%84%E7%BD%91%E7%AB%99.html","link":"http://soundpill.cn/articles/2019/02/%E6%8E%A8%E8%8D%90%E4%B8%A4%E4%B8%AA%E5%AE%9E%E7%94%A8%E5%A5%BD%E7%8E%A9%E7%9A%84%E7%BD%91%E7%AB%99.html","date":"2019-02-21T10:23:37+08:00","modified":"2019-09-15T15:36:19+08:00","author":{"name":"max","url":"http://soundpill.cn/","email":"muyege@gmail.com"},"content":"<h3 id=\"在线绘图工具\">在线绘图工具</h3>\n<p>有流程图，有类图，应有尽有，样式还很好看\nhttps://www.draw.io/</p>\n\n<h3 id=\"ai在线抠图工具\">AI在线抠图工具</h3>\n<p>不说了，自己看吧\nhttps://www.gaoding.com/koutu</p>","excerpt":"在线绘图工具\n有流程图，有类图，应有尽有，样式还很好看\nhttps://www.draw.io/","languages":null,"categories":[],"tags":[]}]
+[
+
+
+  
+    
+    {
+      "title": "php-tips",
+      "permalink": "http://localhost:4321/articles/2021/08/php-tips.html",
+      "link": "http://localhost:4321/articles/2021/08/php-tips.html",
+      "date": "2021-08-16T19:03:01+08:00",
+      
+        "modified": "2021-08-16T19:03:07+08:00",
+      
+      "author": {
+        "name": "max",
+        "url": "http://soundpill.cn/",
+        "email": "muyege@gmail.com"
+      },
+      "content": "<ul>\n  <li>\n    <p>在 foreach 中不要使用 array_merge，不仅慢而且耗费内存，可以在 foreach 中对要合并的数组进行赋值，在 foreach 外部统一进行合并，具体性能差异可以参考这篇文章：<a href=\"https://learnku.com/articles/25111\">不要在循环体中使用 array_merge()</a></p>\n  </li>\n  <li>\n    <p>在 foreach 中也不要使用 array_push，可以通过向数组中赋值的方式代替，比如：$students[] = $student[‘id’]， 而不是 array_push($students, $student[‘id’])，具体性能差异可以参考这篇文章：<a href=\"https://learnku.com/articles/25110\">不要在循环体中使用 array_push()</a></p>\n  </li>\n  <li>\n    <p>针对一些查询较为复杂或者比较核心的逻辑里的 sql 查询，可以将 sql 语句写到注释中，这样看代码的时候不用再去拼接 sql，直接用注释中的 sql 拿来排查问题</p>\n  </li>\n  <li>\n    <p>如果使用 phpstorm 可以安装 php inspections 插件来进行代码的静态分析，可以帮助查找代码规范，语法漏洞，函数使用方式方面的错误。其他的一些代码质量工具可以配置使用 phpcs，phpmd，phpcs-fixer，psalm，phpstan 等。而且可以通过 phpstorm 的热键录制功能，将徽标键 + s 设置为 phpcs-fixer，format code 的快捷键，这样写完时可以通过快捷键格式化代码。</p>\n  </li>\n  <li>\n    <p>为避免在项目中将 dd，var_dump，exit，die 等函数提交到远程版本库中，可以在项目的 .git/hooks/pre-commit 中进行控制，加入下面的代码，每次提交时可以检测到。参考的这个：<a href=\"https://gist.github.com/victorb/8334601\">pre-commit</a></p>\n  </li>\n</ul>\n\n<div class=\"language-shell highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code><span class=\"nv\">VAR</span><span class=\"o\">=</span><span class=\"si\">$(</span>git diff <span class=\"nt\">--cached</span> <span class=\"nt\">--diff-filter</span><span class=\"o\">=</span>ACMR | <span class=\"nb\">grep</span> <span class=\"nt\">-wiE</span> <span class=\"s2\">\"var_dump|echo|exit|dd|die|console.log\"</span><span class=\"si\">)</span> <span class=\"k\">if</span> <span class=\"o\">[</span> <span class=\"o\">!</span> <span class=\"nt\">-z</span> <span class=\"s2\">\"</span><span class=\"se\">\\$</span><span class=\"s2\">VAR\"</span>  <span class=\"o\">]</span><span class=\"p\">;</span> <span class=\"k\">then  </span><span class=\"nb\">echo</span> <span class=\"s2\">\"You've left a dd, var_dump, exit, die or console.log in one of your files! You don't really want to commit this so aborting now...\"</span> <span class=\"nb\">exit </span>1 <span class=\"k\">fi</span>\n</code></pre></div></div>\n\n<ul>\n  <li>\n    <p>在 for 循环的条件中不要使用函数，例如使用 count 来计算总数，这样每次循环都会执行一遍，不太好</p>\n  </li>\n  <li>\n    <p>使用三元运算符时如果要做强制类型转换请记得要在运算区域加括号避免报错，例如：(string)$studentId ?? ““，这样的写法会产生歧义，如果同为字符串不会报错，如果是这样：(string)$studentId ?? null，那么就会报错。建议写成 (string)($studentId ?? null)</p>\n  </li>\n  <li>\n    <p>如果要做判断时要确定好运算符的优先级从而确保执行顺序，以免与预期相左，例如：</p>\n  </li>\n</ul>\n\n<div class=\"language-php highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code><span class=\"k\">if</span> <span class=\"p\">(</span><span class=\"nv\">$isNew</span> <span class=\"o\">&amp;&amp;</span> <span class=\"nv\">$student</span> <span class=\"o\">=</span> <span class=\"nc\">Stu</span><span class=\"o\">::</span><span class=\"nf\">find</span><span class=\"p\">(</span><span class=\"nv\">$id</span><span class=\"p\">)</span> <span class=\"o\">&amp;&amp;</span> <span class=\"k\">isset</span><span class=\"p\">(</span><span class=\"nv\">$foo</span><span class=\"o\">-&gt;</span><span class=\"n\">con</span><span class=\"p\">))</span> <span class=\"p\">{</span>  <span class=\"mf\">...</span> <span class=\"p\">}</span>\n</code></pre></div></div>\n\n<p>因为逻辑运算符 &amp;&amp; 的运算优先级大于赋值运算符 =，所以上面这段代码可能会产生与预期不符的结果，这种情况下为保证执行顺序，尽量使用括号括起来。</p>\n\n<p>包括下面这种：</p>\n\n<div class=\"language-php highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code><span class=\"k\">if</span> <span class=\"p\">(</span><span class=\"o\">!</span><span class=\"k\">isset</span><span class=\"p\">(</span><span class=\"nv\">$student</span><span class=\"p\">[</span><span class=\"s1\">'birthday'</span><span class=\"p\">])</span> <span class=\"o\">&gt;</span> <span class=\"nb\">time</span><span class=\"p\">())</span> <span class=\"p\">{</span>  <span class=\"mf\">...</span> <span class=\"p\">}</span>\n</code></pre></div></div>\n\n<p>虽然逻辑运算符 ！的优先级大于比较运算符 &gt;，但手册中依然建议使用括号来明确运算顺序来增加代码可读性，手册中是这么说的：</p>\n\n<p>“括号的使用，哪怕在不是必要的场合下，通过括号的配对来明确标明运算顺序，而非靠运算符优先级和结合性来决定，通常能够增加代码的可读性。”</p>",
+      "excerpt": "在 foreach 中不要使用 array_merge，不仅慢而且耗费内存，可以在 foreach 中对要合并的数组进行赋值，在 foreach 外部统一进行合并，具体性能差异可以参考这篇文章：不要在循环体中使用 array_merge()",
+      "languages": null,
+      "categories": [],
+      "tags": []
+    }
+    
+  
+
+  
+    ,
+    {
+      "title": "go-tips",
+      "permalink": "http://localhost:4321/articles/2021/08/go-tips.html",
+      "link": "http://localhost:4321/articles/2021/08/go-tips.html",
+      "date": "2021-08-16T18:40:38+08:00",
+      
+        "modified": "2021-08-16T18:57:18+08:00",
+      
+      "author": {
+        "name": "max",
+        "url": "http://soundpill.cn/",
+        "email": "muyege@gmail.com"
+      },
+      "content": "<ul>\n  <li>当把时间作为一个变量传递时，可能会导致的问题，比如：</li>\n</ul>\n\n<div class=\"language-go highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code><span class=\"n\">waitTime</span> <span class=\"o\">:=</span> <span class=\"m\">30</span>\n<span class=\"n\">wait</span> <span class=\"o\">:=</span> <span class=\"n\">waitTime</span> <span class=\"o\">*</span> <span class=\"n\">time</span><span class=\"o\">.</span><span class=\"n\">Second</span>\n</code></pre></div></div>\n\n<p>这样子是错误的，因为 waitTime 不是 time.Duration 类型，但如果直接写 30 * time.Second 就会成功    </p>\n\n<p>在不太了解的情况下，我手动把 waitTime 通过“诡异”的方式变成了 time.Duration 类型</p>\n\n<div class=\"language-go highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code><span class=\"n\">waitTime</span> <span class=\"o\">:=</span> <span class=\"m\">30</span> <span class=\"o\">*</span> <span class=\"n\">time</span><span class=\"o\">.</span><span class=\"n\">Second</span>\n<span class=\"n\">wait</span> <span class=\"o\">:=</span> <span class=\"n\">waitTime</span> <span class=\"o\">*</span> <span class=\"n\">time</span><span class=\"o\">.</span><span class=\"n\">Second</span>\n</code></pre></div></div>\n\n<p>这种情况下 wait 的值就变成了 88 万小时，不是预想的结果，正确的写法如下：</p>\n\n<div class=\"language-go highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code><span class=\"n\">waitTime</span> <span class=\"o\">:=</span> <span class=\"m\">30</span>\n<span class=\"n\">wait</span> <span class=\"o\">:=</span> <span class=\"n\">time</span><span class=\"o\">.</span><span class=\"n\">Duration</span><span class=\"p\">(</span><span class=\"n\">waitTime</span><span class=\"p\">)</span> <span class=\"o\">*</span> <span class=\"n\">time</span><span class=\"o\">.</span><span class=\"n\">Second</span>\n</code></pre></div></div>\n\n<ul>\n  <li>当 waitGroup 使用时要清楚的知道 Done 方法的执行次数，如果是类似递归的结构，执行了多次 Done 方法，则会导致waitGroup 的计数器溢出，导致边界错误，如下：</li>\n</ul>\n\n<p><img src=\"https://img.fulitu.club/carbon.png\" alt=\"carbon.png\" title=\"carbon.png\" /></p>\n\n<p>这段代码运行时会导致 panic: sync: negative WaitGroup counter，所以我们在实际编写代码的过程中，如果有类似的情况，可以通过将有限次数的递归转换为迭代的形式来规避这种问题。总之，你需要明确的知道 Done 方法执行了几次。</p>\n\n<ul>\n  <li>\n    <p>在 goroutine 使用的过程中我们是无法拿到当前 goroutine 的报错信息的，从而可能需要额外建立一个通道，将报错信息传递到某一个 channel 中，然后监听 channel 来进行错误处理。官方提供了一项实验功能，可以用来解决这个问题。官方包在这里：golang.org/x/sync/errgroup</p>\n  </li>\n  <li>\n    <p>在开发过程中可以使用 go vet 工具来检测可能会出现的代码漏洞，帮助查漏补缺。<a href=\"https://www.yuque.com/muyeyu/tutkq5/zxssg1\">使用方式</a></p>\n  </li>\n  <li>\n    <p>在开发时要使用 internal 下的 log 包打日志才能被 ELK 捕获到，logrus 则不行，但如果命令行中的即使反馈日志，或者即时性比较强没有留存意义的日志，理当不计入 ELK 的统计当中，这时候需要用 logrus</p>\n  </li>\n  <li>\n    <p>字符串拼接使用哪种方式更快呢？</p>\n  </li>\n</ul>\n\n<p>已知的四种方式分别是：1. 使用 fmt.Sprintf 函数 2. 使用加号拼接 3. 使用 strings 包 4. 使用 bytes</p>",
+      "excerpt": "当把时间作为一个变量传递时，可能会导致的问题，比如：",
+      "languages": null,
+      "categories": [],
+      "tags": []
+    }
+    
+  
+
+  
+    ,
+    {
+      "title": "一道go面试题",
+      "permalink": "http://localhost:4321/articles/2021/01/go-question.html",
+      "link": "http://localhost:4321/articles/2021/01/go-question.html",
+      "date": "2021-01-18T21:50:43+08:00",
+      
+        "modified": "2021-08-16T18:33:57+08:00",
+      
+      "author": {
+        "name": "max",
+        "url": "http://soundpill.cn/",
+        "email": "muyege@gmail.com"
+      },
+      "content": "<h1 id=\"一道-go-面试题\">一道 Go 面试题</h1>\n\n<p>请问下面这两段代码分别输出什么?\n<img src=\"https://img.fulitu.club/go-1.png\" alt=\"\" />\n<img src=\"https://img.fulitu.club/go-2.png\" alt=\"\" /></p>\n\n<p>直接说结果, 如果你的电脑不是奔腾, 赛扬什么的处理器, 那结果基本是固定的, 就是啥也没有.\n因为在 goroutine 反应过来之前, 程序已经执行完了, 还没来得及输出就结束了.</p>\n\n<p>要么, 你就让时间延迟几秒再结束, time.Sleep(10 * time.Second), 要么就像下面这样使用 WaitGroup 来等待 goroutine 结束\n<img src=\"https://img.fulitu.club/go-1-1.png\" alt=\"\" /></p>\n\n<p>这不是问题的重点, 重点是这两种使用匿名函数的方式, 输出会有什么不一样吗?</p>\n\n<p>首先说第一种, 没有传参的情况下, 匿名函数中是使用的引用地址来操作的, 这时候 i 可能已经加到 10 了, 所以打印出来可能会是 10 个 10, 或者中间夹杂几个其他数字什么的. (而且这时候 goroutine 总是在 i++ 之后执行, 所以是从 1 - 10, 不是 0 - 9)</p>\n\n<p>第二种情况, 显而易见就是乱序的了, 会把 0 - 9 挨个输出, 但是是乱序的</p>",
+      "excerpt": "一道 Go 面试题",
+      "languages": null,
+      "categories": [],
+      "tags": []
+    }
+    
+  
+
+  
+    ,
+    {
+      "title": "i++是原子操作吗?",
+      "permalink": "http://localhost:4321/articles/2021/01/iplusplus.html",
+      "link": "http://localhost:4321/articles/2021/01/iplusplus.html",
+      "date": "2021-01-17T09:47:29+08:00",
+      
+        "modified": "2021-08-16T18:33:57+08:00",
+      
+      "author": {
+        "name": "max",
+        "url": "http://soundpill.cn/",
+        "email": "muyege@gmail.com"
+      },
+      "content": "<h1 id=\"i-是原子操作吗\">i++ 是原子操作吗?</h1>\n\n<p>不是, i++ 要完成的操作要先读取变量 i 的值, 对这个值加 1, 再把结果保存到 i 中. 所以不是原子操作.</p>\n\n<p>我们来看下面的代码</p>\n\n<p><img src=\"http://img.fulitu.club/waitgroup.png?123\" alt=\"\" /></p>\n\n<p>这段代码是启动 10 个线程, 每个线程对 count 执行 10 万次自增操作, 直观上来看最后 count 的结果是 100 万, 但因为自增操作不是原子性的, 所以最终的结果每次都会不一样, 会有协程做重复操作. 那应该怎么解决这个问题呢? 并发资源的读取问题最直接的解决方法就是加锁. 改良后如下:</p>\n\n<p><img src=\"http://img.fulitu.club/waitgroup-lock.png\" alt=\"\" /></p>",
+      "excerpt": "i++ 是原子操作吗?",
+      "languages": null,
+      "categories": [],
+      "tags": []
+    }
+    
+  
+
+  
+    ,
+    {
+      "title": "Gerrit概念说明及使用",
+      "permalink": "http://localhost:4321/articles/2020/09/gerrit-desc.html",
+      "link": "http://localhost:4321/articles/2020/09/gerrit-desc.html",
+      "date": "2020-09-23T18:35:52+08:00",
+      
+        "modified": "2021-08-16T18:33:57+08:00",
+      
+      "author": {
+        "name": "max",
+        "url": "http://soundpill.cn/",
+        "email": "muyege@gmail.com"
+      },
+      "content": "<h3 id=\"gerrit介绍\">Gerrit介绍</h3>\n\n<h4 id=\"gerrit简介\">Gerrit简介</h4>\n\n<p>Gerrit, 一种开放源代码的代码审查软件, 使用网页界面. 利用网页浏览器, 同一个团队的软件开发者, 可以相互审阅彼此修改后的代码, 决定是否能够提交, 回退或是继续修改. 它使用版本控制系统Git作为底层.</p>\n\n<p>它分支自Rietveld, 作者为Google公司的Shawn Pearce, 原先是为了管理Android项目而产生. 这个软件的名称, 来自于荷兰家具设计师赫里特·里特费尔德(Gerrit Rietveld).</p>\n\n<p>因为对访问控制表(ACL)相关的修正, 没有被集成进Rietveld, 之后Gerrit就由Rietveld分支出来, 形成独立软件项目.</p>\n\n<p>最早它是由Python写成, 在第二版后, 改成用Java与SQL. 使用Google Web Toolkit来产生前端的JavaScript.</p>\n\n<h4 id=\"为什么需要gerrit\">为什么需要Gerrit</h4>\n\n<p>首先, 代码审查可以帮助程序员了解系统功能, 从整体掌控代码质量, 其次, 通过代码审核可以及时止损, 构建更加健壮的系统代码.</p>\n\n<h4 id=\"代码审核的建议来自程序员客栈\">代码审核的建议(来自<a href=\"https://www.zhihu.com/question/20046020/answer/555007256\">程序员客栈</a>)</h4>\n\n<ol>\n  <li>\n    <p>对事不对人, 大家都是同事, 在一个团队工作和气最重要. 不要在Code Review中说”你写的什么垃圾”这种话, 你可以说”这个变量名不是很好理解, 咱们换成xxx是不是更好”</p>\n  </li>\n  <li>\n    <p>每个Review至少给一条正面评价. Gerrit中有对代码点赞的功能, 可以时不时的使用一下.</p>\n  </li>\n  <li>\n    <p>保证发布的代码和评审意见的可读性.</p>\n  </li>\n  <li>\n    <p>用工具进行基础问题的自动化检查. 用Tab还是空格, 用两个空格还是四个空格, 缩进风格是使用K&amp;R还是Allman. 这些问题可以使用php code sniffer解决, 团队应该把精力放在代码规范, 代码性能优化等地方.</p>\n  </li>\n  <li>\n    <p>全员参加Code Review, 并设定各部分负责人.</p>\n  </li>\n  <li>\n    <p>每个代码PR(Pull Request)内容一定要少. Code Review效果和质量与PR代码量成反比, 提交的代码越多, Code Review的效果就越差. 所以要经常Code Review, 保证每个PR代码的量要少, 最多不超过300行/PR.</p>\n  </li>\n  <li>\n    <p>在写新代码之前, 先Review掉需要评审的代码. 不要堆积Review, 有PR产生一定要尽快Review, 否则时间拖的长了以后Review的过程就会比较艰难.</p>\n  </li>\n  <li>\n    <p>不要在Review中讨论需求, Review就是Review. 要明确Code Review是完善代码, 始终要以代码质量为中心要素.</p>\n  </li>\n</ol>\n\n<h3 id=\"gerrit使用\">Gerrit使用</h3>\n\n<h4 id=\"账号登录与查看设置\">账号登录与查看设置</h4>\n\n<p>首先, 需要在LDAP系统中发放账号, 拿到自己的账号后进行登录.</p>\n\n<p>登录后在账号中点击Settings设置, 找到新增SSH kyes的设置, 将自己机器上的公钥添加进去</p>\n\n<p><img src=\"https://upload-images.jianshu.io/upload_images/1656074-c0e5e4483b5c40c8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240\" alt=\"SSH keys设置\" /></p>\n\n<p>然后到仓库中选择属于自己的项目clone到本地</p>\n\n<p><img src=\"https://upload-images.jianshu.io/upload_images/1656074-cbd5f77ab4a78c37.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240\" alt=\"git项目列表\" /></p>\n\n<p>注意: 红框中的两个项目为默认项目, 是新建仓库时需要继承权限来用的, 不要动</p>\n\n<p><img src=\"https://upload-images.jianshu.io/upload_images/1656074-c65ca4a43345fdce.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240\" alt=\"默认项目\" /></p>\n\n<p>克隆完毕后需要在项目目录下修改和账户相同的邮箱与真实的姓名, 否则提交时会校验失败</p>\n\n<div class=\"language-plaintext highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code>git config user.email muyege@gmail.com\n\ngit config user.name muyege\n</code></pre></div></div>\n\n<p>加–global是修改全局的, 如果项目很多, 为避免一个个项目修改麻烦, 可以加这个参数.</p>\n\n<h4 id=\"本地仓库设置和提交\">本地仓库设置和提交</h4>\n\n<p>因为Gerrit的设置, 一般用户是没有直接提交到主分支或者开发分支的权限的, 必须提交到引用分支先进行代码审核, 审核通过后才能merge到对应分支. 所以, 在本地操作代码库的时候会出现push不上去的问题, 这时候我们需要在项目下设置Gerrit提供给我们的引用分支.</p>\n\n<p>一般情况下在Gerrit权限设置里有三种类型的分支:</p>\n\n<p>refs/* : 这是管理员才有的权限, 表示当前项目下的所有分支, 拥有此权限可以随意push到任何远端分支</p>\n\n<p>refs/heads/* : 这是不需要经过code review的分支, 与 refs/* 同样权限</p>\n\n<p>refs/for/* : 这是需要经过code review的分支, 提交到此分支上的代码需要经过code review, 通过后才能合并到正式分支上.</p>\n\n<p>我们在提交代码审核的时候需要将代码提交到gerrit为我们提供的引用分支上, 比如说: 我在dev分支上操作, 本来要push的命令需要由 git push origin dev 改为 git push origin HEAD:/refs/for/dev.</p>\n\n<p>如果嫌每次写这么长不方便的话, 可以在项目下做如下配置, git config remote.origin.push ‘refs/heads/*:refs/for/*’, 这样每次提交的时候就会自动提交到引用分支上了.</p>\n\n<h4 id=\"代码审核\">代码审核</h4>\n\n<p>当有代码需要审核时会在CHANGES标签中看到待审核的纪录</p>\n\n<p><img src=\"https://upload-images.jianshu.io/upload_images/1656074-cd61a43a015eef8d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240\" alt=\"审核状态\" /></p>\n\n<p>Open表示打开的代码审核</p>\n\n<p>Merged表示已经通过且已合并的代码审核</p>\n\n<p>Abandoned表示未通过或遗弃的代码审核</p>\n\n<p><img src=\"https://upload-images.jianshu.io/upload_images/1656074-bce72e437220832f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240\" alt=\"审核页面\" /></p>\n\n<p>审核页面, 有 +1 和 +2 两个权限.</p>\n\n<p>只有有 +2 权限的同学才能够把审核通过的代码 submit 到真正的远端分支中.</p>\n\n<p>+1 权限的同学, 多为与你一个组, 或者做同一个业务的同学, 他们对你的代码先进行一次review</p>\n\n<p>当+2 的同学审核通过后, submit 了代码后, 本次Review 就结束了.</p>\n\n<blockquote>\n  <p>然后回到你自己的本地分支, 执行以下 git pull –rebase 同步一下远端分支. 然后继续进行后续工作.</p>\n</blockquote>\n\n<p>当评审不通过时, 需要修改代码后再次提交评审, 这里分两种情况, 第一种情况是评审人员没有ABANDON的情况下, 可以修改代码后使用以下命令再次提交</p>\n\n<div class=\"language-plaintext highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code>\ngit add file\n\ngit coomit --amend --no-edit\n\n</code></pre></div></div>\n\n<p>第二种情况是评审人员已经将此次评审ABANDON了, 那么就需要重新走正常流程提交评审.</p>\n\n<h4 id=\"冲突解决\">冲突解决</h4>\n\n<p>在实际开发中, 可能其他同学提交的代码与自己修改的代码修改了同一处地方, 从而产生了冲突.</p>\n\n<p>比如：</p>\n\n<p>A同学提交了 a.txt 文件, 在最后一行添加了而一些内容并且审核通过已经 submit了. 此时, B同学也在a.txt文件中的最后一行添加了内容, 但是没有先做 git pull –rebase 操作, 直接推到gerrit平台上则会产生冲突.</p>\n\n<p>此时: 需要先到本地进行 git pull –rebase 操作, 更新远端代码, 解决冲突! 具体步骤如下:</p>\n\n<p>1&gt; git pull –rebase</p>\n\n<p>2&gt; 找到冲突文件, 并解决冲突, 解决完后执行 git add 文件名</p>\n\n<p>3&gt; 继续执行git rebase –continue, 如果有冲突文件继续解决.</p>\n\n<p>4&gt; 待所有冲突解决之后, 执行git commit –amend  –no-edit 命令, 不需要对commit msg信息进行任何修改</p>\n\n<p>5&gt; 最后执行git push origin xxx, 将分支代码提交即可.</p>",
+      "excerpt": "Gerrit介绍",
+      "languages": null,
+      "categories": [],
+      "tags": []
+    }
+    
+  
+
+  
+    ,
+    {
+      "title": "为什么没有使用索引?",
+      "permalink": "http://localhost:4321/articles/2020/09/why-index-unuse.html",
+      "link": "http://localhost:4321/articles/2020/09/why-index-unuse.html",
+      "date": "2020-09-23T11:41:43+08:00",
+      
+        "modified": "2021-08-16T18:33:57+08:00",
+      
+      "author": {
+        "name": "max",
+        "url": "http://soundpill.cn/",
+        "email": "muyege@gmail.com"
+      },
+      "content": "<h1 id=\"为什么没有用索引\">为什么没有用索引?</h1>\n<p>已知表 a 数据总量是 40w, 根据时间范围过滤出最近 7 天的数据, 语句如下:</p>\n<div class=\"language-plaintext highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code>explain SELECT\n\t`question_id`,\n\t`student_id`,\n\t`teacher_id`,\n\t`question_type`,\n\t`question_step`,\n\t`question_no`,\n\t`level`,\n\t`class_id`,\n\t`lesson_id`,\n\t`teacher_get_at`,\n\t`teacher_set_at`,\n\t`status`,\n\t`teacher_from`,\n\t`wrong_reason_id`,\n\t`created_at`,\n\t`submit_time`\nFROM\n\t`answer_records`\nWHERE\n\t`updated_at` BETWEEN '2020-07-14+00:00:00'\n\tAND '2020-07-21+00:00:00'\nORDER BY\n\t`created_at` DESC;\n</code></pre></div></div>\n<p><img src=\"http://img.fulitu.club/15953253234282.jpg\" alt=\"-w883\" /></p>\n\n<p>从 explain 返回的数据来看, 这条语句并没有使用到索引, 而且 mysql 进行了全表的扫描, 这个原因就是我们要查询的数据太多了.</p>\n\n<p>因为 innodb 引擎会在检索索引后进行回表的操作, mysql 觉得你查询的数据这么多, 我一个个回表的这点时间都可以把全表扫一次了, 我就没必要用索引再去回表了, 所以就会导致这个索引没有用到.</p>\n\n<p>那我们就想用索引, 应该怎么办呢?</p>\n\n<div class=\"language-plaintext highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code>FROM\n    `answer_records` FORCE INDEX(rqx)\n</code></pre></div></div>\n\n<p>在业务层面的话, 如果时间范围比较大, 可以分批次查询, 这样就会快一点, 如果是频繁需要此类操作的话, 还是建议将时间戳提早设计进表结构里, 通过 int 类型的时间戳进行范围查找和排序会事半功倍</p>",
+      "excerpt": "为什么没有用索引?\n已知表 a 数据总量是 40w, 根据时间范围过滤出最近 7 天的数据, 语句如下:\nexplain SELECT\n\t`question_id`,\n\t`student_id`,\n\t`teacher_id`,\n\t`question_type`,\n\t`question_step`,\n\t`question_no`,\n\t`level`,\n\t`class_id`,\n\t`lesson_id`,\n\t`teacher_get_at`,\n\t`teacher_set_at`,\n\t`status`,\n\t`teacher_from`,\n\t`wrong_reason_id`,\n\t`created_at`,\n\t`submit_time`\nFROM\n\t`answer_records`\nWHERE\n\t`updated_at` BETWEEN '2020-07-14+00:00:00'\n\tAND '2020-07-21+00:00:00'\nORDER BY\n\t`created_at` DESC;",
+      "languages": null,
+      "categories": [],
+      "tags": []
+    }
+    
+  
+
+  
+    ,
+    {
+      "title": "在图片上添加文字或图片",
+      "permalink": "http://localhost:4321/articles/2020/01/draw-someting-on-picture.html",
+      "link": "http://localhost:4321/articles/2020/01/draw-someting-on-picture.html",
+      "date": "2020-01-10T15:43:41+08:00",
+      
+        "modified": "2021-08-16T18:33:57+08:00",
+      
+      "author": {
+        "name": "max",
+        "url": "http://soundpill.cn/",
+        "email": "muyege@gmail.com"
+      },
+      "content": "<h4 id=\"interventionimage\">intervention/image</h4>\n<p>这是一个第三方扩展, 用来处理图片的, 功能特别强大, 可以 cover 我们这篇文章提到的需求</p>\n\n<p>安装文档: http://image.intervention.io/getting_started/installation</p>\n\n<p>我们首先在项目中引入这个包:</p>\n<div class=\"language-plaintext highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code>$ composer require intervention/image\n</code></pre></div></div>\n\n<p>其次, laravel 中需要发布配置文件:</p>\n<div class=\"language-plaintext highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code>php artisan vendor:publish --provider=\"Intervention\\Image\\ImageServiceProviderLaravel5\"\n</code></pre></div></div>\n\n<p>lumen 中需要修改 bootstrap.php, 在当中手动注册</p>\n<div class=\"language-plaintext highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code>$app-&gt;register(\\Intervention\\Image\\ImageServiceProviderLumen::class);\n</code></pre></div></div>\n\n<p>该扩展默认使用的是 GD 库, 如果你想用 Imagick 扩展需要修改文件, config/image.php</p>\n<div class=\"language-plaintext highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code>&lt;?php\n    return [\n        'driver'    =&gt;  'imagick'\n    ];\n</code></pre></div></div>\n\n<p>如果你不想要每次 use 都使用全路径, 可以按照官方所述将 Image 关键字写入 alias 中</p>\n\n<ul>\n  <li>Laravel: config/app.php</li>\n</ul>\n\n<div class=\"language-plaintext highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code>$providers:\n\nIntervention\\Image\\ImageServiceProvider::class\n\n$aliases:\n\n'Image' =&gt; Intervention\\Image\\Facades\\Image::class\n</code></pre></div></div>\n\n<ul>\n  <li>Lumen: bootstrap/app.php</li>\n</ul>\n\n<div class=\"language-plaintext highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code>$app-&gt;withAliases(array('Intervention\\Image\\Facades\\Image' =&gt; 'Image'));\n</code></pre></div></div>\n\n<h4 id=\"具体使用\">具体使用</h4>\n<div class=\"language-plaintext highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code>use Image;\n\npublic function deal()\n{\n    $image = Image::make(public_path() . '/foo.jpg');\n    $text = '我是天才';\n    $image-&gt;text($text, 620, 200, function($font) {\n        $font-&gt;file(public_path() . '/SimHei.ttf');\n        $font-&gt;size(200);\n        $font-&gt;color('#fdf6e3');\n        $font-&gt;align('center');\n        $font-&gt;valign('top');\n        $font-&gt;angle(0);\n    });\n    return $image-&gt;response('jpg');\n}\n</code></pre></div></div>\n\n<p>插入文字的方法是 text, 插入图片的方法是 insert, 如果文字插入后显示乱码, 考虑换一种字体, 支持中文的, 默认的好像就是乱码</p>\n\n<p>官方文档: http://image.intervention.io/</p>",
+      "excerpt": "intervention/image\n这是一个第三方扩展, 用来处理图片的, 功能特别强大, 可以 cover 我们这篇文章提到的需求",
+      "languages": null,
+      "categories": [],
+      "tags": []
+    }
+    
+  
+
+  
+    ,
+    {
+      "title": "比较两个字符串是否相等",
+      "permalink": "http://localhost:4321/articles/2020/01/compare-two-string-equal.html",
+      "link": "http://localhost:4321/articles/2020/01/compare-two-string-equal.html",
+      "date": "2020-01-10T15:34:56+08:00",
+      
+        "modified": "2021-08-16T18:33:57+08:00",
+      
+      "author": {
+        "name": "max",
+        "url": "http://soundpill.cn/",
+        "email": "muyege@gmail.com"
+      },
+      "content": "<p>有时候, 当用户传入一个字符串时, 你可能会需要拿着这个字符串和最终结果相对比, 如果我们使用 == 号来比较两个字符串, 可能会产生时序攻击.</p>\n\n<div class=\"language-plaintext highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code>'abcdef' == $req-&gt;code\n</code></pre></div></div>\n\n<p>也就是说, == 号在判断两个字符串相等时, 会一位一位的判断, 如果遇到哪一位不一样, 就返回错误, 这样根据服务器运算速度, 就可以一位一位的猜出最终的结果.</p>\n\n<p>php 官方提供了避免时序攻击的字符串比较函数, 就是 hash_equals\n无论两个字符串是否相等, 本函数的时间消耗是恒定的.</p>\n\n<p>文档如下: https://www.php.net/manual/zh/function.hash-equals.php</p>",
+      "excerpt": "有时候, 当用户传入一个字符串时, 你可能会需要拿着这个字符串和最终结果相对比, 如果我们使用 == 号来比较两个字符串, 可能会产生时序攻击.",
+      "languages": null,
+      "categories": [],
+      "tags": []
+    }
+    
+  
+
+  
+    ,
+    {
+      "title": "Homestead完整的切换php版本",
+      "permalink": "http://localhost:4321/articles/2020/01/homestead-version-switch.html",
+      "link": "http://localhost:4321/articles/2020/01/homestead-version-switch.html",
+      "date": "2020-01-10T15:14:46+08:00",
+      
+        "modified": "2021-08-16T18:33:57+08:00",
+      
+      "author": {
+        "name": "max",
+        "url": "http://soundpill.cn/",
+        "email": "muyege@gmail.com"
+      },
+      "content": "<p>相信大多数人搜到的都是这篇文章\nhttps://learnku.com/articles/16881</p>\n\n<p>文章中说, 使用 homestead 自带的工具 update-alternatives 进行切换就可以了, 但是我在使用后 php 的版本是切换了, 但是 pecl 安装扩展的时候安装的还是20170817目录, 这是 php7.2 的扩展包默认目录, 使用 php-config 看的时候也是 php7.2</p>\n\n<p>如何把phpize, pecl, php-config 都切换为 php7.1 呢? 请看下面</p>\n\n<div class=\"language-plaintext highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code>sudo update-alternatives --set php /usr/bin/php7.1\nsudo update-alternatives --set phar /usr/bin/phar7.1\nsudo update-alternatives --set phar.phar /usr/bin/phar.phar7.1\nsudo update-alternatives --set phpize /usr/bin/phpize7.1\nsudo update-alternatives --set php-config /usr/bin/php-config7.1\n</code></pre></div></div>\n\n<p>如果你在切换之前装了错误的扩展包到其他版本的目录下, 这样切换完之后卸载重新装, 就 ok 了</p>",
+      "excerpt": "相信大多数人搜到的都是这篇文章\nhttps://learnku.com/articles/16881",
+      "languages": null,
+      "categories": [],
+      "tags": []
+    }
+    
+  
+
+  
+    ,
+    {
+      "title": "mojave下使用pyenv安装python3出错的问题",
+      "permalink": "http://localhost:4321/articles/2019/02/mojave%E4%B8%8B%E4%BD%BF%E7%94%A8pyenv%E5%AE%89%E8%A3%85python3%E5%87%BA%E9%94%99%E7%9A%84%E9%97%AE%E9%A2%98.html",
+      "link": "http://localhost:4321/articles/2019/02/mojave%E4%B8%8B%E4%BD%BF%E7%94%A8pyenv%E5%AE%89%E8%A3%85python3%E5%87%BA%E9%94%99%E7%9A%84%E9%97%AE%E9%A2%98.html",
+      "date": "2019-02-26T15:33:39+08:00",
+      
+        "modified": "2021-08-16T18:33:57+08:00",
+      
+      "author": {
+        "name": "max",
+        "url": "http://soundpill.cn/",
+        "email": "muyege@gmail.com"
+      },
+      "content": "<h2 id=\"使用pyenv安装python3时出现如下报错\">使用pyenv安装python3时出现如下报错</h2>\n<p><img src=\"https://ws1.sinaimg.cn/large/60f1733aly1g0jo757rfnj21go0q8wnf.jpg\" alt=\"\" />\n按照提示来看,好像是在提示我没有安装zlib库,但是我已经装了,没办法,google一下吧.\n(如果你因为没有安装zlib库而产生这个问题, 那就好办了, 直接brew install zlib)</p>\n<h2 id=\"google搜索到的解决方案大都是要安装xcode命令行工具\">google搜索到的解决方案大都是要安装xcode命令行工具</h2>\n<div class=\"language-shell highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code>xcode-select <span class=\"nt\">--install</span>\n</code></pre></div></div>\n<p>这个我也安装了, 不安装的话啥也干不了啊</p>\n<h2 id=\"最后解决方案\">最后解决方案</h2>\n<p>查看一下xcode-select -v的版本\n<img src=\"https://ws1.sinaimg.cn/large/60f1733aly1g0jo9e0g3lj20cg0240tb.jpg\" alt=\"\" /></p>\n\n<p>这个版本的xcode-select 在默认情况下不包含Mojave SDK的头文件的,需要手动安装,mojave采用了新的SDK,关于新SDK的解释,官方的文档在这里\nhttps://developer.apple.com/macos/whats-new/</p>\n\n<p>接下来,我手动安装了新的SDK头文件,解决完毕</p>\n<div class=\"language-shell highlighter-rouge\"><div class=\"highlight\"><pre class=\"highlight\"><code><span class=\"nb\">sudo </span>installer <span class=\"nt\">-pkg</span> /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg <span class=\"nt\">-target</span> /\n</code></pre></div></div>\n<p><img src=\"https://ws1.sinaimg.cn/large/60f1733aly1g0jomwysz8j21fm040n0e.jpg\" alt=\"\" /></p>",
+      "excerpt": "使用pyenv安装python3时出现如下报错\n\n按照提示来看,好像是在提示我没有安装zlib库,但是我已经装了,没办法,google一下吧.\n(如果你因为没有安装zlib库而产生这个问题, 那就好办了, 直接brew install zlib)\ngoogle搜索到的解决方案大都是要安装xcode命令行工具\nxcode-select --install\n\n这个我也安装了, 不安装的话啥也干不了啊\n最后解决方案\n查看一下xcode-select -v的版本",
+      "languages": null,
+      "categories": [],
+      "tags": []
+    }
+    
+  
+
+  
+    ,
+    {
+      "title": "redis中的SDS数据结构",
+      "permalink": "http://localhost:4321/articles/2019/02/redis%E4%B8%AD%E7%9A%84sds%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.html",
+      "link": "http://localhost:4321/articles/2019/02/redis%E4%B8%AD%E7%9A%84sds%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.html",
+      "date": "2019-02-26T15:31:32+08:00",
+      
+        "modified": "2021-08-16T18:33:57+08:00",
+      
+      "author": {
+        "name": "max",
+        "url": "http://soundpill.cn/",
+        "email": "muyege@gmail.com"
+      },
+      "content": "<h2 id=\"sdssimple-dynamic-string简单动态字符串\">SDS(Simple Dynamic String)简单动态字符串</h2>\n<p>在Redis中可修改的字符串值都是采用的SDS数据结构, 而不可修改的都采用了C字符串</p>\n<h2 id=\"sds的结构\">SDS的结构</h2>\n<p>有三个基本变量</p>\n<ul>\n  <li>free 纪录buf数组中未使用字节的数量</li>\n  <li>len 纪录buf数组中已使用字节的数量, 等于SDS所保存字符串的长度</li>\n  <li>buf 字节数组, 用于保存字符串(二进制)\n    <h2 id=\"为什么采用sds\">为什么采用SDS</h2>\n    <p>SDS是基于C字符串结构的缺点优化后的产物, 因为采用C字符串的方式会有以下一些问题：</p>\n  </li>\n  <li>获取字符串长度需要遍历字符串获取, 将需要O(N)的时间复杂度</li>\n  <li>C字符串会有缓冲区溢出的问题</li>\n  <li>一旦修改字符串操作发生就会重新分配内存, 修改N次就分配N次\n所以, 基于以上问题SDS结构的优点也显而易见了, 如下:</li>\n  <li>因为结构体中标记了字符串长度, 所以获取长度的时间复杂度变成了O(1)</li>\n  <li>SDS的API中对内存分配的机制杜绝了缓冲区溢出的问题</li>\n  <li>同样, API中的操作也减少了修改字符串长度时所需的内存重分配次数</li>\n  <li>二进制安全</li>\n  <li>兼容部分C字符串函数\n    <h2 id=\"内存分配机制\">内存分配机制</h2>\n  </li>\n  <li>空间预分配\n在字符串增长操作中有两种情况来预分配空间\n第一种是修改后的长度(len的值)小于1MB的情况下, free的值会和len的值相同, 来做到减少内存分配次数, 预分配以后可能会使用到的空间\n第二种是修改后的长度大于1MB的情况下, free的值会多修改为1MB, 也就是在原来基础上多出1MB的未使用空间</li>\n  <li>惰性空间释放\n在字符串缩短操作的时候, 不会将释放的空间马上回收, 而是会写入到free中, 将缩短的长度标记为未使用空间为将来可能会使用的字符串预留位置。SDS中也有相应的API, 可以在需要时真正释放这部分空间。</li>\n</ul>",
+      "excerpt": "SDS(Simple Dynamic String)简单动态字符串\n在Redis中可修改的字符串值都是采用的SDS数据结构, 而不可修改的都采用了C字符串\nSDS的结构\n有三个基本变量\n\n  free 纪录buf数组中未使用字节的数量\n  len 纪录buf数组中已使用字节的数量, 等于SDS所保存字符串的长度\n  buf 字节数组, 用于保存字符串(二进制)\n    为什么采用SDS\n    SDS是基于C字符串结构的缺点优化后的产物, 因为采用C字符串的方式会有以下一些问题：\n  \n  获取字符串长度需要遍历字符串获取, 将需要O(N)的时间复杂度\n  C字符串会有缓冲区溢出的问题\n  一旦修改字符串操作发生就会重新分配内存, 修改N次就分配N次\n所以, 基于以上问题SDS结构的优点也显而易见了, 如下:\n  因为结构体中标记了字符串长度, 所以获取长度的时间复杂度变成了O(1)\n  SDS的API中对内存分配的机制杜绝了缓冲区溢出的问题\n  同样, API中的操作也减少了修改字符串长度时所需的内存重分配次数\n  二进制安全\n  兼容部分C字符串函数\n    内存分配机制\n  \n  空间预分配\n在字符串增长操作中有两种情况来预分配空间\n第一种是修改后的长度(len的值)小于1MB的情况下, free的值会和len的值相同, 来做到减少内存分配次数, 预分配以后可能会使用到的空间\n第二种是修改后的长度大于1MB的情况下, free的值会多修改为1MB, 也就是在原来基础上多出1MB的未使用空间\n  惰性空间释放\n在字符串缩短操作的时候, 不会将释放的空间马上回收, 而是会写入到free中, 将缩短的长度标记为未使用空间为将来可能会使用的字符串预留位置。SDS中也有相应的API, 可以在需要时真正释放这部分空间。",
+      "languages": null,
+      "categories": [],
+      "tags": []
+    }
+    
+  
+
+  
+    ,
+    {
+      "title": "rebase和merge的区别",
+      "permalink": "http://localhost:4321/articles/2019/02/rebase%E5%92%8Cmerge%E7%9A%84%E5%8C%BA%E5%88%AB.html",
+      "link": "http://localhost:4321/articles/2019/02/rebase%E5%92%8Cmerge%E7%9A%84%E5%8C%BA%E5%88%AB.html",
+      "date": "2019-02-24T15:36:37+08:00",
+      
+        "modified": "2021-08-16T18:33:57+08:00",
+      
+      "author": {
+        "name": "max",
+        "url": "http://soundpill.cn/",
+        "email": "muyege@gmail.com"
+      },
+      "content": "<h4 id=\"变基\">变基</h4>\n<p>找了一大圈, 还是官方的解释最好, 贴出来自己看吧, “变基”这个名字起的很好, 文档中的”重新播放”的解释也相当生动</p>\n\n<p>https://git-scm.com/book/zh/v2/Git-分支-变基</p>",
+      "excerpt": "变基\n找了一大圈, 还是官方的解释最好, 贴出来自己看吧, “变基”这个名字起的很好, 文档中的”重新播放”的解释也相当生动",
+      "languages": null,
+      "categories": [],
+      "tags": []
+    }
+    
+  
+
+  
+    ,
+    {
+      "title": "cgi, fastcgi, php-cgi, php-fpm的关系",
+      "permalink": "http://localhost:4321/articles/2019/02/cgi,-fastcgi,-php-cgi,-php-fpm.html",
+      "link": "http://localhost:4321/articles/2019/02/cgi,-fastcgi,-php-cgi,-php-fpm.html",
+      "date": "2019-02-21T15:33:39+08:00",
+      
+        "modified": "2021-08-16T18:33:57+08:00",
+      
+      "author": {
+        "name": "max",
+        "url": "http://soundpill.cn/",
+        "email": "muyege@gmail.com"
+      },
+      "content": "<h4 id=\"cgi\">cgi</h4>\n<p>通用网关接口, Common Gateway Interface, CGI是Web服务器运行时外部程序的规范, 按CGI编写的程序可以扩展服务器功能. 所以, 广义上的cgi是一种接口标准, 不是字面意义上的接口. 狭义上, cgi就是cgi程序, 运行在服务器上, 提供同客户端HTML页面的接口. 绝大多数的cgi程序被用来解释处理来自表单的输入信息, 并在服务器产生相应的处理, 或将相应的信息反馈给浏览器, cgi程序使网页具有交互功能. \ncgi程序处理步骤:\n1) 通过Internet把用户请求送到web服务器.\n2) web服务器接受用户请求并交给CGI程序处理.\n3) CGI程序把处理结果传送给web服务器.\n4) web服务器把结果送回到用户.</p>\n\n<h4 id=\"fastcgi\">fastcgi</h4>\n<p>快速通用网关接口, Fast Common Gateway Interface, CGI有很多缺点, 每接收一个请求就要fork一个进程处理, 只能接收一个请求作出一个响应, 请求结束后该进程就会结束. 而fastcgi会事先启动起来, 作为一个cgi的管理服务器存在, 使用进程/线程池来处理一连串的请求.\nfastcgi程序处理步骤:\n1) web服务器启动时载入fastcgi进程管理器\n2) fastcgi自身初始化, 启动多个cgi解释器进程并等待来自web server的请求\n3) 当请求来到web服务器时, web服务器通过socket请求fastcgi进程管理器, fastcgi进程管理器选择并连接到一个cgi解释器, web服务器将cgi环境变量和标准输入发送到fastcgi子进程\n4) fastcgi子进程处理请求完成后将标准输出和错误从同一连接返回给web服务器, 当fastcgi子进程结束后请求便结束.fastcgi子进程接着等待处理来自fastcgi进程管理器的下一个连接.</p>\n\n<h4 id=\"php-cgi\">php-cgi</h4>\n<p>php实现的cgi程序</p>\n\n<h4 id=\"php-fpm\">php-fpm</h4>\n<p>php实现的fastcgi程序</p>",
+      "excerpt": "cgi\n通用网关接口, Common Gateway Interface, CGI是Web服务器运行时外部程序的规范, 按CGI编写的程序可以扩展服务器功能. 所以, 广义上的cgi是一种接口标准, 不是字面意义上的接口. 狭义上, cgi就是cgi程序, 运行在服务器上, 提供同客户端HTML页面的接口. 绝大多数的cgi程序被用来解释处理来自表单的输入信息, 并在服务器产生相应的处理, 或将相应的信息反馈给浏览器, cgi程序使网页具有交互功能. \ncgi程序处理步骤:\n1) 通过Internet把用户请求送到web服务器.\n2) web服务器接受用户请求并交给CGI程序处理.\n3) CGI程序把处理结果传送给web服务器.\n4) web服务器把结果送回到用户.",
+      "languages": null,
+      "categories": [],
+      "tags": []
+    }
+    
+  
+
+  
+    ,
+    {
+      "title": "推荐两个实用好玩的网站",
+      "permalink": "http://localhost:4321/articles/2019/02/%E6%8E%A8%E8%8D%90%E4%B8%A4%E4%B8%AA%E5%AE%9E%E7%94%A8%E5%A5%BD%E7%8E%A9%E7%9A%84%E7%BD%91%E7%AB%99.html",
+      "link": "http://localhost:4321/articles/2019/02/%E6%8E%A8%E8%8D%90%E4%B8%A4%E4%B8%AA%E5%AE%9E%E7%94%A8%E5%A5%BD%E7%8E%A9%E7%9A%84%E7%BD%91%E7%AB%99.html",
+      "date": "2019-02-21T10:23:37+08:00",
+      
+        "modified": "2021-08-16T18:33:57+08:00",
+      
+      "author": {
+        "name": "max",
+        "url": "http://soundpill.cn/",
+        "email": "muyege@gmail.com"
+      },
+      "content": "<h3 id=\"在线绘图工具\">在线绘图工具</h3>\n<p>有流程图，有类图，应有尽有，样式还很好看\nhttps://www.draw.io/</p>\n\n<h3 id=\"ai在线抠图工具\">AI在线抠图工具</h3>\n<p>不说了，自己看吧\nhttps://www.gaoding.com/koutu</p>",
+      "excerpt": "在线绘图工具\n有流程图，有类图，应有尽有，样式还很好看\nhttps://www.draw.io/",
+      "languages": null,
+      "categories": [],
+      "tags": []
+    }
+    
+  
+
+
+]

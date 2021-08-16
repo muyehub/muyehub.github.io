@@ -1,1 +1,226 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"> <title>redis中的SDS数据结构 - Beoning</title> <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"> <meta name="description" content="SDS(Simple Dynamic String)简单动态字符串 在Redis中可修改的字符串值都是采用的SDS数据结构, 而不可修改的都采用了C字符串 SDS的结构 有三个基本变量 free 纪录buf数组中未使用字节的数量 len 纪录buf数组中已使用字节的数量, 等于SDS所保存字符串的长度 buf 字节数组, 用于保存字符串(二进制) 为什么采用SDS SDS是基于C字符串结构的缺点优化后的产物, 因为采用C字符串的方式会有以下一些问题： 获取字符串长度需要遍历字符串获取, 将需要O(N)的时间复杂度 C字符串会有缓冲区溢出的问题 一旦修改字符串操作发生就会重新分配内存, 修..."> <meta name="theme-color" content="#ff00b4"> <link rel="alternate" href="/feed.xml" type="application/atom+xml"> <link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="icon" href="/favicon.png" type="image/png"><link rel="icon" href="data:image/svg+xml;utf8,%3Csvg%20width%3D'240'%20height%3D'240'%20viewBox%3D'0%200%20240%20240'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Ctitle%3EAlmace%20Scaffolding%3C%2Ftitle%3E%3Cpath%20d%3D'M62.563%20189.292C42.669%20172.783%2030%20147.872%2030%20120c0-49.706%2040.294-90%2090-90s90%2040.294%2090%2090c0%2038.573-24.266%2071.478-58.365%2084.283L168.568%2097h-24.752l-17.804%20112.802A91.344%2091.344%200%200%201%20120%20210c-12.356%200-24.13-2.49-34.85-6.996L95.568%20137H70.816l-8.253%2052.292z'%20fill%3D'%23FF00B4'%20fill-rule%3D'evenodd'%2F%3E%3C%2Fsvg%3E" sizes="any" type="image/svg+xml"><link rel="mask-icon" href="/mask-icon.svg" color="#ff00b4"> <link rel="manifest" href="/manifest.json"> <style>:root{--fontstack-prefix:-apple-system,BlinkMacSystemFont,;--fontstack-sans-serif:"Helvetica Neue",Arial,sans-serif;--fontstack-serif:Georgia,serif;--fontstack-monospace:Menlo,Consolas,monospace;--fontstack-default:var(--fontstack-prefix) var(--fontstack-sans-serif);--font-size-base:1rem;--font-size-factor:1vw;--font-size:1.6vw;--font-features:"halt","cv01","cv02","cv03";--line-height:calc(20 / 14);--heading-letter-spacing:-.04em;--breakpoint-lg:1600px;--breakpoint-md:1080px;--breakpoint-sm:640px;--breakpoint-xs:400px;--space-lg:24vw;--space-md:8vw;--space-sm:4vw;--space-xs:1.2vw;--border-lg:4px;--border-md:2px;--border-sm:1px;--nav-padding:.75vmax;--nav-item-space:1.4vmax;--text-color-h:318;--text-color-s:30%;--text-color-l:10%;--text-color-hsl:var(--text-color-h),var(--text-color-s),var(--text-color-l);--text-color:hsl(var(--text-color-hsl));--text-color-0:hsla(var(--text-color-hsl), 0);--text-color-3:hsla(var(--text-color-hsl), .03);--text-color-5:hsla(var(--text-color-hsl), .05);--text-color-7:hsla(var(--text-color-hsl), .07);--text-color-10:hsla(var(--text-color-hsl), .1);--text-color-20:hsla(var(--text-color-hsl), .2);--text-color-30:hsla(var(--text-color-hsl), .3);--text-color-40:hsla(var(--text-color-hsl), .4);--text-color-50:hsla(var(--text-color-hsl), .5);--text-color-60:hsla(var(--text-color-hsl), .6);--text-color-70:hsla(var(--text-color-hsl), .7);--text-color-80:hsla(var(--text-color-hsl), .8);--text-color-90:hsla(var(--text-color-hsl), .9);--text-color-light:hsl(var(--text-color-h), var(--text-color-s), calc(var(--text-color-l) / .9));--text-color-dark:hsl(var(--text-color-h), var(--text-color-s), calc(var(--text-color-l) * .9));--link-color-h:318;--link-color-s:100%;--link-color-l:50%;--link-color-hsl:var(--link-color-h),var(--link-color-s),var(--link-color-l);--link-color:hsl(var(--link-color-hsl));--link-color-0:hsla(var(--link-color-hsl), 0);--link-color-3:hsla(var(--link-color-hsl), .03);--link-color-5:hsla(var(--link-color-hsl), .05);--link-color-7:hsla(var(--link-color-hsl), .07);--link-color-10:hsla(var(--link-color-hsl), .1);--link-color-20:hsla(var(--link-color-hsl), .2);--link-color-30:hsla(var(--link-color-hsl), .3);--link-color-40:hsla(var(--link-color-hsl), .4);--link-color-50:hsla(var(--link-color-hsl), .5);--link-color-60:hsla(var(--link-color-hsl), .6);--link-color-70:hsla(var(--link-color-hsl), .7);--link-color-80:hsla(var(--link-color-hsl), .8);--link-color-90:hsla(var(--link-color-hsl), .9);--link-color-light:hsl(var(--link-color-h), var(--link-color-s), calc(var(--link-color-l) / .9));--link-color-dark:hsl(var(--link-color-h), var(--link-color-s), calc(var(--link-color-l) * .9));--bg-color-h:318;--bg-color-s:30%;--bg-color-l:100%;--bg-color-hsl:var(--bg-color-h),var(--bg-color-s),var(--bg-color-l);--bg-color:hsl(var(--bg-color-hsl));--bg-color-0:hsla(var(--bg-color-hsl), 0);--bg-color-3:hsla(var(--bg-color-hsl), .03);--bg-color-5:hsla(var(--bg-color-hsl), .05);--bg-color-7:hsla(var(--bg-color-hsl), .07);--bg-color-10:hsla(var(--bg-color-hsl), .1);--bg-color-20:hsla(var(--bg-color-hsl), .2);--bg-color-30:hsla(var(--bg-color-hsl), .3);--bg-color-40:hsla(var(--bg-color-hsl), .4);--bg-color-50:hsla(var(--bg-color-hsl), .5);--bg-color-60:hsla(var(--bg-color-hsl), .6);--bg-color-70:hsla(var(--bg-color-hsl), .7);--bg-color-80:hsla(var(--bg-color-hsl), .8);--bg-color-90:hsla(var(--bg-color-hsl), .9);--bg-color-light:hsl(var(--bg-color-h), var(--bg-color-s), calc(var(--bg-color-l) / .9));--bg-color-dark:hsl(var(--bg-color-h), var(--bg-color-s), calc(var(--bg-color-l) * .9));--code-color-h:calc(var(--link-color-h) + 30);--code-color-s:calc(var(--link-color-s) * .2 + 30%);--code-color-l:var(--link-color-l);--code-color-hsl:var(--code-color-h),var(--code-color-s),var(--code-color-l);--code-color:hsl(var(--code-color-hsl));--code-color-0:hsla(var(--code-color-hsl), 0);--code-color-3:hsla(var(--code-color-hsl), .03);--code-color-5:hsla(var(--code-color-hsl), .05);--code-color-7:hsla(var(--code-color-hsl), .07);--code-color-10:hsla(var(--code-color-hsl), .1);--code-color-20:hsla(var(--code-color-hsl), .2);--code-color-30:hsla(var(--code-color-hsl), .3);--code-color-40:hsla(var(--code-color-hsl), .4);--code-color-50:hsla(var(--code-color-hsl), .5);--code-color-60:hsla(var(--code-color-hsl), .6);--code-color-70:hsla(var(--code-color-hsl), .7);--code-color-80:hsla(var(--code-color-hsl), .8);--code-color-90:hsla(var(--code-color-hsl), .9);--code-color-light:hsl(var(--code-color-h), var(--code-color-s), calc(var(--code-color-l) / .9));--code-color-dark:hsl(var(--code-color-h), var(--code-color-s), calc(var(--code-color-l) * .9))}*,::after,::before{padding:0;margin:0;box-sizing:border-box}html{font-size:100%;-webkit-text-size-adjust:none;-moz-text-size-adjust:none;text-size-adjust:none;text-rendering:optimizelegibility;image-rendering:optimizequality;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;background:var(--bg-color)}body{--space-body:var(--space-lg);padding-top:0;padding-bottom:0;padding-left:var(--space-body);padding-right:var(--space-body);margin:0 auto 0;font-family:var(--fontstack-default);font-size:var(--font-size);font-feature-settings:var(--font-features);line-height:var(--line-height);hanging-punctuation:first allow-end;color:var(--text-color);background:var(--bg-color);transition:all .2s ease}@media (max-width:1080px){body{--space-body:var(--space-md);font-size:calc(var(--font-size) * 1.4)}}@media (max-width:640px){body{--space-body:var(--space-sm);font-size:calc(var(--font-size) * 2.4)}}@media (max-width:400px){body{font-size:calc(var(--font-size) * 3.2)}}a{color:var(--text-color);text-decoration:none;transition:color .5s ease,border-color .5s ease,background .5s ease,opacity 1.5s ease}a:focus,a:hover{transition:color .1s ease,border-color .1s ease,background .1s ease,opacity .1s ease;text-decoration:underline}::-webkit-input-placeholder{color:var(--text-color);opacity:.2}:-ms-input-placeholder{color:var(--text-color);opacity:.2}:focus::-webkit-input-placeholder{color:var(--link-color)}:focus:-ms-input-placeholder{color:var(--link-color)}.navigation{padding-top:var(--nav-padding);padding-bottom:var(--nav-padding);margin-right:calc(var(--nav-item-space) * -1);margin-left:calc(var(--nav-item-space) * -1);font-size:90%;font-weight:700}.navigation li{display:inline-block;line-height:2}.navigation li a{padding:.5em var(--nav-item-space)}.navigation li a:focus,.navigation li a:hover{color:var(--link-color);text-decoration:none}.content{margin-bottom:16vmin}.content::after,.content::before{display:table;content:""}.content::after{clear:both}.content article>:last-child{margin-bottom:0!important}.content article>:last-child>:last-child{margin-bottom:0!important}.content article>:last-child>:last-child>:last-child{margin-bottom:0!important}.content article>:last-child>:last-child>:last-child>:last-child{margin-bottom:0!important}.content .post-content>:first-child{margin-top:0}.content a:has(>code){-webkit-text-decoration-color:var(--code-color);text-decoration-color:var(--code-color)}.content p{margin-bottom:1.6rem;line-height:calc(var(--line-height) * 1.2)}.content header{--header-height:100vh;--space-header:var(--space-lg);display:flex;min-height:calc(var(--header-height) - (var(--nav-padding) * 4) - (var(--nav-item-space) * 4) - (1ex * .9 * 2));padding-top:10vmin;padding-bottom:10vmin;margin-bottom:16vmin;flex-direction:column;justify-content:center;background:var(--text-color-3);padding-left:var(--space-header);padding-right:var(--space-header);margin-left:calc(var(--space-header) * -1);margin-right:calc(var(--space-header) * -1)}@media (max-width:1080px){.content header{--header-height:70vh;--space-header:var(--space-md);padding-top:16vmin;padding-bottom:16vmin}}@media (max-width:640px){.content header{--space-header:var(--space-sm)}}.content header h1{font-size:360%;font-weight:700;letter-spacing:var(--heading-letter-spacing);margin-left:-2px;-webkit-hyphens:none;-ms-hyphens:none;hyphens:none;line-height:1.1}@media (max-width:640px){.content header h1{font-size:280%}}.content header small{display:block;margin-top:2vmin}.content h2{margin:10vmin 0 1rem;font-size:72%;font-weight:400;opacity:.5}.content ul{margin-bottom:1.8rem;list-style:none;counter-reset:list}@media (max-width:640px){.content ul{margin-left:1em}}.content ul li{line-height:calc(var(--line-height) * 1.2)}.content ul li::before{position:absolute;display:flex;justify-content:flex-end;width:4em;margin-top:0;margin-left:-4em;text-align:right;opacity:.4;pointer-events:none}.content ul li::before{content:"-";padding-right:.5em}.post-modified-date{font-size:75%;opacity:.5}@media only percy{.post-modified-date{display:none}}.footer{padding:0 0 16vmin;margin-right:calc(var(--nav-item-space) * -1);margin-left:calc(var(--nav-item-space) * -1);font-size:80%;text-transform:lowercase}.footer ul li{display:inline-block;line-height:1.8}.footer ul li a{padding:.5em var(--nav-item-space)}@media print{*,::after,::before{background:0 0!important;color:#000!important;box-shadow:none!important;text-shadow:none!important}body{padding:10mm!important;margin:0!important;font-size:calc(var(--font-size) * 1.35)}a,a:visited{text-decoration:none}.content header{min-height:0;padding-bottom:0}.content .post-content{max-width:100%!important}h2,p{orphans:3;widows:3}h2{page-break-after:avoid}.footer,.navigation{display:none}}:root{--rdmz-h:var(--code-color-h, 254);--rdmz-s:var(--code-color-s, 80%);--rdmz-l:var(--code-color-l, 39%)}:root{--code-color-h:calc(var(--link-color-h) + 10);--code-color-s:calc(var(--link-color-s) * .2 + 40%)}@media (prefers-color-scheme:dark){:root{--text-color-l:95%;--bg-color-l:14%;--bg-color-s:2%;--code-color-l:calc(var(--link-color-l) * 1.3)}}</style> <link rel="canonical" href="http://soundpill.cn/articles/2019/02/redis%E4%B8%AD%E7%9A%84sds%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.html"> <meta property="og:type" content="article"> <meta property="og:site_name" content="Beoning"> <meta property="og:title" content="redis中的SDS数据结构"> <meta property="og:url" content="http://soundpill.cn/articles/2019/02/redis%E4%B8%AD%E7%9A%84sds%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.html"> <meta property="og:description" content="SDS(Simple Dynamic String)简单动态字符串 在Redis中可修改的字符串值都是采用的SDS数据结构, 而不可修改的都采用了C字符串 SDS的结构 有三个基本变量 free 纪录buf数组中未使用字节的数量 len 纪录buf数组中已使用字节的数量, 等于SDS所保存字符串的长度 buf 字节数组, 用于保存字符串(二进制) 为什么采用SDS SDS是基于C字符串结构的缺点优化后的产物, 因为采用C字符串的方式会有以下一些问题： 获取字符串长度需要遍历字符串获取, 将需要O(N)的时间复杂度 C字符串会有缓冲区溢出的问题 一旦修改字符串操作发生就会重新分配内存, 修..."> <meta property="og:image" content="http://soundpill.cn/logo.png"> <meta name="twitter:card" content="summary_large_image"> <meta name="twitter:site" content="@muyeJ"> <meta property="article:published_time" content="2019-02-26T15:31:32+08:00"> <meta property="article:modified_time" content="2019-09-15T15:32:24+08:00"> <meta name="twitter:label1" value="Words"> <meta name="twitter:data1" value="57 words"> <meta name="twitter:label2" value="Reading time"> <meta name="twitter:data2" value="Less than 1 min"> </head><body><nav class="navigation"> <ul> <li> <a href="/">Beoning</a> </li> <li> <a href="https://github.com/muyehub">GitHub</a> </li> <li> <a href="https://weibo.com/1626436410">Weibo</a> </li> <li> <a href="/about/">About</a> </li> </ul> </nav> <main class="content" role="main"> <article lang="en"> <header> <h1 title="redis中的SDS数据结构" data-title="redis中的SDS数据结构"> redis中的SDS数据结构<span class="dot dot--post"> </span> </h1> <small> By <span rel="author"></span> on <time datetime="2019-02-26T15:31:32+08:00">Feb 26, 2019</time> </small> </header> <div class="post-content"> <h2 id="sdssimple-dynamic-string简单动态字符串">SDS(Simple Dynamic String)简单动态字符串</h2> <p>在Redis中可修改的字符串值都是采用的SDS数据结构, 而不可修改的都采用了C字符串</p> <h2 id="sds的结构">SDS的结构</h2> <p>有三个基本变量</p> <ul> <li>free 纪录buf数组中未使用字节的数量</li> <li>len 纪录buf数组中已使用字节的数量, 等于SDS所保存字符串的长度</li> <li>buf 字节数组, 用于保存字符串(二进制) <h2 id="为什么采用sds">为什么采用SDS</h2> <p>SDS是基于C字符串结构的缺点优化后的产物, 因为采用C字符串的方式会有以下一些问题：</p> </li> <li>获取字符串长度需要遍历字符串获取, 将需要O(N)的时间复杂度</li> <li>C字符串会有缓冲区溢出的问题</li> <li>一旦修改字符串操作发生就会重新分配内存, 修改N次就分配N次 所以, 基于以上问题SDS结构的优点也显而易见了, 如下:</li> <li>因为结构体中标记了字符串长度, 所以获取长度的时间复杂度变成了O(1)</li> <li>SDS的API中对内存分配的机制杜绝了缓冲区溢出的问题</li> <li>同样, API中的操作也减少了修改字符串长度时所需的内存重分配次数</li> <li>二进制安全</li> <li>兼容部分C字符串函数 <h2 id="内存分配机制">内存分配机制</h2> </li> <li>空间预分配 在字符串增长操作中有两种情况来预分配空间 第一种是修改后的长度(len的值)小于1MB的情况下, free的值会和len的值相同, 来做到减少内存分配次数, 预分配以后可能会使用到的空间 第二种是修改后的长度大于1MB的情况下, free的值会多修改为1MB, 也就是在原来基础上多出1MB的未使用空间</li> <li>惰性空间释放 在字符串缩短操作的时候, 不会将释放的空间马上回收, 而是会写入到free中, 将缩短的长度标记为未使用空间为将来可能会使用的字符串预留位置。SDS中也有相应的API, 可以在需要时真正释放这部分空间。</li> </ul> <footer class="post-modified-date"> <p> Updated <time datetime=" 2019-09-15T15:32:24+08:00 "> Sunday, Sep 15, 2019 </time> </p> </footer> </div> </article> </main> <footer class="footer"> <ul> <li><a href="/">Beoning</a></li> <li> <a href="https://sparanoid.com/lab/amsf/" title="Almace Scaffolding with theme Curtana">AMSF</a> </li> </ul> </footer> <script></script> <script></script> <script>"serviceWorker"in navigator&&"soundpill.cn"===window.location.hostname&&navigator.serviceWorker.register("/service-worker.js").then(function(e){console.log("ServiceWorker registration successful with scope: ",e.scope)}).catch(function(e){console.log("ServiceWorker registration failed: ",e)})</script></body></html>
+<!doctype html>
+
+<html lang="en">
+
+<!--
+  Apply head only for dev environment, this is required for jekyll to
+  insert livereload scripts
+-->
+
+  <head>
+
+
+
+  <meta charset="utf-8">
+
+
+<title>redis中的SDS数据结构 - Beoning</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<!-- Define a description for better SEO result -->
+<meta name="description" content="SDS(Simple Dynamic String)简单动态字符串 在Redis中可修改的字符串值都是采用的SDS数据结构, 而不可修改的都采用了C字符串 SDS的结构 有三个基本变量 free 纪录buf数组中未使用字节的数量 len 纪录buf数组中已使用字节的数量, 等于SDS所保存字符串的长度 buf 字节数组, 用于保存字符串(二进制) 为什么采用SDS SDS是基于C字符串结构的缺点优化后的产物, 因为采用C字符串的方式会有以下一些问题： 获取字符串长度需要遍历字符串获取, 将需要O(N)的时间复杂度 C字符串会有缓冲区溢出的问题 一旦修改字符串操作发生就会重新分配内存, 修...">
+
+<!-- Cheome Web App theme color -->
+<meta name="theme-color" content="#ff00b4">
+
+<!-- Feed URL -->
+<link rel="alternate" href="/feed.xml" type="application/atom+xml">
+
+<!-- Site icons -->
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="icon" href="/favicon.png" type="image/png"><link rel="icon" href="/favicon.svg?assets-inline-assets-keep" sizes="any" type="image/svg+xml"><link rel="mask-icon" href="/mask-icon.svg" color="#ff00b4">
+
+<!-- Chrome Web App manifest -->
+<link rel="manifest" href="/manifest.json">
+
+<!-- Main CSS -->
+<link rel="stylesheet" href="/assets/themes/curtana/css/app.css?assets-inline">
+
+<!-- Canonical links, avoid duplicate content problems -->
+<link rel="canonical" href="http://localhost:4321/articles/2019/02/redis%E4%B8%AD%E7%9A%84sds%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.html">
+
+<!-- DNS prefetching for static files -->
+
+
+<!-- Head hooks -->
+
+
+
+  </head>
+
+<!-- Open Graph and Twitter Cards support -->
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Beoning">
+<meta property="og:title" content="redis中的SDS数据结构">
+<meta property="og:url" content="http://localhost:4321/articles/2019/02/redis%E4%B8%AD%E7%9A%84sds%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.html">
+<meta property="og:description" content="SDS(Simple Dynamic String)简单动态字符串 在Redis中可修改的字符串值都是采用的SDS数据结构, 而不可修改的都采用了C字符串 SDS的结构 有三个基本变量 free 纪录buf数组中未使用字节的数量 len 纪录buf数组中已使用字节的数量, 等于SDS所保存字符串的长度 buf 字节数组, 用于保存字符串(二进制) 为什么采用SDS SDS是基于C字符串结构的缺点优化后的产物, 因为采用C字符串的方式会有以下一些问题： 获取字符串长度需要遍历字符串获取, 将需要O(N)的时间复杂度 C字符串会有缓冲区溢出的问题 一旦修改字符串操作发生就会重新分配内存, 修...">
+<meta property="og:image" content="http://localhost:4321/logo.png">
+
+<meta name="twitter:card" content="summary_large_image">
+
+
+  <meta name="twitter:site" content="@muyeJ">
+
+
+
+
+
+  <meta property="article:published_time" content="2019-02-26T15:31:32+08:00">
+  <meta property="article:modified_time" content="2021-08-16T18:33:57+08:00">
+  <meta name="twitter:label1" value="Words">
+  <meta name="twitter:data1" value="57 words">
+  <meta name="twitter:label2" value="Reading time">
+  <meta name="twitter:data2" value="Less than 1 min">
+
+<!-- Post specified styles -->
+<style data-assets-inline>
+  :root {
+    
+
+    
+
+    
+
+    
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --text-color-l: 95%;
+      --bg-color-l: 14%;
+      --bg-color-s: 2%;
+      --code-color-l: calc(var(--link-color-l) * 1.3);
+    }
+  }
+  
+
+  body {
+    
+  }
+
+  
+  
+    
+</style>
+<!-- Main navigation with current page / categoriy highlighted -->
+<nav class="navigation">
+  <ul>
+    <li >
+        <a href="/">Beoning</a>
+      </li>
+    <li >
+        <a href="https://github.com/muyehub">GitHub</a>
+      </li>
+    <li >
+        <a href="https://weibo.com/1626436410">Weibo</a>
+      </li>
+    <li >
+        <a href="/about/">About</a>
+      </li>
+    
+  </ul>
+</nav>
+<!-- Main content wrap -->
+<main class="content " role=main>
+  <!-- Post-wide custom CSS -->
+
+
+<!-- Article wrapper, limit width -->
+<article lang="en">
+
+  <!-- Post title -->
+  <header style="     ">
+
+    <h1 class="" title="redis中的SDS数据结构" data-title="redis中的SDS数据结构">
+      redis中的SDS数据结构<span class="dot dot--post"> </span>
+    </h1>
+
+    
+      <small>
+        By <span rel="author"></span>
+        on <time datetime="2019-02-26T15:31:32+08:00">Feb 26, 2019</time>
+      </small>
+    
+
+    
+
+  </header>
+
+  <!-- Post content -->
+  <div class="post-content">
+    <h2 id="sdssimple-dynamic-string简单动态字符串">SDS(Simple Dynamic String)简单动态字符串</h2>
+<p>在Redis中可修改的字符串值都是采用的SDS数据结构, 而不可修改的都采用了C字符串</p>
+<h2 id="sds的结构">SDS的结构</h2>
+<p>有三个基本变量</p>
+<ul>
+  <li>free 纪录buf数组中未使用字节的数量</li>
+  <li>len 纪录buf数组中已使用字节的数量, 等于SDS所保存字符串的长度</li>
+  <li>buf 字节数组, 用于保存字符串(二进制)
+    <h2 id="为什么采用sds">为什么采用SDS</h2>
+    <p>SDS是基于C字符串结构的缺点优化后的产物, 因为采用C字符串的方式会有以下一些问题：</p>
+  </li>
+  <li>获取字符串长度需要遍历字符串获取, 将需要O(N)的时间复杂度</li>
+  <li>C字符串会有缓冲区溢出的问题</li>
+  <li>一旦修改字符串操作发生就会重新分配内存, 修改N次就分配N次
+所以, 基于以上问题SDS结构的优点也显而易见了, 如下:</li>
+  <li>因为结构体中标记了字符串长度, 所以获取长度的时间复杂度变成了O(1)</li>
+  <li>SDS的API中对内存分配的机制杜绝了缓冲区溢出的问题</li>
+  <li>同样, API中的操作也减少了修改字符串长度时所需的内存重分配次数</li>
+  <li>二进制安全</li>
+  <li>兼容部分C字符串函数
+    <h2 id="内存分配机制">内存分配机制</h2>
+  </li>
+  <li>空间预分配
+在字符串增长操作中有两种情况来预分配空间
+第一种是修改后的长度(len的值)小于1MB的情况下, free的值会和len的值相同, 来做到减少内存分配次数, 预分配以后可能会使用到的空间
+第二种是修改后的长度大于1MB的情况下, free的值会多修改为1MB, 也就是在原来基础上多出1MB的未使用空间</li>
+  <li>惰性空间释放
+在字符串缩短操作的时候, 不会将释放的空间马上回收, 而是会写入到free中, 将缩短的长度标记为未使用空间为将来可能会使用的字符串预留位置。SDS中也有相应的API, 可以在需要时真正释放这部分空间。</li>
+</ul>
+
+
+    
+    
+
+    
+  </div>
+
+</article>
+
+</main>
+<!-- Footer section -->
+
+  <footer class="footer">
+    <ul>
+      <li><a href="/">Beoning</a></li>
+
+      
+        <li>
+          <a href="https://sparanoid.com/lab/amsf/" title="Almace Scaffolding with theme Curtana">AMSF</a>
+        </li>
+      
+
+      
+    </ul>
+  </footer>
+
+
+<!-- Theme scripts -->
+<script src="/assets/themes/curtana/js/app.js?assets-inline"></script>
+
+<!-- User scripts -->
+<script src="/assets/js/user.js?assets-inline"></script>
+
+<!-- Lightense Images -->
+
+
+<!-- Service Worker  -->
+
+
+<!-- Google Analytics -->
+
+
+<!-- Foot hooks -->
+
+
+<!-- Finale -->
+</html>
