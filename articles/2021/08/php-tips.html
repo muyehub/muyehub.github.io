@@ -1,4 +1,243 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"> <title>php-tips - Beoning</title> <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"> <meta name="description" content="在 foreach 中不要使用 array_merge，不仅慢而且耗费内存，可以在 foreach 中对要合并的数组进行赋值，在 foreach 外部统一进行合并，具体性能差异可以参考这篇文章：不要在循环体中使用 array_merge() 在 foreach 中也不要使用 array_push，可以通过向数组中赋值的方式代替，比如：$students[] = $student[‘id’]， 而不是 array_push($students, $student[‘id’])，具体性能差异可以参考这篇文章：不要在循环体中使用 array_push() 针对一些查询较为复杂或者比较核心的逻辑..."> <meta name="theme-color" content="#ff00b4"> <link rel="alternate" href="/feed.xml" type="application/atom+xml"> <link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="icon" href="/favicon.png" type="image/png"><link rel="icon" href="data:image/svg+xml;utf8,%3Csvg%20width%3D'240'%20height%3D'240'%20viewBox%3D'0%200%20240%20240'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Ctitle%3EAlmace%20Scaffolding%3C%2Ftitle%3E%3Cpath%20d%3D'M62.563%20189.292C42.669%20172.783%2030%20147.872%2030%20120c0-49.706%2040.294-90%2090-90s90%2040.294%2090%2090c0%2038.573-24.266%2071.478-58.365%2084.283L168.568%2097h-24.752l-17.804%20112.802A91.344%2091.344%200%200%201%20120%20210c-12.356%200-24.13-2.49-34.85-6.996L95.568%20137H70.816l-8.253%2052.292z'%20fill%3D'%23FF00B4'%20fill-rule%3D'evenodd'%2F%3E%3C%2Fsvg%3E" sizes="any" type="image/svg+xml"><link rel="mask-icon" href="/mask-icon.svg" color="#ff00b4"> <link rel="manifest" href="/manifest.json"> <style>:root{--fontstack-prefix:-apple-system,BlinkMacSystemFont,;--fontstack-sans-serif:"Helvetica Neue",Arial,sans-serif;--fontstack-serif:Georgia,serif;--fontstack-monospace:Menlo,Consolas,monospace;--fontstack-default:var(--fontstack-prefix) var(--fontstack-sans-serif);--font-size-base:1rem;--font-size-factor:1vw;--font-size:1.6vw;--font-features:"halt","cv01","cv02","cv03";--line-height:calc(20 / 14);--heading-letter-spacing:-.04em;--breakpoint-lg:1600px;--breakpoint-md:1080px;--breakpoint-sm:640px;--breakpoint-xs:400px;--space-lg:24vw;--space-md:8vw;--space-sm:4vw;--space-xs:1.2vw;--border-lg:4px;--border-md:2px;--border-sm:1px;--nav-padding:.75vmax;--nav-item-space:1.4vmax;--text-color-h:318;--text-color-s:30%;--text-color-l:10%;--text-color-hsl:var(--text-color-h),var(--text-color-s),var(--text-color-l);--text-color:hsl(var(--text-color-hsl));--text-color-0:hsla(var(--text-color-hsl), 0);--text-color-3:hsla(var(--text-color-hsl), .03);--text-color-5:hsla(var(--text-color-hsl), .05);--text-color-7:hsla(var(--text-color-hsl), .07);--text-color-10:hsla(var(--text-color-hsl), .1);--text-color-20:hsla(var(--text-color-hsl), .2);--text-color-30:hsla(var(--text-color-hsl), .3);--text-color-40:hsla(var(--text-color-hsl), .4);--text-color-50:hsla(var(--text-color-hsl), .5);--text-color-60:hsla(var(--text-color-hsl), .6);--text-color-70:hsla(var(--text-color-hsl), .7);--text-color-80:hsla(var(--text-color-hsl), .8);--text-color-90:hsla(var(--text-color-hsl), .9);--text-color-light:hsl(var(--text-color-h), var(--text-color-s), calc(var(--text-color-l) / .9));--text-color-dark:hsl(var(--text-color-h), var(--text-color-s), calc(var(--text-color-l) * .9));--link-color-h:318;--link-color-s:100%;--link-color-l:50%;--link-color-hsl:var(--link-color-h),var(--link-color-s),var(--link-color-l);--link-color:hsl(var(--link-color-hsl));--link-color-0:hsla(var(--link-color-hsl), 0);--link-color-3:hsla(var(--link-color-hsl), .03);--link-color-5:hsla(var(--link-color-hsl), .05);--link-color-7:hsla(var(--link-color-hsl), .07);--link-color-10:hsla(var(--link-color-hsl), .1);--link-color-20:hsla(var(--link-color-hsl), .2);--link-color-30:hsla(var(--link-color-hsl), .3);--link-color-40:hsla(var(--link-color-hsl), .4);--link-color-50:hsla(var(--link-color-hsl), .5);--link-color-60:hsla(var(--link-color-hsl), .6);--link-color-70:hsla(var(--link-color-hsl), .7);--link-color-80:hsla(var(--link-color-hsl), .8);--link-color-90:hsla(var(--link-color-hsl), .9);--link-color-light:hsl(var(--link-color-h), var(--link-color-s), calc(var(--link-color-l) / .9));--link-color-dark:hsl(var(--link-color-h), var(--link-color-s), calc(var(--link-color-l) * .9));--bg-color-h:318;--bg-color-s:30%;--bg-color-l:100%;--bg-color-hsl:var(--bg-color-h),var(--bg-color-s),var(--bg-color-l);--bg-color:hsl(var(--bg-color-hsl));--bg-color-0:hsla(var(--bg-color-hsl), 0);--bg-color-3:hsla(var(--bg-color-hsl), .03);--bg-color-5:hsla(var(--bg-color-hsl), .05);--bg-color-7:hsla(var(--bg-color-hsl), .07);--bg-color-10:hsla(var(--bg-color-hsl), .1);--bg-color-20:hsla(var(--bg-color-hsl), .2);--bg-color-30:hsla(var(--bg-color-hsl), .3);--bg-color-40:hsla(var(--bg-color-hsl), .4);--bg-color-50:hsla(var(--bg-color-hsl), .5);--bg-color-60:hsla(var(--bg-color-hsl), .6);--bg-color-70:hsla(var(--bg-color-hsl), .7);--bg-color-80:hsla(var(--bg-color-hsl), .8);--bg-color-90:hsla(var(--bg-color-hsl), .9);--bg-color-light:hsl(var(--bg-color-h), var(--bg-color-s), calc(var(--bg-color-l) / .9));--bg-color-dark:hsl(var(--bg-color-h), var(--bg-color-s), calc(var(--bg-color-l) * .9));--code-color-h:calc(var(--link-color-h) + 30);--code-color-s:calc(var(--link-color-s) * .2 + 30%);--code-color-l:var(--link-color-l);--code-color-hsl:var(--code-color-h),var(--code-color-s),var(--code-color-l);--code-color:hsl(var(--code-color-hsl));--code-color-0:hsla(var(--code-color-hsl), 0);--code-color-3:hsla(var(--code-color-hsl), .03);--code-color-5:hsla(var(--code-color-hsl), .05);--code-color-7:hsla(var(--code-color-hsl), .07);--code-color-10:hsla(var(--code-color-hsl), .1);--code-color-20:hsla(var(--code-color-hsl), .2);--code-color-30:hsla(var(--code-color-hsl), .3);--code-color-40:hsla(var(--code-color-hsl), .4);--code-color-50:hsla(var(--code-color-hsl), .5);--code-color-60:hsla(var(--code-color-hsl), .6);--code-color-70:hsla(var(--code-color-hsl), .7);--code-color-80:hsla(var(--code-color-hsl), .8);--code-color-90:hsla(var(--code-color-hsl), .9);--code-color-light:hsl(var(--code-color-h), var(--code-color-s), calc(var(--code-color-l) / .9));--code-color-dark:hsl(var(--code-color-h), var(--code-color-s), calc(var(--code-color-l) * .9))}*,::after,::before{padding:0;margin:0;box-sizing:border-box}html{font-size:100%;-webkit-text-size-adjust:none;-moz-text-size-adjust:none;text-size-adjust:none;text-rendering:optimizelegibility;image-rendering:optimizequality;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;background:var(--bg-color)}body{--space-body:var(--space-lg);padding-top:0;padding-bottom:0;padding-left:var(--space-body);padding-right:var(--space-body);margin:0 auto 0;font-family:var(--fontstack-default);font-size:var(--font-size);font-feature-settings:var(--font-features);line-height:var(--line-height);hanging-punctuation:first allow-end;color:var(--text-color);background:var(--bg-color);transition:all .2s ease}@media (max-width:1080px){body{--space-body:var(--space-md);font-size:calc(var(--font-size) * 1.4)}}@media (max-width:640px){body{--space-body:var(--space-sm);font-size:calc(var(--font-size) * 2.4)}}@media (max-width:400px){body{font-size:calc(var(--font-size) * 3.2)}}a{color:var(--text-color);text-decoration:none;transition:color .5s ease,border-color .5s ease,background .5s ease,opacity 1.5s ease}a:focus,a:hover{transition:color .1s ease,border-color .1s ease,background .1s ease,opacity .1s ease;text-decoration:underline}::-webkit-input-placeholder{color:var(--text-color);opacity:.2}:-ms-input-placeholder{color:var(--text-color);opacity:.2}:focus::-webkit-input-placeholder{color:var(--link-color)}:focus:-ms-input-placeholder{color:var(--link-color)}.navigation{padding-top:var(--nav-padding);padding-bottom:var(--nav-padding);margin-right:calc(var(--nav-item-space) * -1);margin-left:calc(var(--nav-item-space) * -1);font-size:90%;font-weight:700}.navigation li{display:inline-block;line-height:2}.navigation li a{padding:.5em var(--nav-item-space)}.navigation li a:focus,.navigation li a:hover{color:var(--link-color);text-decoration:none}.content{margin-bottom:16vmin}.content::after,.content::before{display:table;content:""}.content::after{clear:both}.content article>:last-child{margin-bottom:0!important}.content article>:last-child>:last-child{margin-bottom:0!important}.content .post-content>:first-child{margin-top:0}.content .post-content>:first-child>:first-child{margin-top:0}.content a{font-weight:700}.content a:has(>code){-webkit-text-decoration-color:var(--code-color);text-decoration-color:var(--code-color)}.content p{margin-bottom:1.6rem;line-height:calc(var(--line-height) * 1.2)}.content header{--header-height:100vh;--space-header:var(--space-lg);display:flex;min-height:calc(var(--header-height) - (var(--nav-padding) * 4) - (var(--nav-item-space) * 4) - (1ex * .9 * 2));padding-top:10vmin;padding-bottom:10vmin;margin-bottom:16vmin;flex-direction:column;justify-content:center;background:var(--text-color-3);padding-left:var(--space-header);padding-right:var(--space-header);margin-left:calc(var(--space-header) * -1);margin-right:calc(var(--space-header) * -1)}@media (max-width:1080px){.content header{--header-height:70vh;--space-header:var(--space-md);padding-top:16vmin;padding-bottom:16vmin}}@media (max-width:640px){.content header{--space-header:var(--space-sm)}}.content header h1{font-size:360%;font-weight:700;letter-spacing:var(--heading-letter-spacing);margin-left:-2px;-webkit-hyphens:none;-ms-hyphens:none;hyphens:none;line-height:1.1}@media (max-width:640px){.content header h1{font-size:280%}}.content header small{display:block;margin-top:2vmin}.content ul{margin-bottom:1.8rem;list-style:none;counter-reset:list}@media (max-width:640px){.content ul{margin-left:1em}}.content ul li{line-height:calc(var(--line-height) * 1.2)}.content ul li::before{position:absolute;display:flex;justify-content:flex-end;width:4em;margin-top:0;margin-left:-4em;text-align:right;opacity:.4;pointer-events:none}.content ul li::before{content:"-";padding-right:.5em}.content code,.content pre{font-family:var(--fontstack-monospace);color:var(--code-color)}.content pre{background:var(--code-color-5)}.content code{font-size:92%;overflow-wrap:break-word}.content .highlight>pre,.content .highlighter-rouge pre.highlight,.content pre{--space-code:var(--space-xs);padding-top:var(--space-xs);padding-bottom:var(--space-xs);padding-left:var(--space-code);padding-right:var(--space-code);margin-left:calc(var(--space-code) * -1);margin-right:calc(var(--space-code) * -1);margin-bottom:1.8rem;overflow-x:auto;font-size:80%;line-height:calc(var(--line-height) * 1.2);-webkit-overflow-scrolling:touch}@media (max-width:1080px){.content .highlight>pre,.content .highlighter-rouge pre.highlight,.content pre{--space-code:var(--space-md)}}@media (max-width:640px){.content .highlight>pre,.content .highlighter-rouge pre.highlight,.content pre{--space-code:var(--space-sm)}}.content .highlight>pre code,.content .highlighter-rouge pre.highlight code,.content pre code{overflow-wrap:normal}.footer{padding:0 0 16vmin;margin-right:calc(var(--nav-item-space) * -1);margin-left:calc(var(--nav-item-space) * -1);font-size:80%;text-transform:lowercase}.footer ul li{display:inline-block;line-height:1.8}.footer ul li a{padding:.5em var(--nav-item-space)}@media print{*,::after,::before{background:0 0!important;color:#000!important;box-shadow:none!important;text-shadow:none!important}body{padding:10mm!important;margin:0!important;font-size:calc(var(--font-size) * 1.35)}a,a:visited{text-decoration:none}.content header{min-height:0;padding-bottom:0}.content .post-content{max-width:100%!important}.content .post-content a[href]::after{content:" (" attr(href) ")";font-weight:400;opacity:.5}pre{page-break-inside:avoid}p{orphans:3;widows:3}.footer,.navigation{display:none}}:root{--rdmz-h:var(--code-color-h, 254);--rdmz-s:var(--code-color-s, 80%);--rdmz-l:var(--code-color-l, 39%)}.highlight>pre,.highlighter-rouge pre.highlight{background:hsla(var(--rdmz-h),var(--rdmz-s),var(--rdmz-l),.03)}.highlight .nc,.highlighter-rouge .nc{font-weight:700}.highlight .nf,.highlighter-rouge .nf{font-weight:700}.highlight .o,.highlighter-rouge .o{font-weight:700}.highlight .k,.highlighter-rouge .k{font-weight:700}.highlight code,.highlight pre,.highlighter-rouge code,.highlighter-rouge pre{--rdmz-h-local:var(--rdmz-h);color:hsl(var(--rdmz-h),var(--rdmz-s),var(--rdmz-l))}.highlight .n,.highlighter-rouge .n{--rdmz-h-local:calc(var(--rdmz-h) + 16.1194029851);color:hsl(var(--rdmz-h-local),var(--rdmz-s),var(--rdmz-l))}.highlight .nb,.highlighter-rouge .nb{--rdmz-h-local:calc(var(--rdmz-h) + 26.8656716418);color:hsl(var(--rdmz-h-local),var(--rdmz-s),var(--rdmz-l))}.highlight .nc,.highlighter-rouge .nc{--rdmz-h-local:calc(var(--rdmz-h) + 37.6119402985);color:hsl(var(--rdmz-h-local),var(--rdmz-s),var(--rdmz-l))}.highlight .nf,.highlighter-rouge .nf{--rdmz-h-local:calc(var(--rdmz-h) + 64.4776119403);color:hsl(var(--rdmz-h-local),var(--rdmz-s),var(--rdmz-l))}.highlight .nt,.highlighter-rouge .nt{--rdmz-h-local:calc(var(--rdmz-h) + 85.9701492537);color:hsl(var(--rdmz-h-local),var(--rdmz-s),var(--rdmz-l))}.highlight .nv,.highlighter-rouge .nv{--rdmz-h-local:calc(var(--rdmz-h) + 91.3432835821);color:hsl(var(--rdmz-h-local),var(--rdmz-s),var(--rdmz-l))}.highlight .k,.highlighter-rouge .k{--rdmz-h-local:calc(var(--rdmz-h) + 177.313432836);color:hsl(var(--rdmz-h-local),var(--rdmz-s),var(--rdmz-l))}.highlight .s2,.highlighter-rouge .s2{--rdmz-h-local:calc(var(--rdmz-h) + 257.910447761);color:hsl(var(--rdmz-h-local),var(--rdmz-s),var(--rdmz-l))}.highlight .se,.highlighter-rouge .se{--rdmz-h-local:calc(var(--rdmz-h) + 263.28358209);color:hsl(var(--rdmz-h-local),var(--rdmz-s),var(--rdmz-l))}.highlight .si,.highlighter-rouge .si{--rdmz-h-local:calc(var(--rdmz-h) + 274.029850746);color:hsl(var(--rdmz-h-local),var(--rdmz-s),var(--rdmz-l))}.highlight .s1,.highlighter-rouge .s1{--rdmz-h-local:calc(var(--rdmz-h) + 290.149253731);color:hsl(var(--rdmz-h-local),var(--rdmz-s),var(--rdmz-l))}.highlight .mf,.highlighter-rouge .mf{--rdmz-h-local:calc(var(--rdmz-h) + 306.268656716);color:hsl(var(--rdmz-h-local),var(--rdmz-s),var(--rdmz-l))}.highlight .o,.highlighter-rouge .o{--rdmz-h-local:calc(var(--rdmz-h) + 343.880597015);color:hsl(var(--rdmz-h-local),var(--rdmz-s),var(--rdmz-l))}.highlight .p,.highlighter-rouge .p{--rdmz-h-local:calc(var(--rdmz-h) + 354.626865672);color:hsl(var(--rdmz-h-local),var(--rdmz-s),var(--rdmz-l))}:root{--code-color-h:calc(var(--link-color-h) + 10);--code-color-s:calc(var(--link-color-s) * .2 + 40%)}@media (prefers-color-scheme:dark){:root{--text-color-l:95%;--bg-color-l:14%;--bg-color-s:2%;--code-color-l:calc(var(--link-color-l) * 1.3)}}</style> <link rel="canonical" href="http://soundpill.cn/articles/2021/08/php-tips.html"> <meta property="og:type" content="article"> <meta property="og:site_name" content="Beoning"> <meta property="og:title" content="php-tips"> <meta property="og:url" content="http://soundpill.cn/articles/2021/08/php-tips.html"> <meta property="og:description" content="在 foreach 中不要使用 array_merge，不仅慢而且耗费内存，可以在 foreach 中对要合并的数组进行赋值，在 foreach 外部统一进行合并，具体性能差异可以参考这篇文章：不要在循环体中使用 array_merge() 在 foreach 中也不要使用 array_push，可以通过向数组中赋值的方式代替，比如：$students[] = $student[‘id’]， 而不是 array_push($students, $student[‘id’])，具体性能差异可以参考这篇文章：不要在循环体中使用 array_push() 针对一些查询较为复杂或者比较核心的逻辑..."> <meta property="og:image" content="http://soundpill.cn/logo.png"> <meta name="twitter:card" content="summary_large_image"> <meta name="twitter:site" content="@muyeJ"> <meta property="article:published_time" content="2021-08-16T19:03:01+08:00"> <meta property="article:modified_time" content="2021-08-16T19:03:01+08:00"> <meta name="twitter:label1" value="Words"> <meta name="twitter:data1" value="231 words"> <meta name="twitter:label2" value="Reading time"> <meta name="twitter:data2" value="1 min"> </head><body><nav class="navigation"> <ul> <li> <a href="/">Beoning</a> </li> <li> <a href="https://github.com/muyehub">GitHub</a> </li> <li> <a href="https://weibo.com/1626436410">Weibo</a> </li> <li> <a href="/about/">About</a> </li> </ul> </nav> <main class="content" role="main"> <article lang="en"> <header> <h1 title="php-tips" data-title="php-tips"> php-tips<span class="dot dot--post"> </span> </h1> <small> By <span rel="author"></span> on <time datetime="2021-08-16T19:03:01+08:00">Aug 16, 2021</time> </small> </header> <div class="post-content"> <ul> <li> <p>在 foreach 中不要使用 array_merge，不仅慢而且耗费内存，可以在 foreach 中对要合并的数组进行赋值，在 foreach 外部统一进行合并，具体性能差异可以参考这篇文章：<a href="https://learnku.com/articles/25111">不要在循环体中使用 array_merge()</a></p> </li> <li> <p>在 foreach 中也不要使用 array_push，可以通过向数组中赋值的方式代替，比如：$students[] = $student[‘id’]， 而不是 array_push($students, $student[‘id’])，具体性能差异可以参考这篇文章：<a href="https://learnku.com/articles/25110">不要在循环体中使用 array_push()</a></p> </li> <li> <p>针对一些查询较为复杂或者比较核心的逻辑里的 sql 查询，可以将 sql 语句写到注释中，这样看代码的时候不用再去拼接 sql，直接用注释中的 sql 拿来排查问题</p> </li> <li> <p>如果使用 phpstorm 可以安装 php inspections 插件来进行代码的静态分析，可以帮助查找代码规范，语法漏洞，函数使用方式方面的错误。其他的一些代码质量工具可以配置使用 phpcs，phpmd，phpcs-fixer，psalm，phpstan 等。而且可以通过 phpstorm 的热键录制功能，将徽标键 + s 设置为 phpcs-fixer，format code 的快捷键，这样写完时可以通过快捷键格式化代码。</p> </li> <li> <p>为避免在项目中将 dd，var_dump，exit，die 等函数提交到远程版本库中，可以在项目的 .git/hooks/pre-commit 中进行控制，加入下面的代码，每次提交时可以检测到。参考的这个：<a href="https://gist.github.com/victorb/8334601">pre-commit</a></p> </li> </ul> <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">VAR</span><span class="o">=</span><span class="si">$(</span>git diff <span class="nt">--cached</span> <span class="nt">--diff-filter</span><span class="o">=</span>ACMR | <span class="nb">grep</span> <span class="nt">-wiE</span> <span class="s2">"var_dump|echo|exit|dd|die|console.log"</span><span class="si">)</span> <span class="k">if</span> <span class="o">[</span> <span class="o">!</span> <span class="nt">-z</span> <span class="s2">"</span><span class="se">\$</span><span class="s2">VAR"</span>  <span class="o">]</span><span class="p">;</span> <span class="k">then  </span><span class="nb">echo</span> <span class="s2">"You've left a dd, var_dump, exit, die or console.log in one of your files! You don't really want to commit this so aborting now..."</span> <span class="nb">exit </span>1 <span class="k">fi</span>
-</code></pre></div></div> <ul> <li> <p>在 for 循环的条件中不要使用函数，例如使用 count 来计算总数，这样每次循环都会执行一遍，不太好</p> </li> <li> <p>使用三元运算符时如果要做强制类型转换请记得要在运算区域加括号避免报错，例如：(string)$studentId ?? ““，这样的写法会产生歧义，如果同为字符串不会报错，如果是这样：(string)$studentId ?? null，那么就会报错。建议写成 (string)($studentId ?? null)</p> </li> <li> <p>如果要做判断时要确定好运算符的优先级从而确保执行顺序，以免与预期相左，例如：</p> </li> </ul> <div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="nv">$isNew</span> <span class="o">&amp;&amp;</span> <span class="nv">$student</span> <span class="o">=</span> <span class="nc">Stu</span><span class="o">::</span><span class="nf">find</span><span class="p">(</span><span class="nv">$id</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="k">isset</span><span class="p">(</span><span class="nv">$foo</span><span class="o">-&gt;</span><span class="n">con</span><span class="p">))</span> <span class="p">{</span>  <span class="mf">...</span> <span class="p">}</span>
-</code></pre></div></div> <p>因为逻辑运算符 &amp;&amp; 的运算优先级大于赋值运算符 =，所以上面这段代码可能会产生与预期不符的结果，这种情况下为保证执行顺序，尽量使用括号括起来。</p> <p>包括下面这种：</p> <div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">isset</span><span class="p">(</span><span class="nv">$student</span><span class="p">[</span><span class="s1">'birthday'</span><span class="p">])</span> <span class="o">&gt;</span> <span class="nb">time</span><span class="p">())</span> <span class="p">{</span>  <span class="mf">...</span> <span class="p">}</span>
-</code></pre></div></div> <p>虽然逻辑运算符 ！的优先级大于比较运算符 &gt;，但手册中依然建议使用括号来明确运算顺序来增加代码可读性，手册中是这么说的：</p> <p>“括号的使用，哪怕在不是必要的场合下，通过括号的配对来明确标明运算顺序，而非靠运算符优先级和结合性来决定，通常能够增加代码的可读性。”</p> </div> </article> </main> <footer class="footer"> <ul> <li><a href="/">Beoning</a></li> <li> <a href="https://sparanoid.com/lab/amsf/" title="Almace Scaffolding with theme Curtana">AMSF</a> </li> </ul> </footer> <script></script> <script></script> <script>"serviceWorker"in navigator&&"soundpill.cn"===window.location.hostname&&navigator.serviceWorker.register("/service-worker.js").then(function(e){console.log("ServiceWorker registration successful with scope: ",e.scope)}).catch(function(e){console.log("ServiceWorker registration failed: ",e)})</script></body></html>
+<!doctype html>
+
+<html lang="en">
+
+<!--
+  Apply head only for dev environment, this is required for jekyll to
+  insert livereload scripts
+-->
+
+  <head>
+
+
+
+  <meta charset="utf-8">
+
+
+<title>php-tips - Beoning</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<!-- Define a description for better SEO result -->
+<meta name="description" content="在 foreach 中不要使用 array_merge，不仅慢而且耗费内存，可以在 foreach 中对要合并的数组进行赋值，在 foreach 外部统一进行合并，具体性能差异可以参考这篇文章：不要在循环体中使用 array_merge() 在 foreach 中也不要使用 array_push，可以通过向数组中赋值的方式代替，比如：$students[] = $student[‘id’]， 而不是 array_push($students, $student[‘id’])，具体性能差异可以参考这篇文章：不要在循环体中使用 array_push() 针对一些查询较为复杂或者比较核心的逻辑...">
+
+<!-- Cheome Web App theme color -->
+<meta name="theme-color" content="#ff00b4">
+
+<!-- Feed URL -->
+<link rel="alternate" href="/feed.xml" type="application/atom+xml">
+
+<!-- Site icons -->
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="icon" href="/favicon.png" type="image/png"><link rel="icon" href="/favicon.svg?assets-inline-assets-keep" sizes="any" type="image/svg+xml"><link rel="mask-icon" href="/mask-icon.svg" color="#ff00b4">
+
+<!-- Chrome Web App manifest -->
+<link rel="manifest" href="/manifest.json">
+
+<!-- Main CSS -->
+<link rel="stylesheet" href="/assets/themes/curtana/css/app.css?assets-inline">
+
+<!-- Canonical links, avoid duplicate content problems -->
+<link rel="canonical" href="http://localhost:4321/articles/2021/08/php-tips.html">
+
+<!-- DNS prefetching for static files -->
+
+
+<!-- Head hooks -->
+
+
+
+  </head>
+
+<!-- Open Graph and Twitter Cards support -->
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Beoning">
+<meta property="og:title" content="php-tips">
+<meta property="og:url" content="http://localhost:4321/articles/2021/08/php-tips.html">
+<meta property="og:description" content="在 foreach 中不要使用 array_merge，不仅慢而且耗费内存，可以在 foreach 中对要合并的数组进行赋值，在 foreach 外部统一进行合并，具体性能差异可以参考这篇文章：不要在循环体中使用 array_merge() 在 foreach 中也不要使用 array_push，可以通过向数组中赋值的方式代替，比如：$students[] = $student[‘id’]， 而不是 array_push($students, $student[‘id’])，具体性能差异可以参考这篇文章：不要在循环体中使用 array_push() 针对一些查询较为复杂或者比较核心的逻辑...">
+<meta property="og:image" content="http://localhost:4321/logo.png">
+
+<meta name="twitter:card" content="summary_large_image">
+
+
+  <meta name="twitter:site" content="@muyeJ">
+
+
+
+
+
+  <meta property="article:published_time" content="2021-08-16T19:03:01+08:00">
+  <meta property="article:modified_time" content="2021-08-16T19:03:01+08:00">
+  <meta name="twitter:label1" value="Words">
+  <meta name="twitter:data1" value="231 words">
+  <meta name="twitter:label2" value="Reading time">
+  <meta name="twitter:data2" value="1 min">
+
+<!-- Post specified styles -->
+<style data-assets-inline>
+  :root {
+    
+
+    
+
+    
+
+    
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --text-color-l: 95%;
+      --bg-color-l: 14%;
+      --bg-color-s: 2%;
+      --code-color-l: calc(var(--link-color-l) * 1.3);
+    }
+  }
+  
+
+  body {
+    
+  }
+
+  
+  
+    
+</style>
+<!-- Main navigation with current page / categoriy highlighted -->
+<nav class="navigation">
+  <ul>
+    <li >
+        <a href="/">Beoning</a>
+      </li>
+    <li >
+        <a href="https://github.com/muyehub">GitHub</a>
+      </li>
+    <li >
+        <a href="https://weibo.com/1626436410">Weibo</a>
+      </li>
+    <li >
+        <a href="/about/">About</a>
+      </li>
+    
+  </ul>
+</nav>
+<!-- Main content wrap -->
+<main class="content " role=main>
+  <!-- Post-wide custom CSS -->
+
+
+<!-- Article wrapper, limit width -->
+<article lang="en">
+
+  <!-- Post title -->
+  <header style="     ">
+
+    <h1 class="" title="php-tips" data-title="php-tips">
+      php-tips<span class="dot dot--post"> </span>
+    </h1>
+
+    
+      <small>
+        By <span rel="author"></span>
+        on <time datetime="2021-08-16T19:03:01+08:00">Aug 16, 2021</time>
+      </small>
+    
+
+    
+
+  </header>
+
+  <!-- Post content -->
+  <div class="post-content">
+    <ul>
+  <li>
+    <p>在 foreach 中不要使用 array_merge，不仅慢而且耗费内存，可以在 foreach 中对要合并的数组进行赋值，在 foreach 外部统一进行合并，具体性能差异可以参考这篇文章：<a href="https://learnku.com/articles/25111">不要在循环体中使用 array_merge()</a></p>
+  </li>
+  <li>
+    <p>在 foreach 中也不要使用 array_push，可以通过向数组中赋值的方式代替，比如：$students[] = $student[‘id’]， 而不是 array_push($students, $student[‘id’])，具体性能差异可以参考这篇文章：<a href="https://learnku.com/articles/25110">不要在循环体中使用 array_push()</a></p>
+  </li>
+  <li>
+    <p>针对一些查询较为复杂或者比较核心的逻辑里的 sql 查询，可以将 sql 语句写到注释中，这样看代码的时候不用再去拼接 sql，直接用注释中的 sql 拿来排查问题</p>
+  </li>
+  <li>
+    <p>如果使用 phpstorm 可以安装 php inspections 插件来进行代码的静态分析，可以帮助查找代码规范，语法漏洞，函数使用方式方面的错误。其他的一些代码质量工具可以配置使用 phpcs，phpmd，phpcs-fixer，psalm，phpstan 等。而且可以通过 phpstorm 的热键录制功能，将徽标键 + s 设置为 phpcs-fixer，format code 的快捷键，这样写完时可以通过快捷键格式化代码。</p>
+  </li>
+  <li>
+    <p>为避免在项目中将 dd，var_dump，exit，die 等函数提交到远程版本库中，可以在项目的 .git/hooks/pre-commit 中进行控制，加入下面的代码，每次提交时可以检测到。参考的这个：<a href="https://gist.github.com/victorb/8334601">pre-commit</a></p>
+  </li>
+</ul>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">VAR</span><span class="o">=</span><span class="si">$(</span>git diff <span class="nt">--cached</span> <span class="nt">--diff-filter</span><span class="o">=</span>ACMR | <span class="nb">grep</span> <span class="nt">-wiE</span> <span class="s2">"var_dump|echo|exit|dd|die|console.log"</span><span class="si">)</span> <span class="k">if</span> <span class="o">[</span> <span class="o">!</span> <span class="nt">-z</span> <span class="s2">"</span><span class="se">\$</span><span class="s2">VAR"</span>  <span class="o">]</span><span class="p">;</span> <span class="k">then  </span><span class="nb">echo</span> <span class="s2">"You've left a dd, var_dump, exit, die or console.log in one of your files! You don't really want to commit this so aborting now..."</span> <span class="nb">exit </span>1 <span class="k">fi</span>
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>在 for 循环的条件中不要使用函数，例如使用 count 来计算总数，这样每次循环都会执行一遍，不太好</p>
+  </li>
+  <li>
+    <p>使用三元运算符时如果要做强制类型转换请记得要在运算区域加括号避免报错，例如：(string)$studentId ?? ““，这样的写法会产生歧义，如果同为字符串不会报错，如果是这样：(string)$studentId ?? null，那么就会报错。建议写成 (string)($studentId ?? null)</p>
+  </li>
+  <li>
+    <p>如果要做判断时要确定好运算符的优先级从而确保执行顺序，以免与预期相左，例如：</p>
+  </li>
+</ul>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="nv">$isNew</span> <span class="o">&amp;&amp;</span> <span class="nv">$student</span> <span class="o">=</span> <span class="nc">Stu</span><span class="o">::</span><span class="nf">find</span><span class="p">(</span><span class="nv">$id</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="k">isset</span><span class="p">(</span><span class="nv">$foo</span><span class="o">-&gt;</span><span class="n">con</span><span class="p">))</span> <span class="p">{</span>  <span class="mf">...</span> <span class="p">}</span>
+</code></pre></div></div>
+
+<p>因为逻辑运算符 &amp;&amp; 的运算优先级大于赋值运算符 =，所以上面这段代码可能会产生与预期不符的结果，这种情况下为保证执行顺序，尽量使用括号括起来。</p>
+
+<p>包括下面这种：</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">isset</span><span class="p">(</span><span class="nv">$student</span><span class="p">[</span><span class="s1">'birthday'</span><span class="p">])</span> <span class="o">&gt;</span> <span class="nb">time</span><span class="p">())</span> <span class="p">{</span>  <span class="mf">...</span> <span class="p">}</span>
+</code></pre></div></div>
+
+<p>虽然逻辑运算符 ！的优先级大于比较运算符 &gt;，但手册中依然建议使用括号来明确运算顺序来增加代码可读性，手册中是这么说的：</p>
+
+<p>“括号的使用，哪怕在不是必要的场合下，通过括号的配对来明确标明运算顺序，而非靠运算符优先级和结合性来决定，通常能够增加代码的可读性。”</p>
+
+
+    
+    
+
+    
+  </div>
+
+</article>
+
+</main>
+<!-- Footer section -->
+
+  <footer class="footer">
+    <ul>
+      <li><a href="/">Beoning</a></li>
+
+      
+        <li>
+          <a href="https://sparanoid.com/lab/amsf/" title="Almace Scaffolding with theme Curtana">AMSF</a>
+        </li>
+      
+
+      
+    </ul>
+  </footer>
+
+
+<!-- Theme scripts -->
+<script src="/assets/themes/curtana/js/app.js?assets-inline"></script>
+
+<!-- User scripts -->
+<script src="/assets/js/user.js?assets-inline"></script>
+
+<!-- Lightense Images -->
+
+
+<!-- Service Worker  -->
+
+
+<!-- Google Analytics -->
+
+
+<!-- Foot hooks -->
+
+
+<!-- Finale -->
+</html>

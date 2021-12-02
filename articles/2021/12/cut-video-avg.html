@@ -14,12 +14,12 @@
   <meta charset="utf-8">
 
 
-<title>比较两个字符串是否相等 - Beoning</title>
+<title>将视频切割为均等的时间长度 - Beoning</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
 <!-- Define a description for better SEO result -->
-<meta name="description" content="有时候, 当用户传入一个字符串时, 你可能会需要拿着这个字符串和最终结果相对比, 如果我们使用 == 号来比较两个字符串, 可能会产生时序攻击. 'abcdef' == $req-&amp;gt;code 也就是说, == 号在判断两个字符串相等时, 会一位一位的判断, 如果遇到哪一位不一样, 就返回错误, 这样根据服务器运算速度, 就可以一位一位的猜出最终的结果. php 官方提供了避免时序攻击的字符串比较函数, 就是 hash_equals 无论两个字符串是否相等, 本函数的时间消耗是恒定的. 文档如下: https://www.php.net/manual/zh/function....">
+<meta name="description" content="前情提要 有时候在某些软件中将单次可发送的视频时长限制为 5 分钟或者 15 分钟, 总之就是一个固定的长度, 这样在我们发送超过时长的视频时会比较不方便. 所以写一段程序来自动按照传入的时间来等分视频. 当然这只是其中一个场景. 利用 goroutine 和 FFmpeg 首先获取视频长度信息可以通过 ffprobe 命令来获取, 这个是 FFmpeg 下的一个工具包, 安装 FFmpeg 后就会有了. 然后拿到视频总时长后根据传入的分钟数来分割视频, 这时候就需要用到 ffmpeg 命令了. 最后启动 goroutine 来异步分割每一段视频, 最终完成. 工具地址 https://...">
 
 <!-- Cheome Web App theme color -->
 <meta name="theme-color" content="#ff00b4">
@@ -37,7 +37,7 @@
 <link rel="stylesheet" href="/assets/themes/curtana/css/app.css?assets-inline">
 
 <!-- Canonical links, avoid duplicate content problems -->
-<link rel="canonical" href="http://localhost:4321/articles/2020/01/compare-two-string-equal.html">
+<link rel="canonical" href="http://localhost:4321/articles/2021/12/cut-video-avg.html">
 
 <!-- DNS prefetching for static files -->
 
@@ -51,9 +51,9 @@
 <!-- Open Graph and Twitter Cards support -->
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Beoning">
-<meta property="og:title" content="比较两个字符串是否相等">
-<meta property="og:url" content="http://localhost:4321/articles/2020/01/compare-two-string-equal.html">
-<meta property="og:description" content="有时候, 当用户传入一个字符串时, 你可能会需要拿着这个字符串和最终结果相对比, 如果我们使用 == 号来比较两个字符串, 可能会产生时序攻击. 'abcdef' == $req-&amp;gt;code 也就是说, == 号在判断两个字符串相等时, 会一位一位的判断, 如果遇到哪一位不一样, 就返回错误, 这样根据服务器运算速度, 就可以一位一位的猜出最终的结果. php 官方提供了避免时序攻击的字符串比较函数, 就是 hash_equals 无论两个字符串是否相等, 本函数的时间消耗是恒定的. 文档如下: https://www.php.net/manual/zh/function....">
+<meta property="og:title" content="将视频切割为均等的时间长度">
+<meta property="og:url" content="http://localhost:4321/articles/2021/12/cut-video-avg.html">
+<meta property="og:description" content="前情提要 有时候在某些软件中将单次可发送的视频时长限制为 5 分钟或者 15 分钟, 总之就是一个固定的长度, 这样在我们发送超过时长的视频时会比较不方便. 所以写一段程序来自动按照传入的时间来等分视频. 当然这只是其中一个场景. 利用 goroutine 和 FFmpeg 首先获取视频长度信息可以通过 ffprobe 命令来获取, 这个是 FFmpeg 下的一个工具包, 安装 FFmpeg 后就会有了. 然后拿到视频总时长后根据传入的分钟数来分割视频, 这时候就需要用到 ffmpeg 命令了. 最后启动 goroutine 来异步分割每一段视频, 最终完成. 工具地址 https://...">
 <meta property="og:image" content="http://localhost:4321/logo.png">
 
 <meta name="twitter:card" content="summary_large_image">
@@ -65,10 +65,10 @@
 
 
 
-  <meta property="article:published_time" content="2020-01-10T15:34:56+08:00">
-  <meta property="article:modified_time" content="2021-08-16T18:33:57+08:00">
+  <meta property="article:published_time" content="2021-12-02T14:48:45+08:00">
+  <meta property="article:modified_time" content="2021-12-02T14:48:45+08:00">
   <meta name="twitter:label1" value="Words">
-  <meta name="twitter:data1" value="31 words">
+  <meta name="twitter:data1" value="36 words">
   <meta name="twitter:label2" value="Reading time">
   <meta name="twitter:data2" value="Less than 1 min">
 
@@ -130,14 +130,14 @@
   <!-- Post title -->
   <header style="     ">
 
-    <h1 class="" title="比较两个字符串是否相等" data-title="比较两个字符串是否相等">
-      比较两个字符串是否相等<span class="dot dot--post"> </span>
+    <h1 class="" title="将视频切割为均等的时间长度" data-title="将视频切割为均等的时间长度">
+      将视频切割为均等的时间长度<span class="dot dot--post"> </span>
     </h1>
 
     
       <small>
         By <span rel="author"></span>
-        on <time datetime="2020-01-10T15:34:56+08:00">Jan 10, 2020</time>
+        on <time datetime="2021-12-02T14:48:45+08:00">Dec 2, 2021</time>
       </small>
     
 
@@ -147,17 +147,25 @@
 
   <!-- Post content -->
   <div class="post-content">
-    <p>有时候, 当用户传入一个字符串时, 你可能会需要拿着这个字符串和最终结果相对比, 如果我们使用 == 号来比较两个字符串, 可能会产生时序攻击.</p>
+    <h3 id="前情提要">前情提要</h3>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>'abcdef' == $req-&gt;code
-</code></pre></div></div>
+<p>有时候在某些软件中将单次可发送的视频时长限制为 5 分钟或者 15 分钟, 总之就是一个固定的长度, 这样在我们发送超过时长的视频时会比较不方便.</p>
 
-<p>也就是说, == 号在判断两个字符串相等时, 会一位一位的判断, 如果遇到哪一位不一样, 就返回错误, 这样根据服务器运算速度, 就可以一位一位的猜出最终的结果.</p>
+<p>所以写一段程序来自动按照传入的时间来等分视频.</p>
 
-<p>php 官方提供了避免时序攻击的字符串比较函数, 就是 hash_equals
-无论两个字符串是否相等, 本函数的时间消耗是恒定的.</p>
+<p>当然这只是其中一个场景.</p>
 
-<p>文档如下: https://www.php.net/manual/zh/function.hash-equals.php</p>
+<h3 id="利用-goroutine-和-ffmpeg">利用 goroutine 和 FFmpeg</h3>
+
+<p>首先获取视频长度信息可以通过 ffprobe 命令来获取, 这个是 FFmpeg 下的一个工具包, 安装 FFmpeg 后就会有了.</p>
+
+<p>然后拿到视频总时长后根据传入的分钟数来分割视频, 这时候就需要用到 ffmpeg 命令了.</p>
+
+<p>最后启动 goroutine 来异步分割每一段视频, 最终完成.</p>
+
+<h3 id="工具地址">工具地址</h3>
+
+<p>https://github.com/muyehub/cut_video_avg</p>
 
 
     

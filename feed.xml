@@ -1,4 +1,97 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom"><title>Beoning</title><subtitle>Take my broken heart, make it into art.</subtitle><updated>2021-11-02T23:50:04+08:00</updated><id>http://soundpill.cn/</id><generator uri="https://sparanoid.com/lab/amsf/" version="2.0.19">Almace Scaffolding</generator><link rel="alternate" type="text/html" hreflang="en" href="http://soundpill.cn/" /><link rel="self" type="application/atom+xml" href="http://soundpill.cn/feed.xml" /><author><name>max</name><uri>http://soundpill.cn/</uri><email>muyege@gmail.com</email></author><entry><title>golang 编程陷阱---摘自《go 专家编程》</title><id>http://soundpill.cn/articles/2021/11/golang-coding-trap.html</id><link rel="alternate" type="text/html" href="http://soundpill.cn/articles/2021/11/golang-coding-trap.html" /><published>2021-11-02T23:47:33+08:00</published><updated>2021-11-02T23:49:03+08:00</updated><author><name>max</name><uri>http://soundpill.cn/</uri><email>muyege@gmail.com</email></author><content type="html" xml:base="http://soundpill.cn/">
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Beoning</title>
+  <subtitle>Take my broken heart, make it into art.</subtitle>
+  <updated>2021-12-02T16:03:21+08:00</updated>
+  <id>http://localhost:4321/</id>
+  <generator uri="https://sparanoid.com/lab/amsf/" version="2.0.19">Almace Scaffolding</generator>
+
+  <link rel="alternate" type="text/html" hreflang="en" href="http://localhost:4321/" />
+  <link rel="self" type="application/atom+xml" href="http://localhost:4321/feed.xml" />
+
+  <author>
+    <name>max</name>
+    <uri>http://localhost:4321/</uri>
+    <email>muyege@gmail.com</email>
+  </author>
+
+  
+    
+      
+
+      
+
+      <entry>
+        <title>将视频切割为均等的时间长度</title>
+        <id>http://localhost:4321/articles/2021/12/cut-video-avg.html</id>
+        <link rel="alternate" type="text/html" href="http://localhost:4321/articles/2021/12/cut-video-avg.html" />
+        <published>2021-12-02T14:48:45+08:00</published>
+
+        
+          <updated>2021-12-02T16:02:56+08:00</updated>
+        
+
+        <author>
+          <name>max</name>
+          <uri>http://soundpill.cn/</uri>
+          <email>muyege@gmail.com</email>
+        </author>
+
+        <content type="html" xml:base="http://localhost:4321/">
+          
+            &lt;h3 id=&quot;前情提要&quot;&gt;前情提要&lt;/h3&gt;
+
+&lt;p&gt;有时候在某些软件中将单次可发送的视频时长限制为 5 分钟或者 15 分钟, 总之就是一个固定的长度, 这样在我们发送超过时长的视频时会比较不方便.&lt;/p&gt;
+
+&lt;p&gt;所以写一段程序来自动按照传入的时间来等分视频.&lt;/p&gt;
+
+&lt;p&gt;当然这只是其中一个场景.&lt;/p&gt;
+
+&lt;h3 id=&quot;利用-goroutine-和-ffmpeg&quot;&gt;利用 goroutine 和 FFmpeg&lt;/h3&gt;
+
+&lt;p&gt;首先获取视频长度信息可以通过 ffprobe 命令来获取, 这个是 FFmpeg 下的一个工具包, 安装 FFmpeg 后就会有了.&lt;/p&gt;
+
+&lt;p&gt;然后拿到视频总时长后根据传入的分钟数来分割视频, 这时候就需要用到 ffmpeg 命令了.&lt;/p&gt;
+
+&lt;p&gt;最后启动 goroutine 来异步分割每一段视频, 最终完成.&lt;/p&gt;
+
+&lt;h3 id=&quot;工具地址&quot;&gt;工具地址&lt;/h3&gt;
+
+&lt;p&gt;https://github.com/muyehub/cut_video_avg&lt;/p&gt;
+
+          
+          
+        
+      
+        </content>
+
+        
+          <summary>前情提要</summary>
+        
+      </entry>
+    
+  
+    
+      
+
+      
+
+      <entry>
+        <title>golang 编程陷阱---摘自《go 专家编程》</title>
+        <id>http://localhost:4321/articles/2021/11/golang-coding-trap.html</id>
+        <link rel="alternate" type="text/html" href="http://localhost:4321/articles/2021/11/golang-coding-trap.html" />
+        <published>2021-11-02T23:47:33+08:00</published>
+
+        
+          <updated>2021-11-02T23:49:03+08:00</updated>
+        
+
+        <author>
+          <name>max</name>
+          <uri>http://soundpill.cn/</uri>
+          <email>muyege@gmail.com</email>
+        </author>
+
+        <content type="html" xml:base="http://localhost:4321/">
           
             &lt;h3 id=&quot;关于切片扩容&quot;&gt;关于切片扩容&lt;/h3&gt;
 
@@ -109,7 +202,36 @@
           
         
       
-        </content><summary>关于切片扩容</summary></entry><entry><title>php-tips</title><id>http://soundpill.cn/articles/2021/08/php-tips.html</id><link rel="alternate" type="text/html" href="http://soundpill.cn/articles/2021/08/php-tips.html" /><published>2021-08-16T19:03:01+08:00</published><updated>2021-08-16T19:03:07+08:00</updated><author><name>max</name><uri>http://soundpill.cn/</uri><email>muyege@gmail.com</email></author><content type="html" xml:base="http://soundpill.cn/">
+        </content>
+
+        
+          <summary>关于切片扩容</summary>
+        
+      </entry>
+    
+  
+    
+      
+
+      
+
+      <entry>
+        <title>php-tips</title>
+        <id>http://localhost:4321/articles/2021/08/php-tips.html</id>
+        <link rel="alternate" type="text/html" href="http://localhost:4321/articles/2021/08/php-tips.html" />
+        <published>2021-08-16T19:03:01+08:00</published>
+
+        
+          <updated>2021-08-16T19:03:07+08:00</updated>
+        
+
+        <author>
+          <name>max</name>
+          <uri>http://soundpill.cn/</uri>
+          <email>muyege@gmail.com</email>
+        </author>
+
+        <content type="html" xml:base="http://localhost:4321/">
           
             &lt;ul&gt;
   &lt;li&gt;
@@ -162,7 +284,36 @@
           
         
       
-        </content><summary>  在 foreach 中不要使用 array_merge，不仅慢而且耗费内存，可以在 foreach 中对要合并的数组进行赋值，在 foreach 外部统一进行合并，具体性能差异可以参考这篇文章：不要在循环体中使用 array_merge()</summary></entry><entry><title>go-tips</title><id>http://soundpill.cn/articles/2021/08/go-tips.html</id><link rel="alternate" type="text/html" href="http://soundpill.cn/articles/2021/08/go-tips.html" /><published>2021-08-16T18:40:38+08:00</published><updated>2021-08-17T18:48:50+08:00</updated><author><name>max</name><uri>http://soundpill.cn/</uri><email>muyege@gmail.com</email></author><content type="html" xml:base="http://soundpill.cn/">
+        </content>
+
+        
+          <summary>  在 foreach 中不要使用 array_merge，不仅慢而且耗费内存，可以在 foreach 中对要合并的数组进行赋值，在 foreach 外部统一进行合并，具体性能差异可以参考这篇文章：不要在循环体中使用 array_merge()</summary>
+        
+      </entry>
+    
+  
+    
+      
+
+      
+
+      <entry>
+        <title>go-tips</title>
+        <id>http://localhost:4321/articles/2021/08/go-tips.html</id>
+        <link rel="alternate" type="text/html" href="http://localhost:4321/articles/2021/08/go-tips.html" />
+        <published>2021-08-16T18:40:38+08:00</published>
+
+        
+          <updated>2021-08-17T18:48:50+08:00</updated>
+        
+
+        <author>
+          <name>max</name>
+          <uri>http://soundpill.cn/</uri>
+          <email>muyege@gmail.com</email>
+        </author>
+
+        <content type="html" xml:base="http://localhost:4321/">
           
             &lt;ul&gt;
   &lt;li&gt;当把时间作为一个变量传递时，可能会导致的问题，比如：&lt;/li&gt;
@@ -219,7 +370,36 @@
           
         
       
-        </content><summary>  当把时间作为一个变量传递时，可能会导致的问题，比如：</summary></entry><entry><title>一道go面试题</title><id>http://soundpill.cn/articles/2021/01/go-question.html</id><link rel="alternate" type="text/html" href="http://soundpill.cn/articles/2021/01/go-question.html" /><published>2021-01-18T21:50:43+08:00</published><updated>2021-08-16T18:33:57+08:00</updated><author><name>max</name><uri>http://soundpill.cn/</uri><email>muyege@gmail.com</email></author><content type="html" xml:base="http://soundpill.cn/">
+        </content>
+
+        
+          <summary>  当把时间作为一个变量传递时，可能会导致的问题，比如：</summary>
+        
+      </entry>
+    
+  
+    
+      
+
+      
+
+      <entry>
+        <title>一道go面试题</title>
+        <id>http://localhost:4321/articles/2021/01/go-question.html</id>
+        <link rel="alternate" type="text/html" href="http://localhost:4321/articles/2021/01/go-question.html" />
+        <published>2021-01-18T21:50:43+08:00</published>
+
+        
+          <updated>2021-08-16T18:33:57+08:00</updated>
+        
+
+        <author>
+          <name>max</name>
+          <uri>http://soundpill.cn/</uri>
+          <email>muyege@gmail.com</email>
+        </author>
+
+        <content type="html" xml:base="http://localhost:4321/">
           
             &lt;h1 id=&quot;一道-go-面试题&quot;&gt;一道 Go 面试题&lt;/h1&gt;
 
@@ -243,7 +423,36 @@
           
         
       
-        </content><summary>一道 Go 面试题</summary></entry><entry><title>i++是原子操作吗?</title><id>http://soundpill.cn/articles/2021/01/iplusplus.html</id><link rel="alternate" type="text/html" href="http://soundpill.cn/articles/2021/01/iplusplus.html" /><published>2021-01-17T09:47:29+08:00</published><updated>2021-08-16T18:33:57+08:00</updated><author><name>max</name><uri>http://soundpill.cn/</uri><email>muyege@gmail.com</email></author><content type="html" xml:base="http://soundpill.cn/">
+        </content>
+
+        
+          <summary>一道 Go 面试题</summary>
+        
+      </entry>
+    
+  
+    
+      
+
+      
+
+      <entry>
+        <title>i++是原子操作吗?</title>
+        <id>http://localhost:4321/articles/2021/01/iplusplus.html</id>
+        <link rel="alternate" type="text/html" href="http://localhost:4321/articles/2021/01/iplusplus.html" />
+        <published>2021-01-17T09:47:29+08:00</published>
+
+        
+          <updated>2021-08-16T18:33:57+08:00</updated>
+        
+
+        <author>
+          <name>max</name>
+          <uri>http://soundpill.cn/</uri>
+          <email>muyege@gmail.com</email>
+        </author>
+
+        <content type="html" xml:base="http://localhost:4321/">
           
             &lt;h1 id=&quot;i-是原子操作吗&quot;&gt;i++ 是原子操作吗?&lt;/h1&gt;
 
@@ -261,7 +470,36 @@
           
         
       
-        </content><summary>i++ 是原子操作吗?</summary></entry><entry><title>Gerrit概念说明及使用</title><id>http://soundpill.cn/articles/2020/09/gerrit-desc.html</id><link rel="alternate" type="text/html" href="http://soundpill.cn/articles/2020/09/gerrit-desc.html" /><published>2020-09-23T18:35:52+08:00</published><updated>2021-08-16T18:33:57+08:00</updated><author><name>max</name><uri>http://soundpill.cn/</uri><email>muyege@gmail.com</email></author><content type="html" xml:base="http://soundpill.cn/">
+        </content>
+
+        
+          <summary>i++ 是原子操作吗?</summary>
+        
+      </entry>
+    
+  
+    
+      
+
+      
+
+      <entry>
+        <title>Gerrit概念说明及使用</title>
+        <id>http://localhost:4321/articles/2020/09/gerrit-desc.html</id>
+        <link rel="alternate" type="text/html" href="http://localhost:4321/articles/2020/09/gerrit-desc.html" />
+        <published>2020-09-23T18:35:52+08:00</published>
+
+        
+          <updated>2021-08-16T18:33:57+08:00</updated>
+        
+
+        <author>
+          <name>max</name>
+          <uri>http://soundpill.cn/</uri>
+          <email>muyege@gmail.com</email>
+        </author>
+
+        <content type="html" xml:base="http://localhost:4321/">
           
             &lt;h3 id=&quot;gerrit介绍&quot;&gt;Gerrit介绍&lt;/h3&gt;
 
@@ -412,7 +650,36 @@ git coomit --amend --no-edit
           
         
       
-        </content><summary>Gerrit介绍</summary></entry><entry><title>为什么没有使用索引?</title><id>http://soundpill.cn/articles/2020/09/why-index-unuse.html</id><link rel="alternate" type="text/html" href="http://soundpill.cn/articles/2020/09/why-index-unuse.html" /><published>2020-09-23T11:41:43+08:00</published><updated>2021-08-16T18:33:57+08:00</updated><author><name>max</name><uri>http://soundpill.cn/</uri><email>muyege@gmail.com</email></author><content type="html" xml:base="http://soundpill.cn/">
+        </content>
+
+        
+          <summary>Gerrit介绍</summary>
+        
+      </entry>
+    
+  
+    
+      
+
+      
+
+      <entry>
+        <title>为什么没有使用索引?</title>
+        <id>http://localhost:4321/articles/2020/09/why-index-unuse.html</id>
+        <link rel="alternate" type="text/html" href="http://localhost:4321/articles/2020/09/why-index-unuse.html" />
+        <published>2020-09-23T11:41:43+08:00</published>
+
+        
+          <updated>2021-08-16T18:33:57+08:00</updated>
+        
+
+        <author>
+          <name>max</name>
+          <uri>http://soundpill.cn/</uri>
+          <email>muyege@gmail.com</email>
+        </author>
+
+        <content type="html" xml:base="http://localhost:4321/">
           
             &lt;h1 id=&quot;为什么没有用索引&quot;&gt;为什么没有用索引?&lt;/h1&gt;
 &lt;p&gt;已知表 a 数据总量是 40w, 根据时间范围过滤出最近 7 天的数据, 语句如下:&lt;/p&gt;
@@ -459,7 +726,36 @@ ORDER BY
           
         
       
-        </content><summary>为什么没有用索引?已知表 a 数据总量是 40w, 根据时间范围过滤出最近 7 天的数据, 语句如下:explain SELECT	`question_id`,	`student_id`,	`teacher_id`,	`question_type`,	`question_step`,	`question_no`,	`level`,	`class_id`,	`lesson_id`,	`teacher_get_at`,	`teacher_set_at`,	`status`,	`teacher_from`,	`wrong_reason_id`,	`created_at`,	`submit_time`FROM	`answer_records`WHERE	`updated_at` BETWEEN '2020-07-14+00:00:00'	AND '2020-07-21+00:00:00'ORDER BY	`created_at` DESC;</summary></entry><entry><title>在图片上添加文字或图片</title><id>http://soundpill.cn/articles/2020/01/draw-someting-on-picture.html</id><link rel="alternate" type="text/html" href="http://soundpill.cn/articles/2020/01/draw-someting-on-picture.html" /><published>2020-01-10T15:43:41+08:00</published><updated>2021-08-16T18:33:57+08:00</updated><author><name>max</name><uri>http://soundpill.cn/</uri><email>muyege@gmail.com</email></author><content type="html" xml:base="http://soundpill.cn/">
+        </content>
+
+        
+          <summary>为什么没有用索引?已知表 a 数据总量是 40w, 根据时间范围过滤出最近 7 天的数据, 语句如下:explain SELECT	`question_id`,	`student_id`,	`teacher_id`,	`question_type`,	`question_step`,	`question_no`,	`level`,	`class_id`,	`lesson_id`,	`teacher_get_at`,	`teacher_set_at`,	`status`,	`teacher_from`,	`wrong_reason_id`,	`created_at`,	`submit_time`FROM	`answer_records`WHERE	`updated_at` BETWEEN '2020-07-14+00:00:00'	AND '2020-07-21+00:00:00'ORDER BY	`created_at` DESC;</summary>
+        
+      </entry>
+    
+  
+    
+      
+
+      
+
+      <entry>
+        <title>在图片上添加文字或图片</title>
+        <id>http://localhost:4321/articles/2020/01/draw-someting-on-picture.html</id>
+        <link rel="alternate" type="text/html" href="http://localhost:4321/articles/2020/01/draw-someting-on-picture.html" />
+        <published>2020-01-10T15:43:41+08:00</published>
+
+        
+          <updated>2021-08-16T18:33:57+08:00</updated>
+        
+
+        <author>
+          <name>max</name>
+          <uri>http://soundpill.cn/</uri>
+          <email>muyege@gmail.com</email>
+        </author>
+
+        <content type="html" xml:base="http://localhost:4321/">
           
             &lt;h4 id=&quot;interventionimage&quot;&gt;intervention/image&lt;/h4&gt;
 &lt;p&gt;这是一个第三方扩展, 用来处理图片的, 功能特别强大, 可以 cover 我们这篇文章提到的需求&lt;/p&gt;
@@ -534,7 +830,36 @@ public function deal()
           
         
       
-        </content><summary>intervention/image这是一个第三方扩展, 用来处理图片的, 功能特别强大, 可以 cover 我们这篇文章提到的需求</summary></entry><entry><title>比较两个字符串是否相等</title><id>http://soundpill.cn/articles/2020/01/compare-two-string-equal.html</id><link rel="alternate" type="text/html" href="http://soundpill.cn/articles/2020/01/compare-two-string-equal.html" /><published>2020-01-10T15:34:56+08:00</published><updated>2021-08-16T18:33:57+08:00</updated><author><name>max</name><uri>http://soundpill.cn/</uri><email>muyege@gmail.com</email></author><content type="html" xml:base="http://soundpill.cn/">
+        </content>
+
+        
+          <summary>intervention/image这是一个第三方扩展, 用来处理图片的, 功能特别强大, 可以 cover 我们这篇文章提到的需求</summary>
+        
+      </entry>
+    
+  
+    
+      
+
+      
+
+      <entry>
+        <title>比较两个字符串是否相等</title>
+        <id>http://localhost:4321/articles/2020/01/compare-two-string-equal.html</id>
+        <link rel="alternate" type="text/html" href="http://localhost:4321/articles/2020/01/compare-two-string-equal.html" />
+        <published>2020-01-10T15:34:56+08:00</published>
+
+        
+          <updated>2021-08-16T18:33:57+08:00</updated>
+        
+
+        <author>
+          <name>max</name>
+          <uri>http://soundpill.cn/</uri>
+          <email>muyege@gmail.com</email>
+        </author>
+
+        <content type="html" xml:base="http://localhost:4321/">
           
             &lt;p&gt;有时候, 当用户传入一个字符串时, 你可能会需要拿着这个字符串和最终结果相对比, 如果我们使用 == 号来比较两个字符串, 可能会产生时序攻击.&lt;/p&gt;
 
@@ -552,7 +877,36 @@ public function deal()
           
         
       
-        </content><summary>有时候, 当用户传入一个字符串时, 你可能会需要拿着这个字符串和最终结果相对比, 如果我们使用 == 号来比较两个字符串, 可能会产生时序攻击.</summary></entry><entry><title>Homestead完整的切换php版本</title><id>http://soundpill.cn/articles/2020/01/homestead-version-switch.html</id><link rel="alternate" type="text/html" href="http://soundpill.cn/articles/2020/01/homestead-version-switch.html" /><published>2020-01-10T15:14:46+08:00</published><updated>2021-08-16T18:33:57+08:00</updated><author><name>max</name><uri>http://soundpill.cn/</uri><email>muyege@gmail.com</email></author><content type="html" xml:base="http://soundpill.cn/">
+        </content>
+
+        
+          <summary>有时候, 当用户传入一个字符串时, 你可能会需要拿着这个字符串和最终结果相对比, 如果我们使用 == 号来比较两个字符串, 可能会产生时序攻击.</summary>
+        
+      </entry>
+    
+  
+    
+      
+
+      
+
+      <entry>
+        <title>Homestead完整的切换php版本</title>
+        <id>http://localhost:4321/articles/2020/01/homestead-version-switch.html</id>
+        <link rel="alternate" type="text/html" href="http://localhost:4321/articles/2020/01/homestead-version-switch.html" />
+        <published>2020-01-10T15:14:46+08:00</published>
+
+        
+          <updated>2021-08-16T18:33:57+08:00</updated>
+        
+
+        <author>
+          <name>max</name>
+          <uri>http://soundpill.cn/</uri>
+          <email>muyege@gmail.com</email>
+        </author>
+
+        <content type="html" xml:base="http://localhost:4321/">
           
             &lt;p&gt;相信大多数人搜到的都是这篇文章
 https://learnku.com/articles/16881&lt;/p&gt;
@@ -574,7 +928,36 @@ sudo update-alternatives --set php-config /usr/bin/php-config7.1
           
         
       
-        </content><summary>相信大多数人搜到的都是这篇文章https://learnku.com/articles/16881</summary></entry><entry><title>mojave下使用pyenv安装python3出错的问题</title><id>http://soundpill.cn/articles/2019/02/mojave%E4%B8%8B%E4%BD%BF%E7%94%A8pyenv%E5%AE%89%E8%A3%85python3%E5%87%BA%E9%94%99%E7%9A%84%E9%97%AE%E9%A2%98.html</id><link rel="alternate" type="text/html" href="http://soundpill.cn/articles/2019/02/mojave%E4%B8%8B%E4%BD%BF%E7%94%A8pyenv%E5%AE%89%E8%A3%85python3%E5%87%BA%E9%94%99%E7%9A%84%E9%97%AE%E9%A2%98.html" /><published>2019-02-26T15:33:39+08:00</published><updated>2021-08-16T18:33:57+08:00</updated><author><name>max</name><uri>http://soundpill.cn/</uri><email>muyege@gmail.com</email></author><content type="html" xml:base="http://soundpill.cn/">
+        </content>
+
+        
+          <summary>相信大多数人搜到的都是这篇文章https://learnku.com/articles/16881</summary>
+        
+      </entry>
+    
+  
+    
+      
+
+      
+
+      <entry>
+        <title>mojave下使用pyenv安装python3出错的问题</title>
+        <id>http://localhost:4321/articles/2019/02/mojave%E4%B8%8B%E4%BD%BF%E7%94%A8pyenv%E5%AE%89%E8%A3%85python3%E5%87%BA%E9%94%99%E7%9A%84%E9%97%AE%E9%A2%98.html</id>
+        <link rel="alternate" type="text/html" href="http://localhost:4321/articles/2019/02/mojave%E4%B8%8B%E4%BD%BF%E7%94%A8pyenv%E5%AE%89%E8%A3%85python3%E5%87%BA%E9%94%99%E7%9A%84%E9%97%AE%E9%A2%98.html" />
+        <published>2019-02-26T15:33:39+08:00</published>
+
+        
+          <updated>2021-08-16T18:33:57+08:00</updated>
+        
+
+        <author>
+          <name>max</name>
+          <uri>http://soundpill.cn/</uri>
+          <email>muyege@gmail.com</email>
+        </author>
+
+        <content type="html" xml:base="http://localhost:4321/">
           
             &lt;h2 id=&quot;使用pyenv安装python3时出现如下报错&quot;&gt;使用pyenv安装python3时出现如下报错&lt;/h2&gt;
 &lt;p&gt;&lt;img src=&quot;https://ws1.sinaimg.cn/large/60f1733aly1g0jo757rfnj21go0q8wnf.jpg&quot; alt=&quot;&quot; /&gt;
@@ -601,7 +984,36 @@ https://developer.apple.com/macos/whats-new/&lt;/p&gt;
           
         
       
-        </content><summary>使用pyenv安装python3时出现如下报错按照提示来看,好像是在提示我没有安装zlib库,但是我已经装了,没办法,google一下吧.(如果你因为没有安装zlib库而产生这个问题, 那就好办了, 直接brew install zlib)google搜索到的解决方案大都是要安装xcode命令行工具xcode-select --install这个我也安装了, 不安装的话啥也干不了啊最后解决方案查看一下xcode-select -v的版本</summary></entry><entry><title>redis中的SDS数据结构</title><id>http://soundpill.cn/articles/2019/02/redis%E4%B8%AD%E7%9A%84sds%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.html</id><link rel="alternate" type="text/html" href="http://soundpill.cn/articles/2019/02/redis%E4%B8%AD%E7%9A%84sds%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.html" /><published>2019-02-26T15:31:32+08:00</published><updated>2021-08-16T18:33:57+08:00</updated><author><name>max</name><uri>http://soundpill.cn/</uri><email>muyege@gmail.com</email></author><content type="html" xml:base="http://soundpill.cn/">
+        </content>
+
+        
+          <summary>使用pyenv安装python3时出现如下报错按照提示来看,好像是在提示我没有安装zlib库,但是我已经装了,没办法,google一下吧.(如果你因为没有安装zlib库而产生这个问题, 那就好办了, 直接brew install zlib)google搜索到的解决方案大都是要安装xcode命令行工具xcode-select --install这个我也安装了, 不安装的话啥也干不了啊最后解决方案查看一下xcode-select -v的版本</summary>
+        
+      </entry>
+    
+  
+    
+      
+
+      
+
+      <entry>
+        <title>redis中的SDS数据结构</title>
+        <id>http://localhost:4321/articles/2019/02/redis%E4%B8%AD%E7%9A%84sds%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.html</id>
+        <link rel="alternate" type="text/html" href="http://localhost:4321/articles/2019/02/redis%E4%B8%AD%E7%9A%84sds%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.html" />
+        <published>2019-02-26T15:31:32+08:00</published>
+
+        
+          <updated>2021-08-16T18:33:57+08:00</updated>
+        
+
+        <author>
+          <name>max</name>
+          <uri>http://soundpill.cn/</uri>
+          <email>muyege@gmail.com</email>
+        </author>
+
+        <content type="html" xml:base="http://localhost:4321/">
           
             &lt;h2 id=&quot;sdssimple-dynamic-string简单动态字符串&quot;&gt;SDS(Simple Dynamic String)简单动态字符串&lt;/h2&gt;
 &lt;p&gt;在Redis中可修改的字符串值都是采用的SDS数据结构, 而不可修改的都采用了C字符串&lt;/p&gt;
@@ -637,7 +1049,36 @@ https://developer.apple.com/macos/whats-new/&lt;/p&gt;
           
         
       
-        </content><summary>SDS(Simple Dynamic String)简单动态字符串在Redis中可修改的字符串值都是采用的SDS数据结构, 而不可修改的都采用了C字符串SDS的结构有三个基本变量  free 纪录buf数组中未使用字节的数量  len 纪录buf数组中已使用字节的数量, 等于SDS所保存字符串的长度  buf 字节数组, 用于保存字符串(二进制)    为什么采用SDS    SDS是基于C字符串结构的缺点优化后的产物, 因为采用C字符串的方式会有以下一些问题：    获取字符串长度需要遍历字符串获取, 将需要O(N)的时间复杂度  C字符串会有缓冲区溢出的问题  一旦修改字符串操作发生就会重新分配内存, 修改N次就分配N次所以, 基于以上问题SDS结构的优点也显而易见了, 如下:  因为结构体中标记了字符串长度, 所以获取长度的时间复杂度变成了O(1)  SDS的API中对内存分配的机制杜绝了缓冲区溢出的问题  同样, API中的操作也减少了修改字符串长度时所需的内存重分配次数  二进制安全  兼容部分C字符串函数    内存分配机制    空间预分配在字符串增长操作中有两种情况来预分配空间第一种是修改后的长度(len的值)小于1MB的情况下, free的值会和len的值相同, 来做到减少内存分配次数, 预分配以后可能会使用到的空间第二种是修改后的长度大于1MB的情况下, free的值会多修改为1MB, 也就是在原来基础上多出1MB的未使用空间  惰性空间释放在字符串缩短操作的时候, 不会将释放的空间马上回收, 而是会写入到free中, 将缩短的长度标记为未使用空间为将来可能会使用的字符串预留位置。SDS中也有相应的API, 可以在需要时真正释放这部分空间。</summary></entry><entry><title>rebase和merge的区别</title><id>http://soundpill.cn/articles/2019/02/rebase%E5%92%8Cmerge%E7%9A%84%E5%8C%BA%E5%88%AB.html</id><link rel="alternate" type="text/html" href="http://soundpill.cn/articles/2019/02/rebase%E5%92%8Cmerge%E7%9A%84%E5%8C%BA%E5%88%AB.html" /><published>2019-02-24T15:36:37+08:00</published><updated>2021-08-16T18:33:57+08:00</updated><author><name>max</name><uri>http://soundpill.cn/</uri><email>muyege@gmail.com</email></author><content type="html" xml:base="http://soundpill.cn/">
+        </content>
+
+        
+          <summary>SDS(Simple Dynamic String)简单动态字符串在Redis中可修改的字符串值都是采用的SDS数据结构, 而不可修改的都采用了C字符串SDS的结构有三个基本变量  free 纪录buf数组中未使用字节的数量  len 纪录buf数组中已使用字节的数量, 等于SDS所保存字符串的长度  buf 字节数组, 用于保存字符串(二进制)    为什么采用SDS    SDS是基于C字符串结构的缺点优化后的产物, 因为采用C字符串的方式会有以下一些问题：    获取字符串长度需要遍历字符串获取, 将需要O(N)的时间复杂度  C字符串会有缓冲区溢出的问题  一旦修改字符串操作发生就会重新分配内存, 修改N次就分配N次所以, 基于以上问题SDS结构的优点也显而易见了, 如下:  因为结构体中标记了字符串长度, 所以获取长度的时间复杂度变成了O(1)  SDS的API中对内存分配的机制杜绝了缓冲区溢出的问题  同样, API中的操作也减少了修改字符串长度时所需的内存重分配次数  二进制安全  兼容部分C字符串函数    内存分配机制    空间预分配在字符串增长操作中有两种情况来预分配空间第一种是修改后的长度(len的值)小于1MB的情况下, free的值会和len的值相同, 来做到减少内存分配次数, 预分配以后可能会使用到的空间第二种是修改后的长度大于1MB的情况下, free的值会多修改为1MB, 也就是在原来基础上多出1MB的未使用空间  惰性空间释放在字符串缩短操作的时候, 不会将释放的空间马上回收, 而是会写入到free中, 将缩短的长度标记为未使用空间为将来可能会使用的字符串预留位置。SDS中也有相应的API, 可以在需要时真正释放这部分空间。</summary>
+        
+      </entry>
+    
+  
+    
+      
+
+      
+
+      <entry>
+        <title>rebase和merge的区别</title>
+        <id>http://localhost:4321/articles/2019/02/rebase%E5%92%8Cmerge%E7%9A%84%E5%8C%BA%E5%88%AB.html</id>
+        <link rel="alternate" type="text/html" href="http://localhost:4321/articles/2019/02/rebase%E5%92%8Cmerge%E7%9A%84%E5%8C%BA%E5%88%AB.html" />
+        <published>2019-02-24T15:36:37+08:00</published>
+
+        
+          <updated>2021-08-16T18:33:57+08:00</updated>
+        
+
+        <author>
+          <name>max</name>
+          <uri>http://soundpill.cn/</uri>
+          <email>muyege@gmail.com</email>
+        </author>
+
+        <content type="html" xml:base="http://localhost:4321/">
           
             &lt;h4 id=&quot;变基&quot;&gt;变基&lt;/h4&gt;
 &lt;p&gt;找了一大圈, 还是官方的解释最好, 贴出来自己看吧, “变基”这个名字起的很好, 文档中的”重新播放”的解释也相当生动&lt;/p&gt;
@@ -648,7 +1089,36 @@ https://developer.apple.com/macos/whats-new/&lt;/p&gt;
           
         
       
-        </content><summary>变基找了一大圈, 还是官方的解释最好, 贴出来自己看吧, “变基”这个名字起的很好, 文档中的”重新播放”的解释也相当生动</summary></entry><entry><title>cgi, fastcgi, php-cgi, php-fpm的关系</title><id>http://soundpill.cn/articles/2019/02/cgi,-fastcgi,-php-cgi,-php-fpm.html</id><link rel="alternate" type="text/html" href="http://soundpill.cn/articles/2019/02/cgi,-fastcgi,-php-cgi,-php-fpm.html" /><published>2019-02-21T15:33:39+08:00</published><updated>2021-08-16T18:33:57+08:00</updated><author><name>max</name><uri>http://soundpill.cn/</uri><email>muyege@gmail.com</email></author><content type="html" xml:base="http://soundpill.cn/">
+        </content>
+
+        
+          <summary>变基找了一大圈, 还是官方的解释最好, 贴出来自己看吧, “变基”这个名字起的很好, 文档中的”重新播放”的解释也相当生动</summary>
+        
+      </entry>
+    
+  
+    
+      
+
+      
+
+      <entry>
+        <title>cgi, fastcgi, php-cgi, php-fpm的关系</title>
+        <id>http://localhost:4321/articles/2019/02/cgi,-fastcgi,-php-cgi,-php-fpm.html</id>
+        <link rel="alternate" type="text/html" href="http://localhost:4321/articles/2019/02/cgi,-fastcgi,-php-cgi,-php-fpm.html" />
+        <published>2019-02-21T15:33:39+08:00</published>
+
+        
+          <updated>2021-08-16T18:33:57+08:00</updated>
+        
+
+        <author>
+          <name>max</name>
+          <uri>http://soundpill.cn/</uri>
+          <email>muyege@gmail.com</email>
+        </author>
+
+        <content type="html" xml:base="http://localhost:4321/">
           
             &lt;h4 id=&quot;cgi&quot;&gt;cgi&lt;/h4&gt;
 &lt;p&gt;通用网关接口, Common Gateway Interface, CGI是Web服务器运行时外部程序的规范, 按CGI编写的程序可以扩展服务器功能. 所以, 广义上的cgi是一种接口标准, 不是字面意义上的接口. 狭义上, cgi就是cgi程序, 运行在服务器上, 提供同客户端HTML页面的接口. 绝大多数的cgi程序被用来解释处理来自表单的输入信息, 并在服务器产生相应的处理, 或将相应的信息反馈给浏览器, cgi程序使网页具有交互功能. 
@@ -676,7 +1146,36 @@ fastcgi程序处理步骤:
           
         
       
-        </content><summary>cgi通用网关接口, Common Gateway Interface, CGI是Web服务器运行时外部程序的规范, 按CGI编写的程序可以扩展服务器功能. 所以, 广义上的cgi是一种接口标准, 不是字面意义上的接口. 狭义上, cgi就是cgi程序, 运行在服务器上, 提供同客户端HTML页面的接口. 绝大多数的cgi程序被用来解释处理来自表单的输入信息, 并在服务器产生相应的处理, 或将相应的信息反馈给浏览器, cgi程序使网页具有交互功能. cgi程序处理步骤:1) 通过Internet把用户请求送到web服务器.2) web服务器接受用户请求并交给CGI程序处理.3) CGI程序把处理结果传送给web服务器.4) web服务器把结果送回到用户.</summary></entry><entry><title>推荐两个实用好玩的网站</title><id>http://soundpill.cn/articles/2019/02/%E6%8E%A8%E8%8D%90%E4%B8%A4%E4%B8%AA%E5%AE%9E%E7%94%A8%E5%A5%BD%E7%8E%A9%E7%9A%84%E7%BD%91%E7%AB%99.html</id><link rel="alternate" type="text/html" href="http://soundpill.cn/articles/2019/02/%E6%8E%A8%E8%8D%90%E4%B8%A4%E4%B8%AA%E5%AE%9E%E7%94%A8%E5%A5%BD%E7%8E%A9%E7%9A%84%E7%BD%91%E7%AB%99.html" /><published>2019-02-21T10:23:37+08:00</published><updated>2021-08-16T18:33:57+08:00</updated><author><name>max</name><uri>http://soundpill.cn/</uri><email>muyege@gmail.com</email></author><content type="html" xml:base="http://soundpill.cn/">
+        </content>
+
+        
+          <summary>cgi通用网关接口, Common Gateway Interface, CGI是Web服务器运行时外部程序的规范, 按CGI编写的程序可以扩展服务器功能. 所以, 广义上的cgi是一种接口标准, 不是字面意义上的接口. 狭义上, cgi就是cgi程序, 运行在服务器上, 提供同客户端HTML页面的接口. 绝大多数的cgi程序被用来解释处理来自表单的输入信息, 并在服务器产生相应的处理, 或将相应的信息反馈给浏览器, cgi程序使网页具有交互功能. cgi程序处理步骤:1) 通过Internet把用户请求送到web服务器.2) web服务器接受用户请求并交给CGI程序处理.3) CGI程序把处理结果传送给web服务器.4) web服务器把结果送回到用户.</summary>
+        
+      </entry>
+    
+  
+    
+      
+
+      
+
+      <entry>
+        <title>推荐两个实用好玩的网站</title>
+        <id>http://localhost:4321/articles/2019/02/%E6%8E%A8%E8%8D%90%E4%B8%A4%E4%B8%AA%E5%AE%9E%E7%94%A8%E5%A5%BD%E7%8E%A9%E7%9A%84%E7%BD%91%E7%AB%99.html</id>
+        <link rel="alternate" type="text/html" href="http://localhost:4321/articles/2019/02/%E6%8E%A8%E8%8D%90%E4%B8%A4%E4%B8%AA%E5%AE%9E%E7%94%A8%E5%A5%BD%E7%8E%A9%E7%9A%84%E7%BD%91%E7%AB%99.html" />
+        <published>2019-02-21T10:23:37+08:00</published>
+
+        
+          <updated>2021-08-16T18:33:57+08:00</updated>
+        
+
+        <author>
+          <name>max</name>
+          <uri>http://soundpill.cn/</uri>
+          <email>muyege@gmail.com</email>
+        </author>
+
+        <content type="html" xml:base="http://localhost:4321/">
           
             &lt;h3 id=&quot;在线绘图工具&quot;&gt;在线绘图工具&lt;/h3&gt;
 &lt;p&gt;有流程图，有类图，应有尽有，样式还很好看
@@ -690,4 +1189,12 @@ https://www.gaoding.com/koutu&lt;/p&gt;
           
         
       
-        </content><summary>在线绘图工具有流程图，有类图，应有尽有，样式还很好看https://www.draw.io/</summary></entry></feed>
+        </content>
+
+        
+          <summary>在线绘图工具有流程图，有类图，应有尽有，样式还很好看https://www.draw.io/</summary>
+        
+      </entry>
+    
+  
+</feed>
