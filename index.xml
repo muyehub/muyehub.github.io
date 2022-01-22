@@ -9,7 +9,19 @@
       <link>https://www.soundpill.cn/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 02 Dec 2021 14:48:45 +0800</lastBuildDate><atom:link href="https://www.soundpill.cn/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 22 Jan 2022 16:27:33 +0800</lastBuildDate><atom:link href="https://www.soundpill.cn/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>用 go 实现一个简易聊天室</title>
+      <link>https://www.soundpill.cn/posts/2022-01-22-go-simple-chatroom/</link>
+      <pubDate>Sat, 22 Jan 2022 16:27:33 +0800</pubDate>
+      
+      <guid>https://www.soundpill.cn/posts/2022-01-22-go-simple-chatroom/</guid>
+      <description>概述 first，我们需要创建一个房间，可以使用 net 包直接启动一个常驻的 tcp 服务 second，我们需要有用户的信息，用户通过访问 tcp 服务来进入房间 end，我们需要在用户进入/离开房间时对其他用户进行广播，还需要将用户在房间内产生的消息发送到房间里让其他用户看见
+实现 我们通过设定三个 channel 来分别标记用户进入房间、用户离开房间和用户广播消息的存储。 首先，我们创建一个 tcp 服务器，新建一个 server.go 的文件，然后通过 net 包来初始化 tcp 服务器，端口就选择 2022。监听器创建完毕后我们可以看到它里面有三个方法，分别是 Accept、Close 和 Addr，Close 就是用来关闭这个端口监听，Addr 就是返回监听器所对应的 ip，这里默认的话也就是本地的 ip，Accept 方法就是返回一个连接，一旦有人请求这个文件，就意味着产生一个连接，如果没有人请求那么 Accept 就会等待，这里我们用一个死循环来让它可以重复的接受多个连接请求。
+listener, err := net.Listen(&amp;#34;tcp&amp;#34;, &amp;#34;:2022&amp;#34;) if err != nil { panic(err) } for { conn, err := listener.Accept() if err != nil { log.Println(err) continue } go handleConn(conn) } 然后就是 handleConn 这个方法，将每次的连接传入进去，然后初始化连接的用户信息，再通过一个协程将用户消息通道里的信息拿出来消费，接下来做的就是向用户进入/离开的消息 channel 中写入该用户已经上线或用户离开的消息，然后再将用户记录到用户列表中。最后通过扫描该连接来读取用户的输入内容。
+func handleConn(conn net.</description>
+    </item>
+    
     <item>
       <title>将视频切割为均等的时间长度</title>
       <link>https://www.soundpill.cn/posts/2021-12-02-cut-video-avg/</link>
