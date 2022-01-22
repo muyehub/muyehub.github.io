@@ -9,7 +9,18 @@
       <link>https://www.soundpill.cn/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sat, 22 Jan 2022 16:27:33 +0800</lastBuildDate><atom:link href="https://www.soundpill.cn/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 22 Jan 2022 17:24:26 +0800</lastBuildDate><atom:link href="https://www.soundpill.cn/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>推荐两个学习 go 的网站</title>
+      <link>https://www.soundpill.cn/posts/2022-01-22-study-go-website/</link>
+      <pubDate>Sat, 22 Jan 2022 17:24:26 +0800</pubDate>
+      
+      <guid>https://www.soundpill.cn/posts/2022-01-22-study-go-website/</guid>
+      <description>一个就是 exercism, 这里不光可以练习 go 的基本语法和常识，还可以选择其他的语言，大部分的编程语言都是可以学习的，通过一个个任务去完成来掌握一门编程语言，很有成就感。
+在掌握了基本的语法后就需要项目来练手，但是不知道应该写些什么东西的时候可以参考gophercises这个网站，里面会有各种练手项目，比如如何生成一个短链接，如何制作一个文件重命名工具等等。
+经过两个网站的学习，再加上一点点悟性，相信很快就可以上手了</description>
+    </item>
+    
     <item>
       <title>用 go 实现一个简易聊天室</title>
       <link>https://www.soundpill.cn/posts/2022-01-22-go-simple-chatroom/</link>

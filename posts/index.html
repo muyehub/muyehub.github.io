@@ -58,6 +58,19 @@
 </header>
 <article class=post-entry>
 <header class=entry-header>
+<h2>推荐两个学习 go 的网站<sup><span class=entry-isdraft>&nbsp;&nbsp;[draft]</span></sup>
+</h2>
+</header>
+<section class=entry-content>
+<p>一个就是 exercism, 这里不光可以练习 go 的基本语法和常识，还可以选择其他的语言，大部分的编程语言都是可以学习的，通过一个个任务去完成来掌握一门编程语言，很有成就感。
+在掌握了基本的语法后就需要项目来练手，但是不知道应该写些什么东西的时候可以参考gophercises这个网站，里面会有各种练手项目，比如如何生成一个短链接，如何制作一个文件重命名工具等等。
+经过两个网站的学习，再加上一点点悟性，相信很快就可以上手了</p>
+</section>
+<footer class=entry-footer><span title="2022-01-22 17:24:26 +0800 CST">January 22, 2022</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;Max</footer>
+<a class=entry-link aria-label="post link to 推荐两个学习 go 的网站" href=https://www.soundpill.cn/posts/2022-01-22-study-go-website/></a>
+</article>
+<article class=post-entry>
+<header class=entry-header>
 <h2>用 go 实现一个简易聊天室
 </h2>
 </header>
@@ -194,24 +207,6 @@ FROM `answer_records` FORCE INDEX(rqx) 在业务层面的话, 如果时间范围
 </section>
 <footer class=entry-footer><span title="2020-09-23 11:41:43 +0800 CST">September 23, 2020</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;max</footer>
 <a class=entry-link aria-label="post link to 为什么没有使用索引?" href=https://www.soundpill.cn/posts/2020-09-23-why-index-unuse/></a>
-</article>
-<article class=post-entry>
-<header class=entry-header>
-<h2>在图片上添加文字或图片
-</h2>
-</header>
-<section class=entry-content>
-<p>intervention/image 这是一个第三方扩展, 用来处理图片的, 功能特别强大, 可以 cover 我们这篇文章提到的需求
-安装文档: http://image.intervention.io/getting_started/installation
-我们首先在项目中引入这个包:
-$ composer require intervention/image 其次, laravel 中需要发布配置文件:
-php artisan vendor:publish --provider="Intervention\Image\ImageServiceProviderLaravel5" lumen 中需要修改 bootstrap.php, 在当中手动注册
-$app->register(\Intervention\Image\ImageServiceProviderLumen::class); 该扩展默认使用的是 GD 库, 如果你想用 Imagick 扩展需要修改文件, config/image.php
-&lt;?php return [ 'driver' => 'imagick' ]; 如果你不想要每次 use 都使用全路径, 可以按照官方所述将 Image 关键字写入 alias 中
-Laravel: config/app.php $providers: Intervention\Image\ImageServiceProvider::class $aliases: 'Image' => Intervention\Image\Facades\Image::class Lumen: bootstrap/app.php $app->withAliases(array('Intervention\Image\Facades\Image' => 'Image')); 具体使用 use Image; public function deal() { $image = Image::make(public_path() ....</p>
-</section>
-<footer class=entry-footer><span title="2020-01-10 15:43:41 +0800 CST">January 10, 2020</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;max</footer>
-<a class=entry-link aria-label="post link to 在图片上添加文字或图片" href=https://www.soundpill.cn/posts/2020-01-10-draw-someting-on-picture/></a>
 </article>
 <footer class=page-footer>
 <nav class=pagination>

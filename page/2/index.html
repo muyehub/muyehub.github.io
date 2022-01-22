@@ -55,6 +55,24 @@
 <main class=main>
 <article class=post-entry>
 <header class=entry-header>
+<h2>在图片上添加文字或图片
+</h2>
+</header>
+<section class=entry-content>
+<p>intervention/image 这是一个第三方扩展, 用来处理图片的, 功能特别强大, 可以 cover 我们这篇文章提到的需求
+安装文档: http://image.intervention.io/getting_started/installation
+我们首先在项目中引入这个包:
+$ composer require intervention/image 其次, laravel 中需要发布配置文件:
+php artisan vendor:publish --provider="Intervention\Image\ImageServiceProviderLaravel5" lumen 中需要修改 bootstrap.php, 在当中手动注册
+$app->register(\Intervention\Image\ImageServiceProviderLumen::class); 该扩展默认使用的是 GD 库, 如果你想用 Imagick 扩展需要修改文件, config/image.php
+&lt;?php return [ 'driver' => 'imagick' ]; 如果你不想要每次 use 都使用全路径, 可以按照官方所述将 Image 关键字写入 alias 中
+Laravel: config/app.php $providers: Intervention\Image\ImageServiceProvider::class $aliases: 'Image' => Intervention\Image\Facades\Image::class Lumen: bootstrap/app.php $app->withAliases(array('Intervention\Image\Facades\Image' => 'Image')); 具体使用 use Image; public function deal() { $image = Image::make(public_path() ....</p>
+</section>
+<footer class=entry-footer><span title="2020-01-10 15:43:41 +0800 CST">January 10, 2020</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;max</footer>
+<a class=entry-link aria-label="post link to 在图片上添加文字或图片" href=https://www.soundpill.cn/posts/2020-01-10-draw-someting-on-picture/></a>
+</article>
+<article class=post-entry>
+<header class=entry-header>
 <h2>比较两个字符串是否相等
 </h2>
 </header>
