@@ -75,6 +75,21 @@
 </article>
 <article class=post-entry>
 <header class=entry-header>
+<h2>控制 goroutine 执行顺序的一例<sup><span class=entry-isdraft>&nbsp;&nbsp;[draft]</span></sup>
+</h2>
+</header>
+<section class=entry-content>
+<p>依次打印 题目：依次输出 dog、pig、sheep，并执行 100 次，每个输出都需要一个单独的 goroutine
+这里我们通过有缓冲的容量为 1 的 channel 来标记状态，通过 for-select 结构来控制当前要输出哪一个单词，因为 select 在 channel 阻塞的时候不会执行对应的 case，我们可以通过这个特性来操作。
+具体思路如下：
+设置三个 channel，初始化时使 dog 的 channel 中有一条数据，这样 select 就会先输出 dog 然后在 dog 的 case 中结束的时候给 pig 的 channel 中新增一条数据，这样下次就会进入 pig 的 case 进行输出操作 过程中我们可以使用 atomic 包来控制次数，不会产生并发问题 具体代码如下：
+package main import ( "fmt" "sync" "sync/atomic" ) var wg sync.WaitGroup var counter uint64 = 0 var dogChan = make(chan struct{}, 1) var pigChan = make(chan struct{}, 1) var sheepChan = make(chan struct{}, 1) func main() { wg....</p>
+</section>
+<footer class=entry-footer><span title="2022-02-08 22:14:29 +0800 CST">February 8, 2022</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;Max</footer>
+<a class=entry-link aria-label="post link to 控制 goroutine 执行顺序的一例" href=https://www.soundpill.cn/posts/2022-02-08-go-alter-print/></a>
+</article>
+<article class=post-entry>
+<header class=entry-header>
 <h2>推荐两个学习 go 的网站<sup><span class=entry-isdraft>&nbsp;&nbsp;[draft]</span></sup>
 </h2>
 </header>
@@ -209,21 +224,6 @@ waitTime := 30 wait := time.Duration(waitTime) * time.Second 当 waitGroup 使�
 </section>
 <footer class=entry-footer><span title="2020-09-23 18:35:52 +0800 CST">September 23, 2020</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;max</footer>
 <a class=entry-link aria-label="post link to Gerrit概念说明及使用" href=https://www.soundpill.cn/posts/2020-09-23-gerrit-desc/></a>
-</article>
-<article class=post-entry>
-<header class=entry-header>
-<h2>为什么没有使用索引?
-</h2>
-</header>
-<section class=entry-content>
-<p>为什么没有用索引? 已知表 a 数据总量是 40w, 根据时间范围过滤出最近 7 天的数据, 语句如下:
-explain SELECT `question_id`, `student_id`, `teacher_id`, `question_type`, `question_step`, `question_no`, `level`, `class_id`, `lesson_id`, `teacher_get_at`, `teacher_set_at`, `status`, `teacher_from`, `wrong_reason_id`, `created_at`, `submit_time` FROM `answer_records` WHERE `updated_at` BETWEEN '2020-07-14+00:00:00' AND '2020-07-21+00:00:00' ORDER BY `created_at` DESC; 从 explain 返回的数据来看, 这条语句并没有使用到索引, 而且 mysql 进行了全表的扫描, 这个原因就是我们要查询的数据太多了.
-因为 innodb 引擎会在检索索引后进行回表的操作, mysql 觉得你查询的数据这么多, 我一个个回表的这点时间都可以把全表扫一次了, 我就没必要用索引再去回表了, 所以就会导致这个索引没有用到.
-那我们就想用索引, 应该怎么办呢?
-FROM `answer_records` FORCE INDEX(rqx) 在业务层面的话, 如果时间范围比较大, 可以分批次查询, 这样就会快一点, 如果是频繁需要此类操作的话, 还是建议将时间戳提早设计进表结构里, 通过 int 类型的时间戳进行范围查找和排序会事半功倍</p>
-</section>
-<footer class=entry-footer><span title="2020-09-23 11:41:43 +0800 CST">September 23, 2020</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;max</footer>
-<a class=entry-link aria-label="post link to 为什么没有使用索引?" href=https://www.soundpill.cn/posts/2020-09-23-why-index-unuse/></a>
 </article>
 <footer class=page-footer>
 <nav class=pagination>

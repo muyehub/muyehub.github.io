@@ -9,7 +9,20 @@
       <link>https://www.soundpill.cn/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sat, 22 Jan 2022 17:24:26 +0800</lastBuildDate><atom:link href="https://www.soundpill.cn/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 08 Feb 2022 22:14:29 +0800</lastBuildDate><atom:link href="https://www.soundpill.cn/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>控制 goroutine 执行顺序的一例</title>
+      <link>https://www.soundpill.cn/posts/2022-02-08-go-alter-print/</link>
+      <pubDate>Tue, 08 Feb 2022 22:14:29 +0800</pubDate>
+      
+      <guid>https://www.soundpill.cn/posts/2022-02-08-go-alter-print/</guid>
+      <description>依次打印 题目：依次输出 dog、pig、sheep，并执行 100 次，每个输出都需要一个单独的 goroutine
+这里我们通过有缓冲的容量为 1 的 channel 来标记状态，通过 for-select 结构来控制当前要输出哪一个单词，因为 select 在 channel 阻塞的时候不会执行对应的 case，我们可以通过这个特性来操作。
+具体思路如下：
+ 设置三个 channel，初始化时使 dog 的 channel 中有一条数据，这样 select 就会先输出 dog 然后在 dog 的 case 中结束的时候给 pig 的 channel 中新增一条数据，这样下次就会进入 pig 的 case 进行输出操作 过程中我们可以使用 atomic 包来控制次数，不会产生并发问题  具体代码如下：
+package main import ( &amp;#34;fmt&amp;#34; &amp;#34;sync&amp;#34; &amp;#34;sync/atomic&amp;#34; ) var wg sync.WaitGroup var counter uint64 = 0 var dogChan = make(chan struct{}, 1) var pigChan = make(chan struct{}, 1) var sheepChan = make(chan struct{}, 1) func main() { wg.</description>
+    </item>
+    
     <item>
       <title>推荐两个学习 go 的网站</title>
       <link>https://www.soundpill.cn/posts/2022-01-22-study-go-website/</link>
