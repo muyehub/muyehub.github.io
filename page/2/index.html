@@ -55,6 +55,19 @@
 <main class=main>
 <article class=post-entry>
 <header class=entry-header>
+<h2>i++是原子操作吗?
+</h2>
+</header>
+<section class=entry-content>
+<p>i++ 是原子操作吗? 不是, i++ 要完成的操作要先读取变量 i 的值, 对这个值加 1, 再把结果保存到 i 中. 所以不是原子操作.
+我们来看下面的代码
+这段代码是启动 10 个线程, 每个线程对 count 执行 10 万次自增操作, 直观上来看最后 count 的结果是 100 万, 但因为自增操作不是原子性的, 所以最终的结果每次都会不一样, 会有协程做重复操作. 那应该怎么解决这个问题呢? 并发资源的读取问题最直接的解决方法就是加锁. 改良后如下:</p>
+</section>
+<footer class=entry-footer><span title="2021-01-17 09:47:29 +0800 CST">January 17, 2021</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;max</footer>
+<a class=entry-link aria-label="post link to i++是原子操作吗?" href=https://www.soundpill.cn/posts/2021-01-17-iplusplus/></a>
+</article>
+<article class=post-entry>
+<header class=entry-header>
 <h2>Gerrit概念说明及使用
 </h2>
 </header>
@@ -190,21 +203,10 @@ php-fpm php实现的fastcgi程序</p>
 <footer class=entry-footer><span title="2019-02-21 15:33:39 +0800 CST">February 21, 2019</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;max</footer>
 <a class=entry-link aria-label="post link to cgi, fastcgi, php-cgi, php-fpm的关系" href=https://www.soundpill.cn/posts/2019-02-21-cgi-fastcgi-php-cgi-php-fpm/></a>
 </article>
-<article class=post-entry>
-<header class=entry-header>
-<h2>推荐两个实用好玩的网站
-</h2>
-</header>
-<section class=entry-content>
-<p>在线绘图工具 有流程图，有类图，应有尽有，样式还很好看 https://www.draw.io/
-AI在线抠图工具 不说了，自己看吧 https://www.gaoding.com/koutu</p>
-</section>
-<footer class=entry-footer><span title="2019-02-21 10:23:37 +0800 CST">February 21, 2019</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;max</footer>
-<a class=entry-link aria-label="post link to 推荐两个实用好玩的网站" href=https://www.soundpill.cn/posts/2019-02-21-%E6%8E%A8%E8%8D%90%E4%B8%A4%E4%B8%AA%E5%AE%9E%E7%94%A8%E5%A5%BD%E7%8E%A9%E7%9A%84%E7%BD%91%E7%AB%99/></a>
-</article>
 <footer class=page-footer>
 <nav class=pagination>
 <a class=prev href=https://www.soundpill.cn/>« Prev Page</a>
+<a class=next href=https://www.soundpill.cn/page/3/>Next Page »</a>
 </nav>
 </footer>
 </main>

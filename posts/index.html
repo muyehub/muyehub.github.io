@@ -58,6 +58,21 @@
 </header>
 <article class=post-entry>
 <header class=entry-header>
+<h2>由 append 引发的一个疑问<sup><span class=entry-isdraft>&nbsp;&nbsp;[draft]</span></sup>
+</h2>
+</header>
+<section class=entry-content>
+<p>由 append 引发的一个疑问 我们先来看一个问题
+package main import "fmt" func main() { a := make([]int, 0, 5) AddElm(a, 5) fmt.Println(a) } func AddElm(a []int, i int) { a = append(a, i) } 上面这一段代码中，a 这个切片会输出什么呢？可以试着运行一下
+答案是空切片，为什么呢？首先我们知道 append 这个操作，在容量足够的情况下是不会新生成一个 slice 来进行扩容的，所以这里排除这种情况。
+已知这个 slice 也是值传递的方式传入的，那么是不是因为他 copy 了一份数据到函数内部从而导致的函数内外不一致的情况呢？我们打印地址看一下
+package main import "fmt" func main() { a := make([]int, 0, 5) fmt.Printf("before: %p\n", a) AddElm(a, 5) fmt.Printf("after: %p\n", a) fmt.Println(a) } func AddElm(a []int, i int) { a = append(a, i) fmt....</p>
+</section>
+<footer class=entry-footer><span title="2022-02-20 18:02:55 +0800 CST">February 20, 2022</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;Max</footer>
+<a class=entry-link aria-label="post link to 由 append 引发的一个疑问" href=https://www.soundpill.cn/posts/2022-02-20-golang-slice-question/></a>
+</article>
+<article class=post-entry>
+<header class=entry-header>
 <h2>golang 中提防竞态条件的产生<sup><span class=entry-isdraft>&nbsp;&nbsp;[draft]</span></sup>
 </h2>
 </header>
@@ -185,19 +200,6 @@ waitTime := 30 wait := time.Duration(waitTime) * time.Second 当 waitGroup 使�
 </section>
 <footer class=entry-footer><span title="2021-01-18 21:50:43 +0800 CST">January 18, 2021</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;max</footer>
 <a class=entry-link aria-label="post link to 一道go面试题" href=https://www.soundpill.cn/posts/2021-01-18-go-question/></a>
-</article>
-<article class=post-entry>
-<header class=entry-header>
-<h2>i++是原子操作吗?
-</h2>
-</header>
-<section class=entry-content>
-<p>i++ 是原子操作吗? 不是, i++ 要完成的操作要先读取变量 i 的值, 对这个值加 1, 再把结果保存到 i 中. 所以不是原子操作.
-我们来看下面的代码
-这段代码是启动 10 个线程, 每个线程对 count 执行 10 万次自增操作, 直观上来看最后 count 的结果是 100 万, 但因为自增操作不是原子性的, 所以最终的结果每次都会不一样, 会有协程做重复操作. 那应该怎么解决这个问题呢? 并发资源的读取问题最直接的解决方法就是加锁. 改良后如下:</p>
-</section>
-<footer class=entry-footer><span title="2021-01-17 09:47:29 +0800 CST">January 17, 2021</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;max</footer>
-<a class=entry-link aria-label="post link to i++是原子操作吗?" href=https://www.soundpill.cn/posts/2021-01-17-iplusplus/></a>
 </article>
 <footer class=page-footer>
 <nav class=pagination>

@@ -9,7 +9,20 @@
       <link>https://www.soundpill.cn/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 09 Feb 2022 22:33:25 +0800</lastBuildDate><atom:link href="https://www.soundpill.cn/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 20 Feb 2022 18:02:55 +0800</lastBuildDate><atom:link href="https://www.soundpill.cn/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>由 append 引发的一个疑问</title>
+      <link>https://www.soundpill.cn/posts/2022-02-20-golang-slice-question/</link>
+      <pubDate>Sun, 20 Feb 2022 18:02:55 +0800</pubDate>
+      
+      <guid>https://www.soundpill.cn/posts/2022-02-20-golang-slice-question/</guid>
+      <description>由 append 引发的一个疑问 我们先来看一个问题
+package main import &amp;#34;fmt&amp;#34; func main() { a := make([]int, 0, 5) AddElm(a, 5) fmt.Println(a) } func AddElm(a []int, i int) { a = append(a, i) } 上面这一段代码中，a 这个切片会输出什么呢？可以试着运行一下
+答案是空切片，为什么呢？首先我们知道 append 这个操作，在容量足够的情况下是不会新生成一个 slice 来进行扩容的，所以这里排除这种情况。
+已知这个 slice 也是值传递的方式传入的，那么是不是因为他 copy 了一份数据到函数内部从而导致的函数内外不一致的情况呢？我们打印地址看一下
+package main import &amp;#34;fmt&amp;#34; func main() { a := make([]int, 0, 5) fmt.Printf(&amp;#34;before: %p\n&amp;#34;, a) AddElm(a, 5) fmt.Printf(&amp;#34;after: %p\n&amp;#34;, a) fmt.Println(a) } func AddElm(a []int, i int) { a = append(a, i) fmt.</description>
+    </item>
+    
     <item>
       <title>golang 中提防竞态条件的产生</title>
       <link>https://www.soundpill.cn/posts/2022-02-09-go-race-data/</link>
