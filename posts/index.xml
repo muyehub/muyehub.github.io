@@ -2,278 +2,656 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Posts on Beoning</title>
-    <link>https://www.soundpill.cn/posts/</link>
+    <link>http://localhost:1313/posts/</link>
     <description>Recent content in Posts on Beoning</description>
     <image>
-      <url>https://www.soundpill.cn/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
-      <link>https://www.soundpill.cn/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+      <title>Beoning</title>
+      <url>http://localhost:1313/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>http://localhost:1313/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
-    <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sun, 20 Feb 2022 18:02:55 +0800</lastBuildDate><atom:link href="https://www.soundpill.cn/posts/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- 0.140.2</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 20 Feb 2022 18:02:55 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>由 append 引发的一个疑问</title>
-      <link>https://www.soundpill.cn/posts/2022-02-20-golang-slice-question/</link>
+      <link>http://localhost:1313/posts/2022-02-20-golang-slice-question/</link>
       <pubDate>Sun, 20 Feb 2022 18:02:55 +0800</pubDate>
-      
-      <guid>https://www.soundpill.cn/posts/2022-02-20-golang-slice-question/</guid>
-      <description>由 append 引发的一个疑问 我们先来看一个问题
-package main import &amp;#34;fmt&amp;#34; func main() { a := make([]int, 0, 5) AddElm(a, 5) fmt.Println(a) } func AddElm(a []int, i int) { a = append(a, i) } 上面这一段代码中，a 这个切片会输出什么呢？可以试着运行一下
-答案是空切片，为什么呢？首先我们知道 append 这个操作，在容量足够的情况下是不会新生成一个 slice 来进行扩容的，所以这里排除这种情况。
-已知这个 slice 也是值传递的方式传入的，那么是不是因为他 copy 了一份数据到函数内部从而导致的函数内外不一致的情况呢？我们打印地址看一下
-package main import &amp;#34;fmt&amp;#34; func main() { a := make([]int, 0, 5) fmt.Printf(&amp;#34;before: %p\n&amp;#34;, a) AddElm(a, 5) fmt.Printf(&amp;#34;after: %p\n&amp;#34;, a) fmt.Println(a) } func AddElm(a []int, i int) { a = append(a, i) fmt.</description>
+      <guid>http://localhost:1313/posts/2022-02-20-golang-slice-question/</guid>
+      <description>&lt;h4 id=&#34;由-append-引发的一个疑问&#34;&gt;由 append 引发的一个疑问&lt;/h4&gt;
+&lt;p&gt;我们先来看一个问题&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-Go&#34; data-lang=&#34;Go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;package&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;fmt&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; make([]&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;AddElm&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;fmt&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Println&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;AddElm&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt; []&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;i&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt; = append(&lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;i&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;上面这一段代码中，a 这个切片会输出什么呢？可以试着运行一下&lt;/p&gt;
+&lt;p&gt;答案是空切片，为什么呢？首先我们知道 append 这个操作，在容量足够的情况下是不会新生成一个 slice 来进行扩容的，所以这里排除这种情况。&lt;/p&gt;
+&lt;p&gt;已知这个 slice 也是值传递的方式传入的，那么是不是因为他 copy 了一份数据到函数内部从而导致的函数内外不一致的情况呢？我们打印地址看一下&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-Go&#34; data-lang=&#34;Go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;package&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;fmt&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; make([]&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;fmt&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Printf&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;before: %p\n&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;AddElm&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;fmt&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Printf&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;after: %p\n&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;fmt&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Println&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;AddElm&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt; []&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;i&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt; = append(&lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;i&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;fmt&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Printf&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;under: %p\n&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// 输出如下：
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// before: 0xc0000a8030
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// under: 0xc0000a8030
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// after: 0xc0000a8030
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// []
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;可以发现，在申明开始-函数内-函数追加赋值结束时打印，这三个地址都是一样的。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>golang 中提防竞态条件的产生</title>
-      <link>https://www.soundpill.cn/posts/2022-02-09-go-race-data/</link>
+      <link>http://localhost:1313/posts/2022-02-09-go-race-data/</link>
       <pubDate>Wed, 09 Feb 2022 22:33:25 +0800</pubDate>
-      
-      <guid>https://www.soundpill.cn/posts/2022-02-09-go-race-data/</guid>
-      <description>我们来看下面这段代码：
-package main import ( &amp;#34;time&amp;#34; ) type testInt struct { Num int } func main() { a := make([]int, 0) for i := 1; i &amp;lt; 10; i++ { a = append(a, i) } t := testInt{Num: 1} for _, v := range a { go func(i int) { t.Num = i pTs(t) }(v) } time.Sleep(time.Second*3) } func pTs(t testInt) { println(t.Num) } 你可以复制出来执行一下，会不会有问题呢？从执行的结果来看，是没问题的。 但是如果你要加上 -race 参数去执行，就会发现在 t.Num = i 这里报错了，这是为什么呢？ 这就要说到一个 go 语言的编程常识了(可能不限语言)，就是在多个协程去处理一个变量的时候记得要加锁或者用 atomic 进行原子操作，不管结果是否正常。因为如果不这么做，有天出了问题可是不好排查的。</description>
+      <guid>http://localhost:1313/posts/2022-02-09-go-race-data/</guid>
+      <description>&lt;p&gt;我们来看下面这段代码：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-Go&#34; data-lang=&#34;Go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;package&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; (
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;time&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;type&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;testInt&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;struct&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#a6e22e&#34;&gt;Num&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; make([]&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;i&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;; &lt;span style=&#34;color:#a6e22e&#34;&gt;i&lt;/span&gt; &amp;lt; &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;; &lt;span style=&#34;color:#a6e22e&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt; = append(&lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;i&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#a6e22e&#34;&gt;t&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;testInt&lt;/span&gt;{&lt;span style=&#34;color:#a6e22e&#34;&gt;Num&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;_&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;v&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;range&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#66d9ef&#34;&gt;go&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;i&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			&lt;span style=&#34;color:#a6e22e&#34;&gt;t&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Num&lt;/span&gt; = &lt;span style=&#34;color:#a6e22e&#34;&gt;i&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			&lt;span style=&#34;color:#a6e22e&#34;&gt;pTs&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;t&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		}(&lt;span style=&#34;color:#a6e22e&#34;&gt;v&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Sleep&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Second&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;pTs&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;t&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;testInt&lt;/span&gt;) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	println(&lt;span style=&#34;color:#a6e22e&#34;&gt;t&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Num&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;你可以复制出来执行一下，会不会有问题呢？从执行的结果来看，是没问题的。
+但是如果你要加上 -race 参数去执行，就会发现在 t.Num = i 这里报错了，这是为什么呢？
+这就要说到一个 go 语言的编程常识了(可能不限语言)，就是在多个协程去处理一个变量的时候记得要加锁或者用 atomic 进行原子操作，不管结果是否正常。因为如果不这么做，有天出了问题可是不好排查的。&lt;/p&gt;
+&lt;p&gt;建议大家拿到陌生代码，都 -race 去检测一下，就是这样。&lt;/p&gt;
+&lt;p&gt;对于为什么不加锁执行起来也没有问题，我还没有想明白，希望有大明白能指点一二。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>控制 goroutine 执行顺序的一例</title>
-      <link>https://www.soundpill.cn/posts/2022-02-08-go-alter-print/</link>
+      <link>http://localhost:1313/posts/2022-02-08-go-alter-print/</link>
       <pubDate>Tue, 08 Feb 2022 22:14:29 +0800</pubDate>
-      
-      <guid>https://www.soundpill.cn/posts/2022-02-08-go-alter-print/</guid>
-      <description>依次打印 题目：依次输出 dog、pig、sheep，并执行 100 次，每个输出都需要一个单独的 goroutine
-这里我们通过有缓冲的容量为 1 的 channel 来标记状态，通过 for-select 结构来控制当前要输出哪一个单词，因为 select 在 channel 阻塞的时候不会执行对应的 case，我们可以通过这个特性来操作。
-具体思路如下：
- 设置三个 channel，初始化时使 dog 的 channel 中有一条数据，这样 select 就会先输出 dog 然后在 dog 的 case 中结束的时候给 pig 的 channel 中新增一条数据，这样下次就会进入 pig 的 case 进行输出操作 过程中我们可以使用 atomic 包来控制次数，不会产生并发问题  具体代码如下：
-package main import ( &amp;#34;fmt&amp;#34; &amp;#34;sync&amp;#34; &amp;#34;sync/atomic&amp;#34; ) var wg sync.WaitGroup var counter uint64 = 0 var dogChan = make(chan struct{}, 1) var pigChan = make(chan struct{}, 1) var sheepChan = make(chan struct{}, 1) func main() { wg.</description>
+      <guid>http://localhost:1313/posts/2022-02-08-go-alter-print/</guid>
+      <description>&lt;h3 id=&#34;依次打印&#34;&gt;依次打印&lt;/h3&gt;
+&lt;p&gt;题目：依次输出 dog、pig、sheep，并执行 100 次，每个输出都需要一个单独的 goroutine&lt;/p&gt;
+&lt;p&gt;这里我们通过有缓冲的容量为 1 的 channel 来标记状态，通过 for-select 结构来控制当前要输出哪一个单词，因为 select 在 channel 阻塞的时候不会执行对应的 case，我们可以通过这个特性来操作。&lt;/p&gt;
+&lt;p&gt;具体思路如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;设置三个 channel，初始化时使 dog 的 channel 中有一条数据，这样 select 就会先输出 dog&lt;/li&gt;
+&lt;li&gt;然后在 dog 的 case 中结束的时候给 pig 的 channel 中新增一条数据，这样下次就会进入 pig 的 case 进行输出操作&lt;/li&gt;
+&lt;li&gt;过程中我们可以使用 atomic 包来控制次数，不会产生并发问题&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;具体代码如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-Go&#34; data-lang=&#34;Go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;package&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;fmt&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;sync&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;sync/atomic&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;wg&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;sync&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;WaitGroup&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;counter&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;uint64&lt;/span&gt; = &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;dogChan&lt;/span&gt; = make(&lt;span style=&#34;color:#66d9ef&#34;&gt;chan&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;struct&lt;/span&gt;{}, &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;pigChan&lt;/span&gt; = make(&lt;span style=&#34;color:#66d9ef&#34;&gt;chan&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;struct&lt;/span&gt;{}, &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;sheepChan&lt;/span&gt; = make(&lt;span style=&#34;color:#66d9ef&#34;&gt;chan&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;struct&lt;/span&gt;{}, &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#a6e22e&#34;&gt;wg&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Add&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;go&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;animalPrint&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#a6e22e&#34;&gt;dogChan&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;struct&lt;/span&gt;{}{}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#a6e22e&#34;&gt;wg&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Wait&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;animalPrint&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;counter&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; uint64(&lt;span style=&#34;color:#ae81ff&#34;&gt;300&lt;/span&gt;) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			&lt;span style=&#34;color:#a6e22e&#34;&gt;wg&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Done&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			&lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#66d9ef&#34;&gt;select&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#66d9ef&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;dogChan&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			&lt;span style=&#34;color:#a6e22e&#34;&gt;fmt&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Println&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;dog&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			&lt;span style=&#34;color:#a6e22e&#34;&gt;atomic&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;AddUint64&lt;/span&gt;(&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;counter&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			&lt;span style=&#34;color:#a6e22e&#34;&gt;pigChan&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;struct&lt;/span&gt;{}{}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#66d9ef&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;pigChan&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			&lt;span style=&#34;color:#a6e22e&#34;&gt;fmt&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Println&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;pig&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			&lt;span style=&#34;color:#a6e22e&#34;&gt;atomic&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;AddUint64&lt;/span&gt;(&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;counter&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			&lt;span style=&#34;color:#a6e22e&#34;&gt;sheepChan&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;struct&lt;/span&gt;{}{}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#66d9ef&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;sheepChan&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			&lt;span style=&#34;color:#a6e22e&#34;&gt;fmt&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Println&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;sheep&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			&lt;span style=&#34;color:#a6e22e&#34;&gt;atomic&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;AddUint64&lt;/span&gt;(&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;counter&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			&lt;span style=&#34;color:#a6e22e&#34;&gt;dogChan&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;struct&lt;/span&gt;{}{}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;是不是觉得重复代码有点多？
+我们还是依照上面的思路，把代码换种方式实现：&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>推荐两个学习 go 的网站</title>
-      <link>https://www.soundpill.cn/posts/2022-01-22-study-go-website/</link>
+      <link>http://localhost:1313/posts/2022-01-22-study-go-website/</link>
       <pubDate>Sat, 22 Jan 2022 17:24:26 +0800</pubDate>
-      
-      <guid>https://www.soundpill.cn/posts/2022-01-22-study-go-website/</guid>
-      <description>一个就是 exercism, 这里不光可以练习 go 的基本语法和常识，还可以选择其他的语言，大部分的编程语言都是可以学习的，通过一个个任务去完成来掌握一门编程语言，很有成就感。
-在掌握了基本的语法后就需要项目来练手，但是不知道应该写些什么东西的时候可以参考gophercises这个网站，里面会有各种练手项目，比如如何生成一个短链接，如何制作一个文件重命名工具等等。
-经过两个网站的学习，再加上一点点悟性，相信很快就可以上手了</description>
+      <guid>http://localhost:1313/posts/2022-01-22-study-go-website/</guid>
+      <description>&lt;p&gt;一个就是 &lt;a href=&#34;https://exercism.org/&#34;&gt;exercism&lt;/a&gt;, 这里不光可以练习 go 的基本语法和常识，还可以选择其他的语言，大部分的编程语言都是可以学习的，通过一个个任务去完成来掌握一门编程语言，很有成就感。&lt;/p&gt;
+&lt;p&gt;在掌握了基本的语法后就需要项目来练手，但是不知道应该写些什么东西的时候可以参考&lt;a href=&#34;https://gophercises.com/&#34;&gt;gophercises&lt;/a&gt;这个网站，里面会有各种练手项目，比如如何生成一个短链接，如何制作一个文件重命名工具等等。&lt;/p&gt;
+&lt;p&gt;经过两个网站的学习，再加上一点点悟性，相信很快就可以上手了&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>用 go 实现一个简易聊天室</title>
-      <link>https://www.soundpill.cn/posts/2022-01-22-go-simple-chatroom/</link>
+      <link>http://localhost:1313/posts/2022-01-22-go-simple-chatroom/</link>
       <pubDate>Sat, 22 Jan 2022 16:27:33 +0800</pubDate>
-      
-      <guid>https://www.soundpill.cn/posts/2022-01-22-go-simple-chatroom/</guid>
-      <description>概述 first，我们需要创建一个房间，可以使用 net 包直接启动一个常驻的 tcp 服务 second，我们需要有用户的信息，用户通过访问 tcp 服务来进入房间 end，我们需要在用户进入/离开房间时对其他用户进行广播，还需要将用户在房间内产生的消息发送到房间里让其他用户看见
-实现 我们通过设定三个 channel 来分别标记用户进入房间、用户离开房间和用户广播消息的存储。 首先，我们创建一个 tcp 服务器，新建一个 server.go 的文件，然后通过 net 包来初始化 tcp 服务器，端口就选择 2022。监听器创建完毕后我们可以看到它里面有三个方法，分别是 Accept、Close 和 Addr，Close 就是用来关闭这个端口监听，Addr 就是返回监听器所对应的 ip，这里默认的话也就是本地的 ip，Accept 方法就是返回一个连接，一旦有人请求这个文件，就意味着产生一个连接，如果没有人请求那么 Accept 就会等待，这里我们用一个死循环来让它可以重复的接受多个连接请求。
-listener, err := net.Listen(&amp;#34;tcp&amp;#34;, &amp;#34;:2022&amp;#34;) if err != nil { panic(err) } for { conn, err := listener.Accept() if err != nil { log.Println(err) continue } go handleConn(conn) } 然后就是 handleConn 这个方法，将每次的连接传入进去，然后初始化连接的用户信息，再通过一个协程将用户消息通道里的信息拿出来消费，接下来做的就是向用户进入/离开的消息 channel 中写入该用户已经上线或用户离开的消息，然后再将用户记录到用户列表中。最后通过扫描该连接来读取用户的输入内容。
-func handleConn(conn net.</description>
+      <guid>http://localhost:1313/posts/2022-01-22-go-simple-chatroom/</guid>
+      <description>&lt;h3 id=&#34;概述&#34;&gt;概述&lt;/h3&gt;
+&lt;p&gt;first，我们需要创建一个房间，可以使用 net 包直接启动一个常驻的 tcp 服务
+second，我们需要有用户的信息，用户通过访问 tcp 服务来进入房间
+end，我们需要在用户进入/离开房间时对其他用户进行广播，还需要将用户在房间内产生的消息发送到房间里让其他用户看见&lt;/p&gt;
+&lt;h3 id=&#34;实现&#34;&gt;实现&lt;/h3&gt;
+&lt;p&gt;我们通过设定三个 channel 来分别标记用户进入房间、用户离开房间和用户广播消息的存储。
+首先，我们创建一个 tcp 服务器，新建一个 server.go 的文件，然后通过 net 包来初始化 tcp 服务器，端口就选择 2022。监听器创建完毕后我们可以看到它里面有三个方法，分别是 Accept、Close 和 Addr，Close 就是用来关闭这个端口监听，Addr 就是返回监听器所对应的 ip，这里默认的话也就是本地的 ip，Accept 方法就是返回一个连接，一旦有人请求这个文件，就意味着产生一个连接，如果没有人请求那么 Accept 就会等待，这里我们用一个死循环来让它可以重复的接受多个连接请求。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#a6e22e&#34;&gt;listener&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;err&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;net&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Listen&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;tcp&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;:2022&amp;#34;&lt;/span&gt;)  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;err&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;nil&lt;/span&gt; {  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		 panic(&lt;span style=&#34;color:#a6e22e&#34;&gt;err&lt;/span&gt;)  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; {  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		 &lt;span style=&#34;color:#a6e22e&#34;&gt;conn&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;err&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;listener&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Accept&lt;/span&gt;()  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		 &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;err&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;nil&lt;/span&gt; {  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			 &lt;span style=&#34;color:#a6e22e&#34;&gt;log&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Println&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;err&lt;/span&gt;)  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			 &lt;span style=&#34;color:#66d9ef&#34;&gt;continue&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		 }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		 &lt;span style=&#34;color:#66d9ef&#34;&gt;go&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;handleConn&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;conn&lt;/span&gt;)  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然后就是 handleConn 这个方法，将每次的连接传入进去，然后初始化连接的用户信息，再通过一个协程将用户消息通道里的信息拿出来消费，接下来做的就是向用户进入/离开的消息 channel 中写入该用户已经上线或用户离开的消息，然后再将用户记录到用户列表中。最后通过扫描该连接来读取用户的输入内容。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;handleConn&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;conn&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;net&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Conn&lt;/span&gt;) {  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	 &lt;span style=&#34;color:#66d9ef&#34;&gt;defer&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;conn&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Close&lt;/span&gt;()  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	 &lt;span style=&#34;color:#75715e&#34;&gt;// 1. 新用户进来，构建该用户的实例  
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	 &lt;span style=&#34;color:#a6e22e&#34;&gt;user&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;User&lt;/span&gt;{  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		 &lt;span style=&#34;color:#a6e22e&#34;&gt;ID&lt;/span&gt;:             &lt;span style=&#34;color:#a6e22e&#34;&gt;GenUserID&lt;/span&gt;(),  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		 &lt;span style=&#34;color:#a6e22e&#34;&gt;Addr&lt;/span&gt;:           &lt;span style=&#34;color:#a6e22e&#34;&gt;conn&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;RemoteAddr&lt;/span&gt;().&lt;span style=&#34;color:#a6e22e&#34;&gt;String&lt;/span&gt;(),  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		 &lt;span style=&#34;color:#a6e22e&#34;&gt;EnterAt&lt;/span&gt;:        &lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Now&lt;/span&gt;(),  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		 &lt;span style=&#34;color:#a6e22e&#34;&gt;MessageChannel&lt;/span&gt;: make(&lt;span style=&#34;color:#66d9ef&#34;&gt;chan&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;string&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;8&lt;/span&gt;),  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	 }  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	 &lt;span style=&#34;color:#75715e&#34;&gt;// 2. 由于当前是在一个新的 goroutine 中进行读操作的， 所以需要开一个 goroutine 用户写操作。读写 goroutine 之间可以通过 channel 进行通信  
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	 &lt;span style=&#34;color:#66d9ef&#34;&gt;go&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;sendMessage&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;conn&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;user&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;MessageChannel&lt;/span&gt;)  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	 &lt;span style=&#34;color:#75715e&#34;&gt;// 3. 给当前用户发送欢迎信息，向所有用户告知新用户到来  
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	 &lt;span style=&#34;color:#a6e22e&#34;&gt;user&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;MessageChannel&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Welcome, &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;user&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;String&lt;/span&gt;()  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	 &lt;span style=&#34;color:#a6e22e&#34;&gt;messageChannel&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;user:`&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;strconv&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Itoa&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;user&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;ID&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;` has enter&amp;#34;&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	 &lt;span style=&#34;color:#75715e&#34;&gt;// 4. 记录到全局用户列表中，避免用锁  
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	 &lt;span style=&#34;color:#a6e22e&#34;&gt;enteringChannel&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;user&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	   &lt;span style=&#34;color:#75715e&#34;&gt;// 5. 循环读取用户输入  
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	 &lt;span style=&#34;color:#a6e22e&#34;&gt;input&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;bufio&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;NewScanner&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;conn&lt;/span&gt;)  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	 &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;input&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Scan&lt;/span&gt;() {  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		 &lt;span style=&#34;color:#a6e22e&#34;&gt;messageChannel&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;strconv&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Itoa&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;user&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;ID&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;:&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;input&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Text&lt;/span&gt;()  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	 }  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	 &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;err&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;input&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Err&lt;/span&gt;(); &lt;span style=&#34;color:#a6e22e&#34;&gt;err&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;nil&lt;/span&gt; {  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		 &lt;span style=&#34;color:#a6e22e&#34;&gt;log&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Println&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;读取错误：&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;err&lt;/span&gt;)  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	 }  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	 &lt;span style=&#34;color:#75715e&#34;&gt;// 6. 用户离开  
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	 &lt;span style=&#34;color:#a6e22e&#34;&gt;leavingChannel&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;user&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	 &lt;span style=&#34;color:#a6e22e&#34;&gt;messageChannel&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;user:`&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;strconv&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Itoa&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;user&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;ID&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;` has left&amp;#34;&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;上面这段代码有严格的执行顺序，我们可以看到最后连用户离开消息也一并发送但是却没有看到判断连接断开的代码，那是因为上面监听用户输入的代码阻塞了流程，当用户断开时自然就会往下走了。如果要手动判断 net.Conn 是否断开，然后再继续操作的话，可以使用一个 byte 类型的切片，将当前时间通过 net 包下的 SetReadDeadline 函数传入，然后使用 net 包下的 read 方法来读取这个 byte 切片，当发生错误信息并且错误信息是 io.EOF 类型时，说明连接已经断开，具体代码可以参考这里：&lt;a href=&#34;https://web.archive.org/web/20140801101158/http://osdir.com/ml/go-language-discuss/2012-08/msg01586.html&#34;&gt;Best way to reliably detect that a TCP connection is closed&lt;/a&gt;&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>将视频切割为均等的时间长度</title>
-      <link>https://www.soundpill.cn/posts/2021-12-02-cut-video-avg/</link>
+      <link>http://localhost:1313/posts/2021-12-02-cut-video-avg/</link>
       <pubDate>Thu, 02 Dec 2021 14:48:45 +0800</pubDate>
-      
-      <guid>https://www.soundpill.cn/posts/2021-12-02-cut-video-avg/</guid>
-      <description>前情提要 有时候在某些软件中将单次可发送的视频时长限制为 5 分钟或者 15 分钟, 总之就是一个固定的长度, 这样在我们发送超过时长的视频时会比较不方便.
-所以写一段程序来自动按照传入的时间来等分视频.
-当然这只是其中一个场景.
-利用 goroutine 和 FFmpeg 首先获取视频长度信息可以通过 ffprobe 命令来获取, 这个是 FFmpeg 下的一个工具包, 安装 FFmpeg 后就会有了.
-然后拿到视频总时长后根据传入的分钟数来分割视频, 这时候就需要用到 ffmpeg 命令了.
-最后启动 goroutine 来异步分割每一段视频, 最终完成.
-工具地址 https://github.com/muyehub/cut_video_avg</description>
+      <guid>http://localhost:1313/posts/2021-12-02-cut-video-avg/</guid>
+      <description>&lt;h3 id=&#34;前情提要&#34;&gt;前情提要&lt;/h3&gt;
+&lt;p&gt;有时候在某些软件中将单次可发送的视频时长限制为 5 分钟或者 15 分钟, 总之就是一个固定的长度, 这样在我们发送超过时长的视频时会比较不方便.&lt;/p&gt;
+&lt;p&gt;所以写一段程序来自动按照传入的时间来等分视频.&lt;/p&gt;
+&lt;p&gt;当然这只是其中一个场景.&lt;/p&gt;
+&lt;h3 id=&#34;利用-goroutine-和-ffmpeg&#34;&gt;利用 goroutine 和 FFmpeg&lt;/h3&gt;
+&lt;p&gt;首先获取视频长度信息可以通过 ffprobe 命令来获取, 这个是 FFmpeg 下的一个工具包, 安装 FFmpeg 后就会有了.&lt;/p&gt;
+&lt;p&gt;然后拿到视频总时长后根据传入的分钟数来分割视频, 这时候就需要用到 ffmpeg 命令了.&lt;/p&gt;
+&lt;p&gt;最后启动 goroutine 来异步分割每一段视频, 最终完成.&lt;/p&gt;
+&lt;h3 id=&#34;工具地址&#34;&gt;工具地址&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/muyehub/cut&#34;&gt;https://github.com/muyehub/cut&lt;/a&gt;_video_avg&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>golang 编程陷阱---摘自《go 专家编程》</title>
-      <link>https://www.soundpill.cn/posts/2021-11-02-golang-coding-trap/</link>
+      <link>http://localhost:1313/posts/2021-11-02-golang-coding-trap/</link>
       <pubDate>Tue, 02 Nov 2021 23:47:33 +0800</pubDate>
-      
-      <guid>https://www.soundpill.cn/posts/2021-11-02-golang-coding-trap/</guid>
-      <description>关于切片扩容 在使用 append 向 slice 中追加元素时，如果 slice 容量不足以存储新元素，则会把当前切片扩容并产生一个新的切片。如下：
-package main import &amp;#34;fmt&amp;#34; func main() { s := make([]int, 0) w := append(s, 1) t := append(s, 2) v := append(s, 3) fmt.Printf(&amp;#34;%p, %p , %p , %p, %p&amp;#34;, s, w, t, v) } // 0x116ce80, 0xc00001c198 , 0xc00001c1a0 , 0xc00001c1a8 append 会每次都生成一个新的切片，并且每次都会做扩容操作，元切片 s 并没有改变任何。
-所以，在操作中要将 append 的返回值接收，如果不接收编译器会报错，如果用 _ 忽略返回值，则需要考虑扩容的情况，避免滥用。
-空切片 向 slice 中 append 空值(nil)时也会增加 slice 的长度，这在有些情况下可能会导致严重的错误，并且不易察觉，书中举了一个 Kubernetes 项目中的例子。
-有一个错误收集器，用来将验证函数的一系列错误收集到一个 slice 中，检查 slice 的长度如果大于 0 时，说明有错误产生，则程序退出，如下：</description>
+      <guid>http://localhost:1313/posts/2021-11-02-golang-coding-trap/</guid>
+      <description>&lt;h3 id=&#34;关于切片扩容&#34;&gt;关于切片扩容&lt;/h3&gt;
+&lt;p&gt;在使用 append 向 slice 中追加元素时，如果 slice 容量不足以存储新元素，则会把当前切片扩容并产生一个新的切片。如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;package&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;fmt&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   &lt;span style=&#34;color:#a6e22e&#34;&gt;s&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; make([]&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   &lt;span style=&#34;color:#a6e22e&#34;&gt;w&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; append(&lt;span style=&#34;color:#a6e22e&#34;&gt;s&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   &lt;span style=&#34;color:#a6e22e&#34;&gt;t&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; append(&lt;span style=&#34;color:#a6e22e&#34;&gt;s&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   &lt;span style=&#34;color:#a6e22e&#34;&gt;v&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; append(&lt;span style=&#34;color:#a6e22e&#34;&gt;s&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   &lt;span style=&#34;color:#a6e22e&#34;&gt;fmt&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Printf&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;%p, %p , %p , %p, %p&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;s&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;w&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;t&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;v&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// 0x116ce80, 0xc00001c198 , 0xc00001c1a0 , 0xc00001c1a8
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;append 会每次都生成一个新的切片，并且每次都会做扩容操作，元切片 s 并没有改变任何。&lt;/p&gt;
+&lt;p&gt;所以，在操作中要将 append 的返回值接收，如果不接收编译器会报错，如果用 _ 忽略返回值，则需要考虑扩容的情况，避免滥用。&lt;/p&gt;
+&lt;h3 id=&#34;空切片&#34;&gt;空切片&lt;/h3&gt;
+&lt;p&gt;向 slice 中 append 空值(nil)时也会增加 slice 的长度，这在有些情况下可能会导致严重的错误，并且不易察觉，书中举了一个 Kubernetes 项目中的例子。&lt;/p&gt;
+&lt;p&gt;有一个错误收集器，用来将验证函数的一系列错误收集到一个 slice 中，检查 slice 的长度如果大于 0 时，说明有错误产生，则程序退出，如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;package&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; (
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;errors&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;os&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   &lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;errs&lt;/span&gt; []&lt;span style=&#34;color:#66d9ef&#34;&gt;error&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   &lt;span style=&#34;color:#a6e22e&#34;&gt;errs&lt;/span&gt; = append(&lt;span style=&#34;color:#a6e22e&#34;&gt;errs&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;ValidateName&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;张三&amp;#34;&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; len(&lt;span style=&#34;color:#a6e22e&#34;&gt;errs&lt;/span&gt;) &amp;gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      println(&lt;span style=&#34;color:#a6e22e&#34;&gt;errs&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#a6e22e&#34;&gt;os&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Exit&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ValidateName&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;name&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;string&lt;/span&gt;) &lt;span style=&#34;color:#66d9ef&#34;&gt;error&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;name&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;nil&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;errors&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;New&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;empty name&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在使用 append 函数时，谨记 append 可能会追加 nil 值，应该尽量避免追加无意义的元素。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>php-tips</title>
-      <link>https://www.soundpill.cn/posts/2021-08-16-php-tips/</link>
+      <link>http://localhost:1313/posts/2021-08-16-php-tips/</link>
       <pubDate>Mon, 16 Aug 2021 19:03:01 +0800</pubDate>
-      
-      <guid>https://www.soundpill.cn/posts/2021-08-16-php-tips/</guid>
-      <description>在 foreach 中不要使用 array_merge，不仅慢而且耗费内存，可以在 foreach 中对要合并的数组进行赋值，在 foreach 外部统一进行合并，具体性能差异可以参考这篇文章：不要在循环体中使用 array_merge()
-  在 foreach 中也不要使用 array_push，可以通过向数组中赋值的方式代替，比如：$students[] = $student[&amp;lsquo;id&amp;rsquo;]， 而不是 array_push($students, $student[&amp;lsquo;id&amp;rsquo;])，具体性能差异可以参考这篇文章：不要在循环体中使用 array_push()
-  针对一些查询较为复杂或者比较核心的逻辑里的 sql 查询，可以将 sql 语句写到注释中，这样看代码的时候不用再去拼接 sql，直接用注释中的 sql 拿来排查问题
-  如果使用 phpstorm 可以安装 php inspections 插件来进行代码的静态分析，可以帮助查找代码规范，语法漏洞，函数使用方式方面的错误。其他的一些代码质量工具可以配置使用 phpcs，phpmd，phpcs-fixer，psalm，phpstan 等。而且可以通过 phpstorm 的热键录制功能，将徽标键 + s 设置为 phpcs-fixer，format code 的快捷键，这样写完时可以通过快捷键格式化代码。
-  为避免在项目中将 dd，var_dump，exit，die 等函数提交到远程版本库中，可以在项目的 .git/hooks/pre-commit 中进行控制，加入下面的代码，每次提交时可以检测到。参考的这个：pre-commit
-  VAR=$(git diff --cached --diff-filter=ACMR | grep -wiE &amp;#34;var_dump|echo|exit|dd|die|console.log&amp;#34;) if [ !</description>
+      <guid>http://localhost:1313/posts/2021-08-16-php-tips/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;在 foreach 中不要使用 array_merge，不仅慢而且耗费内存，可以在 foreach 中对要合并的数组进行赋值，在 foreach 外部统一进行合并，具体性能差异可以参考这篇文章：&lt;a href=&#34;https://learnku.com/articles/25111&#34;&gt;不要在循环体中使用 array_merge()&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在 foreach 中也不要使用 array_push，可以通过向数组中赋值的方式代替，比如：$students[] = $student[&amp;lsquo;id&amp;rsquo;]， 而不是 array_push($students, $student[&amp;lsquo;id&amp;rsquo;])，具体性能差异可以参考这篇文章：&lt;a href=&#34;https://learnku.com/articles/25110&#34;&gt;不要在循环体中使用 array_push()&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;针对一些查询较为复杂或者比较核心的逻辑里的 sql 查询，可以将 sql 语句写到注释中，这样看代码的时候不用再去拼接 sql，直接用注释中的 sql 拿来排查问题&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;如果使用 phpstorm 可以安装 php inspections 插件来进行代码的静态分析，可以帮助查找代码规范，语法漏洞，函数使用方式方面的错误。其他的一些代码质量工具可以配置使用 phpcs，phpmd，phpcs-fixer，psalm，phpstan 等。而且可以通过 phpstorm 的热键录制功能，将徽标键 + s 设置为 phpcs-fixer，format code 的快捷键，这样写完时可以通过快捷键格式化代码。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;为避免在项目中将 dd，var_dump，exit，die 等函数提交到远程版本库中，可以在项目的 .git/hooks/pre-commit 中进行控制，加入下面的代码，每次提交时可以检测到。参考的这个：&lt;a href=&#34;https://gist.github.com/victorb/8334601&#34;&gt;pre-commit&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;VAR&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;$(&lt;/span&gt;git diff --cached --diff-filter&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;ACMR | grep -wiE &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;var_dump|echo|exit|dd|die|console.log&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt; ! -z &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;\$VAR&amp;#34;&lt;/span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;; &lt;span style=&#34;color:#66d9ef&#34;&gt;then&lt;/span&gt;  echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;You&amp;#39;ve left a dd, var_dump, exit, die or console.log in one of your files! You don&amp;#39;t really want to commit this so aborting now...&amp;#34;&lt;/span&gt; exit &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;在 for 循环的条件中不要使用函数，例如使用 count 来计算总数，这样每次循环都会执行一遍，不太好&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>go-tips</title>
-      <link>https://www.soundpill.cn/posts/2021-08-16-go-tips/</link>
+      <link>http://localhost:1313/posts/2021-08-16-go-tips/</link>
       <pubDate>Mon, 16 Aug 2021 18:40:38 +0800</pubDate>
-      
-      <guid>https://www.soundpill.cn/posts/2021-08-16-go-tips/</guid>
-      <description>当把时间作为一个变量传递时，可能会导致的问题，比如：  waitTime := 30 wait := waitTime * time.Second 这样子是错误的，因为 waitTime 不是 time.Duration 类型，但如果直接写 30 * time.Second 就会成功 在不太了解的情况下，我手动把 waitTime 通过“诡异”的方式变成了 time.Duration 类型
-waitTime := 30 * time.Second wait := waitTime * time.Second 这种情况下 wait 的值就变成了 88 万小时，不是预想的结果，正确的写法如下：
-waitTime := 30 wait := time.Duration(waitTime) * time.Second  当 waitGroup 使用时要清楚的知道 Done 方法的执行次数，如果是类似递归的结构，执行了多次 Done 方法，则会导致waitGroup 的计数器溢出，导致边界错误，如下：  这段代码运行时会导致 panic: sync: negative WaitGroup counter，所以我们在实际编写代码的过程中，如果有类似的情况，可以通过将有限次数的递归转换为迭代的形式来规避这种问题。总之，你需要明确的知道 Done 方法执行了几次。
-  在 goroutine 使用的过程中我们是无法拿到当前 goroutine 的报错信息的，从而可能需要额外建立一个通道，将报错信息传递到某一个 channel 中，然后监听 channel 来进行错误处理。官方提供了一项实验功能，可以用来解决这个问题。官方包在这里：golang.</description>
+      <guid>http://localhost:1313/posts/2021-08-16-go-tips/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;当把时间作为一个变量传递时，可能会导致的问题，比如：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;waitTime&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;30&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;wait&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;waitTime&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Second&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这样子是错误的，因为 waitTime 不是 time.Duration 类型，但如果直接写 30 * time.Second 就会成功    &lt;/p&gt;
+&lt;p&gt;在不太了解的情况下，我手动把 waitTime 通过“诡异”的方式变成了 time.Duration 类型&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;waitTime&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;30&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Second&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;wait&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;waitTime&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Second&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这种情况下 wait 的值就变成了 88 万小时，不是预想的结果，正确的写法如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;waitTime&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;30&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;wait&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Duration&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;waitTime&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Second&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;当 waitGroup 使用时要清楚的知道 Done 方法的执行次数，如果是类似递归的结构，执行了多次 Done 方法，则会导致waitGroup 的计数器溢出，导致边界错误，如下：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img alt=&#34;carbon.png&#34; loading=&#34;lazy&#34; src=&#34;https://img.fulitu.club/carbon.png&#34; title=&#34;carbon.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;这段代码运行时会导致 panic: sync: negative WaitGroup counter，所以我们在实际编写代码的过程中，如果有类似的情况，可以通过将有限次数的递归转换为迭代的形式来规避这种问题。总之，你需要明确的知道 Done 方法执行了几次。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;在 goroutine 使用的过程中我们是无法拿到当前 goroutine 的报错信息的，从而可能需要额外建立一个通道，将报错信息传递到某一个 channel 中，然后监听 channel 来进行错误处理。官方提供了一项实验功能，可以用来解决这个问题。官方包在这里：golang.org/x/sync/errgroup&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在开发过程中可以使用 go vet 工具来检测可能会出现的代码漏洞，帮助查漏补缺。&lt;a href=&#34;https://www.yuque.com/muyeyu/tutkq5/zxssg1&#34;&gt;使用方式&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在开发时要使用 internal 下的 log 包打日志才能被 ELK 捕获到，logrus 则不行，但如果命令行中的即使反馈日志，或者即时性比较强没有留存意义的日志，理当不计入 ELK 的统计当中，这时候需要用 logrus&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;字符串拼接使用哪种方式更快呢？&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;已知的四种方式分别是：1. 使用 fmt.Sprintf 函数 2. 使用加号拼接 3. 使用 strings 包 4. 使用 bytes&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>一道go面试题</title>
-      <link>https://www.soundpill.cn/posts/2021-01-18-go-question/</link>
+      <link>http://localhost:1313/posts/2021-01-18-go-question/</link>
       <pubDate>Mon, 18 Jan 2021 21:50:43 +0800</pubDate>
-      
-      <guid>https://www.soundpill.cn/posts/2021-01-18-go-question/</guid>
-      <description>一道 Go 面试题 请问下面这两段代码分别输出什么? 直接说结果, 如果你的电脑不是奔腾, 赛扬什么的处理器, 那结果基本是固定的, 就是啥也没有. 因为在 goroutine 反应过来之前, 程序已经执行完了, 还没来得及输出就结束了.
-要么, 你就让时间延迟几秒再结束, time.Sleep(10 * time.Second), 要么就像下面这样使用 WaitGroup 来等待 goroutine 结束 这不是问题的重点, 重点是这两种使用匿名函数的方式, 输出会有什么不一样吗?
-首先说第一种, 没有传参的情况下, 匿名函数中是使用的引用地址来操作的, 这时候 i 可能已经加到 10 了, 所以打印出来可能会是 10 个 10, 或者中间夹杂几个其他数字什么的. (而且这时候 goroutine 总是在 i++ 之后执行, 所以是从 1 - 10, 不是 0 - 9)
-第二种情况, 显而易见就是乱序的了, 会把 0 - 9 挨个输出, 但是是乱序的</description>
+      <guid>http://localhost:1313/posts/2021-01-18-go-question/</guid>
+      <description>&lt;h1 id=&#34;一道-go-面试题&#34;&gt;一道 Go 面试题&lt;/h1&gt;
+&lt;p&gt;请问下面这两段代码分别输出什么?
+&lt;img loading=&#34;lazy&#34; src=&#34;https://img.fulitu.club/go-1.png&#34;&gt;
+&lt;img loading=&#34;lazy&#34; src=&#34;https://img.fulitu.club/go-2.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;直接说结果, 如果你的电脑不是奔腾, 赛扬什么的处理器, 那结果基本是固定的, 就是啥也没有.
+因为在 goroutine 反应过来之前, 程序已经执行完了, 还没来得及输出就结束了.&lt;/p&gt;
+&lt;p&gt;要么, 你就让时间延迟几秒再结束, time.Sleep(10 * time.Second), 要么就像下面这样使用 WaitGroup 来等待 goroutine 结束
+&lt;img loading=&#34;lazy&#34; src=&#34;https://img.fulitu.club/go-1-1.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;这不是问题的重点, 重点是这两种使用匿名函数的方式, 输出会有什么不一样吗?&lt;/p&gt;
+&lt;p&gt;首先说第一种, 没有传参的情况下, 匿名函数中是使用的引用地址来操作的, 这时候 i 可能已经加到 10 了, 所以打印出来可能会是 10 个 10, 或者中间夹杂几个其他数字什么的. (而且这时候 goroutine 总是在 i++ 之后执行, 所以是从 1 - 10, 不是 0 - 9)&lt;/p&gt;
+&lt;p&gt;第二种情况, 显而易见就是乱序的了, 会把 0 - 9 挨个输出, 但是是乱序的&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>i&#43;&#43;是原子操作吗?</title>
-      <link>https://www.soundpill.cn/posts/2021-01-17-iplusplus/</link>
+      <link>http://localhost:1313/posts/2021-01-17-iplusplus/</link>
       <pubDate>Sun, 17 Jan 2021 09:47:29 +0800</pubDate>
-      
-      <guid>https://www.soundpill.cn/posts/2021-01-17-iplusplus/</guid>
-      <description>i++ 是原子操作吗? 不是, i++ 要完成的操作要先读取变量 i 的值, 对这个值加 1, 再把结果保存到 i 中. 所以不是原子操作.
-我们来看下面的代码
-这段代码是启动 10 个线程, 每个线程对 count 执行 10 万次自增操作, 直观上来看最后 count 的结果是 100 万, 但因为自增操作不是原子性的, 所以最终的结果每次都会不一样, 会有协程做重复操作. 那应该怎么解决这个问题呢? 并发资源的读取问题最直接的解决方法就是加锁. 改良后如下:</description>
+      <guid>http://localhost:1313/posts/2021-01-17-iplusplus/</guid>
+      <description>&lt;h1 id=&#34;i-是原子操作吗&#34;&gt;i++ 是原子操作吗?&lt;/h1&gt;
+&lt;p&gt;不是, i++ 要完成的操作要先读取变量 i 的值, 对这个值加 1, 再把结果保存到 i 中. 所以不是原子操作.&lt;/p&gt;
+&lt;p&gt;我们来看下面的代码&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;http://img.fulitu.club/waitgroup.png?123&#34;&gt;&lt;/p&gt;
+&lt;p&gt;这段代码是启动 10 个线程, 每个线程对 count 执行 10 万次自增操作, 直观上来看最后 count 的结果是 100 万, 但因为自增操作不是原子性的, 所以最终的结果每次都会不一样, 会有协程做重复操作. 那应该怎么解决这个问题呢? 并发资源的读取问题最直接的解决方法就是加锁. 改良后如下:&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;http://img.fulitu.club/waitgroup-lock.png&#34;&gt;&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Gerrit概念说明及使用</title>
-      <link>https://www.soundpill.cn/posts/2020-09-23-gerrit-desc/</link>
+      <link>http://localhost:1313/posts/2020-09-23-gerrit-desc/</link>
       <pubDate>Wed, 23 Sep 2020 18:35:52 +0800</pubDate>
-      
-      <guid>https://www.soundpill.cn/posts/2020-09-23-gerrit-desc/</guid>
-      <description>Gerrit介绍 Gerrit简介 Gerrit, 一种开放源代码的代码审查软件, 使用网页界面. 利用网页浏览器, 同一个团队的软件开发者, 可以相互审阅彼此修改后的代码, 决定是否能够提交, 回退或是继续修改. 它使用版本控制系统Git作为底层.
-它分支自Rietveld, 作者为Google公司的Shawn Pearce, 原先是为了管理Android项目而产生. 这个软件的名称, 来自于荷兰家具设计师赫里特·里特费尔德(Gerrit Rietveld).
-因为对访问控制表(ACL)相关的修正, 没有被集成进Rietveld, 之后Gerrit就由Rietveld分支出来, 形成独立软件项目.
-最早它是由Python写成, 在第二版后, 改成用Java与SQL. 使用Google Web Toolkit来产生前端的JavaScript.
-为什么需要Gerrit 首先, 代码审查可以帮助程序员了解系统功能, 从整体掌控代码质量, 其次, 通过代码审核可以及时止损, 构建更加健壮的系统代码.
-代码审核的建议(来自程序员客栈)   对事不对人, 大家都是同事, 在一个团队工作和气最重要. 不要在Code Review中说&amp;quot;你写的什么垃圾&amp;quot;这种话, 你可以说&amp;quot;这个变量名不是很好理解, 咱们换成xxx是不是更好&amp;quot;
-  每个Review至少给一条正面评价. Gerrit中有对代码点赞的功能, 可以时不时的使用一下.
-  保证发布的代码和评审意见的可读性.
-  用工具进行基础问题的自动化检查. 用Tab还是空格, 用两个空格还是四个空格, 缩进风格是使用K&amp;amp;R还是Allman. 这些问题可以使用php code sniffer解决, 团队应该把精力放在代码规范, 代码性能优化等地方.
-  全员参加Code Review, 并设定各部分负责人.
-  每个代码PR(Pull Request)内容一定要少.</description>
+      <guid>http://localhost:1313/posts/2020-09-23-gerrit-desc/</guid>
+      <description>&lt;h3 id=&#34;gerrit介绍&#34;&gt;Gerrit介绍&lt;/h3&gt;
+&lt;h4 id=&#34;gerrit简介&#34;&gt;Gerrit简介&lt;/h4&gt;
+&lt;p&gt;Gerrit, 一种开放源代码的代码审查软件, 使用网页界面. 利用网页浏览器, 同一个团队的软件开发者, 可以相互审阅彼此修改后的代码, 决定是否能够提交, 回退或是继续修改. 它使用版本控制系统Git作为底层.&lt;/p&gt;
+&lt;p&gt;它分支自Rietveld, 作者为Google公司的Shawn Pearce, 原先是为了管理Android项目而产生. 这个软件的名称, 来自于荷兰家具设计师赫里特·里特费尔德(Gerrit Rietveld).&lt;/p&gt;
+&lt;p&gt;因为对访问控制表(ACL)相关的修正, 没有被集成进Rietveld, 之后Gerrit就由Rietveld分支出来, 形成独立软件项目.&lt;/p&gt;
+&lt;p&gt;最早它是由Python写成, 在第二版后, 改成用Java与SQL. 使用Google Web Toolkit来产生前端的JavaScript.&lt;/p&gt;
+&lt;h4 id=&#34;为什么需要gerrit&#34;&gt;为什么需要Gerrit&lt;/h4&gt;
+&lt;p&gt;首先, 代码审查可以帮助程序员了解系统功能, 从整体掌控代码质量, 其次, 通过代码审核可以及时止损, 构建更加健壮的系统代码.&lt;/p&gt;
+&lt;h4 id=&#34;代码审核的建议来自程序员客栈httpswwwzhihucomquestion20046020answer555007256&#34;&gt;代码审核的建议(来自&lt;a href=&#34;https://www.zhihu.com/question/20046020/answer/555007256&#34;&gt;程序员客栈&lt;/a&gt;)&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;对事不对人, 大家都是同事, 在一个团队工作和气最重要. 不要在Code Review中说&amp;quot;你写的什么垃圾&amp;quot;这种话, 你可以说&amp;quot;这个变量名不是很好理解, 咱们换成xxx是不是更好&amp;quot;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;每个Review至少给一条正面评价. Gerrit中有对代码点赞的功能, 可以时不时的使用一下.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;保证发布的代码和评审意见的可读性.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;用工具进行基础问题的自动化检查. 用Tab还是空格, 用两个空格还是四个空格, 缩进风格是使用K&amp;amp;R还是Allman. 这些问题可以使用php code sniffer解决, 团队应该把精力放在代码规范, 代码性能优化等地方.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;全员参加Code Review, 并设定各部分负责人.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;每个代码PR(Pull Request)内容一定要少. Code Review效果和质量与PR代码量成反比, 提交的代码越多, Code Review的效果就越差. 所以要经常Code Review, 保证每个PR代码的量要少, 最多不超过300行/PR.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>为什么没有使用索引?</title>
-      <link>https://www.soundpill.cn/posts/2020-09-23-why-index-unuse/</link>
+      <link>http://localhost:1313/posts/2020-09-23-why-index-unuse/</link>
       <pubDate>Wed, 23 Sep 2020 11:41:43 +0800</pubDate>
-      
-      <guid>https://www.soundpill.cn/posts/2020-09-23-why-index-unuse/</guid>
-      <description>为什么没有用索引? 已知表 a 数据总量是 40w, 根据时间范围过滤出最近 7 天的数据, 语句如下:
-explain SELECT `question_id`, `student_id`, `teacher_id`, `question_type`, `question_step`, `question_no`, `level`, `class_id`, `lesson_id`, `teacher_get_at`, `teacher_set_at`, `status`, `teacher_from`, `wrong_reason_id`, `created_at`, `submit_time` FROM `answer_records` WHERE `updated_at` BETWEEN &#39;2020-07-14+00:00:00&#39; AND &#39;2020-07-21+00:00:00&#39; ORDER BY `created_at` DESC; 从 explain 返回的数据来看, 这条语句并没有使用到索引, 而且 mysql 进行了全表的扫描, 这个原因就是我们要查询的数据太多了.
-因为 innodb 引擎会在检索索引后进行回表的操作, mysql 觉得你查询的数据这么多, 我一个个回表的这点时间都可以把全表扫一次了, 我就没必要用索引再去回表了, 所以就会导致这个索引没有用到.
-那我们就想用索引, 应该怎么办呢?
-FROM `answer_records` FORCE INDEX(rqx) 在业务层面的话, 如果时间范围比较大, 可以分批次查询, 这样就会快一点, 如果是频繁需要此类操作的话, 还是建议将时间戳提早设计进表结构里, 通过 int 类型的时间戳进行范围查找和排序会事半功倍</description>
+      <guid>http://localhost:1313/posts/2020-09-23-why-index-unuse/</guid>
+      <description>&lt;h1 id=&#34;为什么没有用索引&#34;&gt;为什么没有用索引?&lt;/h1&gt;
+&lt;p&gt;已知表 a 数据总量是 40w, 根据时间范围过滤出最近 7 天的数据, 语句如下:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;explain SELECT
+	`question_id`,
+	`student_id`,
+	`teacher_id`,
+	`question_type`,
+	`question_step`,
+	`question_no`,
+	`level`,
+	`class_id`,
+	`lesson_id`,
+	`teacher_get_at`,
+	`teacher_set_at`,
+	`status`,
+	`teacher_from`,
+	`wrong_reason_id`,
+	`created_at`,
+	`submit_time`
+FROM
+	`answer_records`
+WHERE
+	`updated_at` BETWEEN &amp;#39;2020-07-14+00:00:00&amp;#39;
+	AND &amp;#39;2020-07-21+00:00:00&amp;#39;
+ORDER BY
+	`created_at` DESC;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img alt=&#34;-w883&#34; loading=&#34;lazy&#34; src=&#34;http://img.fulitu.club/15953253234282.jpg&#34;&gt;&lt;/p&gt;
+&lt;p&gt;从 explain 返回的数据来看, 这条语句并没有使用到索引, 而且 mysql 进行了全表的扫描, 这个原因就是我们要查询的数据太多了.&lt;/p&gt;
+&lt;p&gt;因为 innodb 引擎会在检索索引后进行回表的操作, mysql 觉得你查询的数据这么多, 我一个个回表的这点时间都可以把全表扫一次了, 我就没必要用索引再去回表了, 所以就会导致这个索引没有用到.&lt;/p&gt;
+&lt;p&gt;那我们就想用索引, 应该怎么办呢?&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;FROM
+    `answer_records` FORCE INDEX(rqx)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;在业务层面的话, 如果时间范围比较大, 可以分批次查询, 这样就会快一点, 如果是频繁需要此类操作的话, 还是建议将时间戳提早设计进表结构里, 通过 int 类型的时间戳进行范围查找和排序会事半功倍&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>在图片上添加文字或图片</title>
-      <link>https://www.soundpill.cn/posts/2020-01-10-draw-someting-on-picture/</link>
+      <link>http://localhost:1313/posts/2020-01-10-draw-someting-on-picture/</link>
       <pubDate>Fri, 10 Jan 2020 15:43:41 +0800</pubDate>
-      
-      <guid>https://www.soundpill.cn/posts/2020-01-10-draw-someting-on-picture/</guid>
-      <description>intervention/image 这是一个第三方扩展, 用来处理图片的, 功能特别强大, 可以 cover 我们这篇文章提到的需求
-安装文档: http://image.intervention.io/getting_started/installation
-我们首先在项目中引入这个包:
-$ composer require intervention/image 其次, laravel 中需要发布配置文件:
-php artisan vendor:publish --provider=&amp;quot;Intervention\Image\ImageServiceProviderLaravel5&amp;quot; lumen 中需要修改 bootstrap.php, 在当中手动注册
-$app-&amp;gt;register(\Intervention\Image\ImageServiceProviderLumen::class); 该扩展默认使用的是 GD 库, 如果你想用 Imagick 扩展需要修改文件, config/image.php
-&amp;lt;?php return [ &#39;driver&#39; =&amp;gt; &#39;imagick&#39; ]; 如果你不想要每次 use 都使用全路径, 可以按照官方所述将 Image 关键字写入 alias 中
- Laravel: config/app.php  $providers: Intervention\Image\ImageServiceProvider::class $aliases: &#39;Image&#39; =&amp;gt; Intervention\Image\Facades\Image::class  Lumen: bootstrap/app.php  $app-&amp;gt;withAliases(array(&#39;Intervention\Image\Facades\Image&#39; =&amp;gt; &#39;Image&#39;)); 具体使用 use Image; public function deal() { $image = Image::make(public_path() .</description>
+      <guid>http://localhost:1313/posts/2020-01-10-draw-someting-on-picture/</guid>
+      <description>&lt;h4 id=&#34;interventionimage&#34;&gt;intervention/image&lt;/h4&gt;
+&lt;p&gt;这是一个第三方扩展, 用来处理图片的, 功能特别强大, 可以 cover 我们这篇文章提到的需求&lt;/p&gt;
+&lt;p&gt;安装文档: &lt;a href=&#34;http://image.intervention.io/getting_started/installation&#34;&gt;http://image.intervention.io/getting_started/installation&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;我们首先在项目中引入这个包:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ composer require intervention/image
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;其次, laravel 中需要发布配置文件:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;php artisan vendor:publish --provider=&amp;#34;Intervention\Image\ImageServiceProviderLaravel5&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;lumen 中需要修改 bootstrap.php, 在当中手动注册&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$app-&amp;gt;register(\Intervention\Image\ImageServiceProviderLumen::class);
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;该扩展默认使用的是 GD 库, 如果你想用 Imagick 扩展需要修改文件, config/image.php&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;&amp;lt;?php
+    return [
+        &amp;#39;driver&amp;#39;    =&amp;gt;  &amp;#39;imagick&amp;#39;
+    ];
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;如果你不想要每次 use 都使用全路径, 可以按照官方所述将 Image 关键字写入 alias 中&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Laravel: config/app.php&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$providers:
+
+Intervention\Image\ImageServiceProvider::class
+
+$aliases:
+
+&amp;#39;Image&amp;#39; =&amp;gt; Intervention\Image\Facades\Image::class
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;Lumen: bootstrap/app.php&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$app-&amp;gt;withAliases(array(&amp;#39;Intervention\Image\Facades\Image&amp;#39; =&amp;gt; &amp;#39;Image&amp;#39;));
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;具体使用&#34;&gt;具体使用&lt;/h4&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;use Image;
+
+public function deal()
+{
+    $image = Image::make(public_path() . &amp;#39;/foo.jpg&amp;#39;);
+    $text = &amp;#39;我是天才&amp;#39;;
+    $image-&amp;gt;text($text, 620, 200, function($font) {
+        $font-&amp;gt;file(public_path() . &amp;#39;/SimHei.ttf&amp;#39;);
+        $font-&amp;gt;size(200);
+        $font-&amp;gt;color(&amp;#39;#fdf6e3&amp;#39;);
+        $font-&amp;gt;align(&amp;#39;center&amp;#39;);
+        $font-&amp;gt;valign(&amp;#39;top&amp;#39;);
+        $font-&amp;gt;angle(0);
+    });
+    return $image-&amp;gt;response(&amp;#39;jpg&amp;#39;);
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;插入文字的方法是 text, 插入图片的方法是 insert, 如果文字插入后显示乱码, 考虑换一种字体, 支持中文的, 默认的好像就是乱码&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>比较两个字符串是否相等</title>
-      <link>https://www.soundpill.cn/posts/2020-01-10-compare-two-string-equal/</link>
+      <link>http://localhost:1313/posts/2020-01-10-compare-two-string-equal/</link>
       <pubDate>Fri, 10 Jan 2020 15:34:56 +0800</pubDate>
-      
-      <guid>https://www.soundpill.cn/posts/2020-01-10-compare-two-string-equal/</guid>
-      <description>有时候, 当用户传入一个字符串时, 你可能会需要拿着这个字符串和最终结果相对比, 如果我们使用 == 号来比较两个字符串, 可能会产生时序攻击.
-&#39;abcdef&#39; == $req-&amp;gt;code 也就是说, == 号在判断两个字符串相等时, 会一位一位的判断, 如果遇到哪一位不一样, 就返回错误, 这样根据服务器运算速度, 就可以一位一位的猜出最终的结果.
-php 官方提供了避免时序攻击的字符串比较函数, 就是 hash_equals 无论两个字符串是否相等, 本函数的时间消耗是恒定的.
-文档如下: https://www.php.net/manual/zh/function.hash-equals.php</description>
+      <guid>http://localhost:1313/posts/2020-01-10-compare-two-string-equal/</guid>
+      <description>&lt;p&gt;有时候, 当用户传入一个字符串时, 你可能会需要拿着这个字符串和最终结果相对比, 如果我们使用 == 号来比较两个字符串, 可能会产生时序攻击.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;&amp;#39;abcdef&amp;#39; == $req-&amp;gt;code
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;也就是说, == 号在判断两个字符串相等时, 会一位一位的判断, 如果遇到哪一位不一样, 就返回错误, 这样根据服务器运算速度, 就可以一位一位的猜出最终的结果.&lt;/p&gt;
+&lt;p&gt;php 官方提供了避免时序攻击的字符串比较函数, 就是 hash_equals
+无论两个字符串是否相等, 本函数的时间消耗是恒定的.&lt;/p&gt;
+&lt;p&gt;文档如下: &lt;a href=&#34;https://www.php.net/manual/zh/function.hash-equals.php&#34;&gt;https://www.php.net/manual/zh/function.hash-equals.php&lt;/a&gt;&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Homestead完整的切换php版本</title>
-      <link>https://www.soundpill.cn/posts/2020-01-10-homestead-version-switch/</link>
+      <link>http://localhost:1313/posts/2020-01-10-homestead-version-switch/</link>
       <pubDate>Fri, 10 Jan 2020 15:14:46 +0800</pubDate>
-      
-      <guid>https://www.soundpill.cn/posts/2020-01-10-homestead-version-switch/</guid>
-      <description>相信大多数人搜到的都是这篇文章 https://learnku.com/articles/16881
-文章中说, 使用 homestead 自带的工具 update-alternatives 进行切换就可以了, 但是我在使用后 php 的版本是切换了, 但是 pecl 安装扩展的时候安装的还是20170817目录, 这是 php7.2 的扩展包默认目录, 使用 php-config 看的时候也是 php7.2
-如何把phpize, pecl, php-config 都切换为 php7.1 呢? 请看下面
-sudo update-alternatives --set php /usr/bin/php7.1 sudo update-alternatives --set phar /usr/bin/phar7.1 sudo update-alternatives --set phar.phar /usr/bin/phar.phar7.1 sudo update-alternatives --set phpize /usr/bin/phpize7.1 sudo update-alternatives --set php-config /usr/bin/php-config7.1 如果你在切换之前装了错误的扩展包到其他版本的目录下, 这样切换完之后卸载重新装, 就 ok 了</description>
+      <guid>http://localhost:1313/posts/2020-01-10-homestead-version-switch/</guid>
+      <description>&lt;p&gt;相信大多数人搜到的都是这篇文章
+&lt;a href=&#34;https://learnku.com/articles/16881&#34;&gt;https://learnku.com/articles/16881&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;文章中说, 使用 homestead 自带的工具 update-alternatives 进行切换就可以了, 但是我在使用后 php 的版本是切换了, 但是 pecl 安装扩展的时候安装的还是20170817目录, 这是 php7.2 的扩展包默认目录, 使用 php-config 看的时候也是 php7.2&lt;/p&gt;
+&lt;p&gt;如何把phpize, pecl, php-config 都切换为 php7.1 呢? 请看下面&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo update-alternatives --set php /usr/bin/php7.1
+sudo update-alternatives --set phar /usr/bin/phar7.1
+sudo update-alternatives --set phar.phar /usr/bin/phar.phar7.1
+sudo update-alternatives --set phpize /usr/bin/phpize7.1
+sudo update-alternatives --set php-config /usr/bin/php-config7.1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;如果你在切换之前装了错误的扩展包到其他版本的目录下, 这样切换完之后卸载重新装, 就 ok 了&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>mojave下使用pyenv安装python3出错的问题</title>
-      <link>https://www.soundpill.cn/posts/2019-02-26-mojave%E4%B8%8B%E4%BD%BF%E7%94%A8pyenv%E5%AE%89%E8%A3%85python3%E5%87%BA%E9%94%99%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+      <link>http://localhost:1313/posts/2019-02-26-mojave%E4%B8%8B%E4%BD%BF%E7%94%A8pyenv%E5%AE%89%E8%A3%85python3%E5%87%BA%E9%94%99%E7%9A%84%E9%97%AE%E9%A2%98/</link>
       <pubDate>Tue, 26 Feb 2019 15:33:39 +0800</pubDate>
-      
-      <guid>https://www.soundpill.cn/posts/2019-02-26-mojave%E4%B8%8B%E4%BD%BF%E7%94%A8pyenv%E5%AE%89%E8%A3%85python3%E5%87%BA%E9%94%99%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
-      <description>使用pyenv安装python3时出现如下报错 按照提示来看,好像是在提示我没有安装zlib库,但是我已经装了,没办法,google一下吧. (如果你因为没有安装zlib库而产生这个问题, 那就好办了, 直接brew install zlib)
-google搜索到的解决方案大都是要安装xcode命令行工具 xcode-select --install 这个我也安装了, 不安装的话啥也干不了啊
-最后解决方案 查看一下xcode-select -v的版本 这个版本的xcode-select 在默认情况下不包含Mojave SDK的头文件的,需要手动安装,mojave采用了新的SDK,关于新SDK的解释,官方的文档在这里 https://developer.apple.com/macos/whats-new/
-接下来,我手动安装了新的SDK头文件,解决完毕
-sudo installer -pkg /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg -target / </description>
+      <guid>http://localhost:1313/posts/2019-02-26-mojave%E4%B8%8B%E4%BD%BF%E7%94%A8pyenv%E5%AE%89%E8%A3%85python3%E5%87%BA%E9%94%99%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+      <description>&lt;h2 id=&#34;使用pyenv安装python3时出现如下报错&#34;&gt;使用pyenv安装python3时出现如下报错&lt;/h2&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://ws1.sinaimg.cn/large/60f1733aly1g0jo757rfnj21go0q8wnf.jpg&#34;&gt;
+按照提示来看,好像是在提示我没有安装zlib库,但是我已经装了,没办法,google一下吧.
+(如果你因为没有安装zlib库而产生这个问题, 那就好办了, 直接brew install zlib)&lt;/p&gt;
+&lt;h2 id=&#34;google搜索到的解决方案大都是要安装xcode命令行工具&#34;&gt;google搜索到的解决方案大都是要安装xcode命令行工具&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;xcode-select --install
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这个我也安装了, 不安装的话啥也干不了啊&lt;/p&gt;
+&lt;h2 id=&#34;最后解决方案&#34;&gt;最后解决方案&lt;/h2&gt;
+&lt;p&gt;查看一下xcode-select -v的版本
+&lt;img loading=&#34;lazy&#34; src=&#34;https://ws1.sinaimg.cn/large/60f1733aly1g0jo9e0g3lj20cg0240tb.jpg&#34;&gt;&lt;/p&gt;
+&lt;p&gt;这个版本的xcode-select 在默认情况下不包含Mojave SDK的头文件的,需要手动安装,mojave采用了新的SDK,关于新SDK的解释,官方的文档在这里
+&lt;a href=&#34;https://developer.apple.com/macos/whats-new/&#34;&gt;https://developer.apple.com/macos/whats-new/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;接下来,我手动安装了新的SDK头文件,解决完毕&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo installer -pkg /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg -target /
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://ws1.sinaimg.cn/large/60f1733aly1g0jomwysz8j21fm040n0e.jpg&#34;&gt;&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>redis中的SDS数据结构</title>
-      <link>https://www.soundpill.cn/posts/2019-02-26-redis%E4%B8%AD%E7%9A%84sds%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</link>
+      <link>http://localhost:1313/posts/2019-02-26-redis%E4%B8%AD%E7%9A%84sds%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</link>
       <pubDate>Tue, 26 Feb 2019 15:31:32 +0800</pubDate>
-      
-      <guid>https://www.soundpill.cn/posts/2019-02-26-redis%E4%B8%AD%E7%9A%84sds%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</guid>
-      <description>SDS(Simple Dynamic String)简单动态字符串 在Redis中可修改的字符串值都是采用的SDS数据结构, 而不可修改的都采用了C字符串
-SDS的结构 有三个基本变量
- free 纪录buf数组中未使用字节的数量 len 纪录buf数组中已使用字节的数量, 等于SDS所保存字符串的长度 buf 字节数组, 用于保存字符串(二进制)  为什么采用SDS SDS是基于C字符串结构的缺点优化后的产物, 因为采用C字符串的方式会有以下一些问题：
- 获取字符串长度需要遍历字符串获取, 将需要O(N)的时间复杂度 C字符串会有缓冲区溢出的问题 一旦修改字符串操作发生就会重新分配内存, 修改N次就分配N次 所以, 基于以上问题SDS结构的优点也显而易见了, 如下: 因为结构体中标记了字符串长度, 所以获取长度的时间复杂度变成了O(1) SDS的API中对内存分配的机制杜绝了缓冲区溢出的问题 同样, API中的操作也减少了修改字符串长度时所需的内存重分配次数 二进制安全 兼容部分C字符串函数  内存分配机制  空间预分配 在字符串增长操作中有两种情况来预分配空间 第一种是修改后的长度(len的值)小于1MB的情况下, free的值会和len的值相同, 来做到减少内存分配次数, 预分配以后可能会使用到的空间 第二种是修改后的长度大于1MB的情况下, free的值会多修改为1MB, 也就是在原来基础上多出1MB的未使用空间 惰性空间释放 在字符串缩短操作的时候, 不会将释放的空间马上回收, 而是会写入到free中, 将缩短的长度标记为未使用空间为将来可能会使用的字符串预留位置。SDS中也有相应的API, 可以在需要时真正释放这部分空间。  </description>
+      <guid>http://localhost:1313/posts/2019-02-26-redis%E4%B8%AD%E7%9A%84sds%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</guid>
+      <description>&lt;h2 id=&#34;sdssimple-dynamic-string简单动态字符串&#34;&gt;SDS(Simple Dynamic String)简单动态字符串&lt;/h2&gt;
+&lt;p&gt;在Redis中可修改的字符串值都是采用的SDS数据结构, 而不可修改的都采用了C字符串&lt;/p&gt;
+&lt;h2 id=&#34;sds的结构&#34;&gt;SDS的结构&lt;/h2&gt;
+&lt;p&gt;有三个基本变量&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;free 纪录buf数组中未使用字节的数量&lt;/li&gt;
+&lt;li&gt;len 纪录buf数组中已使用字节的数量, 等于SDS所保存字符串的长度&lt;/li&gt;
+&lt;li&gt;buf 字节数组, 用于保存字符串(二进制)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;为什么采用sds&#34;&gt;为什么采用SDS&lt;/h2&gt;
+&lt;p&gt;SDS是基于C字符串结构的缺点优化后的产物, 因为采用C字符串的方式会有以下一些问题：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;获取字符串长度需要遍历字符串获取, 将需要O(N)的时间复杂度&lt;/li&gt;
+&lt;li&gt;C字符串会有缓冲区溢出的问题&lt;/li&gt;
+&lt;li&gt;一旦修改字符串操作发生就会重新分配内存, 修改N次就分配N次
+所以, 基于以上问题SDS结构的优点也显而易见了, 如下:&lt;/li&gt;
+&lt;li&gt;因为结构体中标记了字符串长度, 所以获取长度的时间复杂度变成了O(1)&lt;/li&gt;
+&lt;li&gt;SDS的API中对内存分配的机制杜绝了缓冲区溢出的问题&lt;/li&gt;
+&lt;li&gt;同样, API中的操作也减少了修改字符串长度时所需的内存重分配次数&lt;/li&gt;
+&lt;li&gt;二进制安全&lt;/li&gt;
+&lt;li&gt;兼容部分C字符串函数&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;内存分配机制&#34;&gt;内存分配机制&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;空间预分配
+在字符串增长操作中有两种情况来预分配空间
+第一种是修改后的长度(len的值)小于1MB的情况下, free的值会和len的值相同, 来做到减少内存分配次数, 预分配以后可能会使用到的空间
+第二种是修改后的长度大于1MB的情况下, free的值会多修改为1MB, 也就是在原来基础上多出1MB的未使用空间&lt;/li&gt;
+&lt;li&gt;惰性空间释放
+在字符串缩短操作的时候, 不会将释放的空间马上回收, 而是会写入到free中, 将缩短的长度标记为未使用空间为将来可能会使用的字符串预留位置。SDS中也有相应的API, 可以在需要时真正释放这部分空间。&lt;/li&gt;
+&lt;/ul&gt;</description>
     </item>
-    
     <item>
       <title>rebase和merge的区别</title>
-      <link>https://www.soundpill.cn/posts/2019-02-24-rebase%E5%92%8Cmerge%E7%9A%84%E5%8C%BA%E5%88%AB/</link>
+      <link>http://localhost:1313/posts/2019-02-24-rebase%E5%92%8Cmerge%E7%9A%84%E5%8C%BA%E5%88%AB/</link>
       <pubDate>Sun, 24 Feb 2019 15:36:37 +0800</pubDate>
-      
-      <guid>https://www.soundpill.cn/posts/2019-02-24-rebase%E5%92%8Cmerge%E7%9A%84%E5%8C%BA%E5%88%AB/</guid>
-      <description>变基 找了一大圈, 还是官方的解释最好, 贴出来自己看吧, &amp;ldquo;变基&amp;quot;这个名字起的很好, 文档中的&amp;quot;重新播放&amp;quot;的解释也相当生动
-https://git-scm.com/book/zh/v2/Git-分支-变基</description>
+      <guid>http://localhost:1313/posts/2019-02-24-rebase%E5%92%8Cmerge%E7%9A%84%E5%8C%BA%E5%88%AB/</guid>
+      <description>&lt;h4 id=&#34;变基&#34;&gt;变基&lt;/h4&gt;
+&lt;p&gt;找了一大圈, 还是官方的解释最好, 贴出来自己看吧, &amp;ldquo;变基&amp;quot;这个名字起的很好, 文档中的&amp;quot;重新播放&amp;quot;的解释也相当生动&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://git-scm.com/book/zh/v2/Git-&#34;&gt;https://git-scm.com/book/zh/v2/Git-&lt;/a&gt;分支-变基&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>cgi, fastcgi, php-cgi, php-fpm的关系</title>
-      <link>https://www.soundpill.cn/posts/2019-02-21-cgi-fastcgi-php-cgi-php-fpm/</link>
+      <link>http://localhost:1313/posts/2019-02-21-cgi-fastcgi-php-cgi-php-fpm/</link>
       <pubDate>Thu, 21 Feb 2019 15:33:39 +0800</pubDate>
-      
-      <guid>https://www.soundpill.cn/posts/2019-02-21-cgi-fastcgi-php-cgi-php-fpm/</guid>
-      <description>cgi 通用网关接口, Common Gateway Interface, CGI是Web服务器运行时外部程序的规范, 按CGI编写的程序可以扩展服务器功能. 所以, 广义上的cgi是一种接口标准, 不是字面意义上的接口. 狭义上, cgi就是cgi程序, 运行在服务器上, 提供同客户端HTML页面的接口. 绝大多数的cgi程序被用来解释处理来自表单的输入信息, 并在服务器产生相应的处理, 或将相应的信息反馈给浏览器, cgi程序使网页具有交互功能. cgi程序处理步骤:
- 通过Internet把用户请求送到web服务器. web服务器接受用户请求并交给CGI程序处理. CGI程序把处理结果传送给web服务器. web服务器把结果送回到用户.  fastcgi 快速通用网关接口, Fast Common Gateway Interface, CGI有很多缺点, 每接收一个请求就要fork一个进程处理, 只能接收一个请求作出一个响应, 请求结束后该进程就会结束. 而fastcgi会事先启动起来, 作为一个cgi的管理服务器存在, 使用进程/线程池来处理一连串的请求. fastcgi程序处理步骤:
- web服务器启动时载入fastcgi进程管理器 fastcgi自身初始化, 启动多个cgi解释器进程并等待来自web server的请求 当请求来到web服务器时, web服务器通过socket请求fastcgi进程管理器, fastcgi进程管理器选择并连接到一个cgi解释器, web服务器将cgi环境变量和标准输入发送到fastcgi子进程 fastcgi子进程处理请求完成后将标准输出和错误从同一连接返回给web服务器, 当fastcgi子进程结束后请求便结束.fastcgi子进程接着等待处理来自fastcgi进程管理器的下一个连接.  php-cgi php实现的cgi程序
-php-fpm php实现的fastcgi程序</description>
+      <guid>http://localhost:1313/posts/2019-02-21-cgi-fastcgi-php-cgi-php-fpm/</guid>
+      <description>&lt;h4 id=&#34;cgi&#34;&gt;cgi&lt;/h4&gt;
+&lt;p&gt;通用网关接口, Common Gateway Interface, CGI是Web服务器运行时外部程序的规范, 按CGI编写的程序可以扩展服务器功能. 所以, 广义上的cgi是一种接口标准, 不是字面意义上的接口. 狭义上, cgi就是cgi程序, 运行在服务器上, 提供同客户端HTML页面的接口. 绝大多数的cgi程序被用来解释处理来自表单的输入信息, 并在服务器产生相应的处理, 或将相应的信息反馈给浏览器, cgi程序使网页具有交互功能.
+cgi程序处理步骤:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;通过Internet把用户请求送到web服务器.&lt;/li&gt;
+&lt;li&gt;web服务器接受用户请求并交给CGI程序处理.&lt;/li&gt;
+&lt;li&gt;CGI程序把处理结果传送给web服务器.&lt;/li&gt;
+&lt;li&gt;web服务器把结果送回到用户.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;fastcgi&#34;&gt;fastcgi&lt;/h4&gt;
+&lt;p&gt;快速通用网关接口, Fast Common Gateway Interface, CGI有很多缺点, 每接收一个请求就要fork一个进程处理, 只能接收一个请求作出一个响应, 请求结束后该进程就会结束. 而fastcgi会事先启动起来, 作为一个cgi的管理服务器存在, 使用进程/线程池来处理一连串的请求.
+fastcgi程序处理步骤:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;web服务器启动时载入fastcgi进程管理器&lt;/li&gt;
+&lt;li&gt;fastcgi自身初始化, 启动多个cgi解释器进程并等待来自web server的请求&lt;/li&gt;
+&lt;li&gt;当请求来到web服务器时, web服务器通过socket请求fastcgi进程管理器, fastcgi进程管理器选择并连接到一个cgi解释器, web服务器将cgi环境变量和标准输入发送到fastcgi子进程&lt;/li&gt;
+&lt;li&gt;fastcgi子进程处理请求完成后将标准输出和错误从同一连接返回给web服务器, 当fastcgi子进程结束后请求便结束.fastcgi子进程接着等待处理来自fastcgi进程管理器的下一个连接.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;php-cgi&#34;&gt;php-cgi&lt;/h4&gt;
+&lt;p&gt;php实现的cgi程序&lt;/p&gt;
+&lt;h4 id=&#34;php-fpm&#34;&gt;php-fpm&lt;/h4&gt;
+&lt;p&gt;php实现的fastcgi程序&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>推荐两个实用好玩的网站</title>
-      <link>https://www.soundpill.cn/posts/2019-02-21-%E6%8E%A8%E8%8D%90%E4%B8%A4%E4%B8%AA%E5%AE%9E%E7%94%A8%E5%A5%BD%E7%8E%A9%E7%9A%84%E7%BD%91%E7%AB%99/</link>
+      <link>http://localhost:1313/posts/2019-02-21-%E6%8E%A8%E8%8D%90%E4%B8%A4%E4%B8%AA%E5%AE%9E%E7%94%A8%E5%A5%BD%E7%8E%A9%E7%9A%84%E7%BD%91%E7%AB%99/</link>
       <pubDate>Thu, 21 Feb 2019 10:23:37 +0800</pubDate>
-      
-      <guid>https://www.soundpill.cn/posts/2019-02-21-%E6%8E%A8%E8%8D%90%E4%B8%A4%E4%B8%AA%E5%AE%9E%E7%94%A8%E5%A5%BD%E7%8E%A9%E7%9A%84%E7%BD%91%E7%AB%99/</guid>
-      <description>在线绘图工具 有流程图，有类图，应有尽有，样式还很好看 https://www.draw.io/
-AI在线抠图工具 不说了，自己看吧 https://www.gaoding.com/koutu</description>
+      <guid>http://localhost:1313/posts/2019-02-21-%E6%8E%A8%E8%8D%90%E4%B8%A4%E4%B8%AA%E5%AE%9E%E7%94%A8%E5%A5%BD%E7%8E%A9%E7%9A%84%E7%BD%91%E7%AB%99/</guid>
+      <description>&lt;h3 id=&#34;在线绘图工具&#34;&gt;在线绘图工具&lt;/h3&gt;
+&lt;p&gt;有流程图，有类图，应有尽有，样式还很好看
+&lt;a href=&#34;https://www.draw.io/&#34;&gt;https://www.draw.io/&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;ai在线抠图工具&#34;&gt;AI在线抠图工具&lt;/h3&gt;
+&lt;p&gt;不说了，自己看吧
+&lt;a href=&#34;https://www.gaoding.com/koutu&#34;&gt;https://www.gaoding.com/koutu&lt;/a&gt;&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>
