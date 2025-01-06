@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Beoning</title>
-    <link>http://localhost:64037/</link>
+    <link>http://localhost:1313/</link>
     <description>Recent content on Beoning</description>
     <image>
       <title>Beoning</title>
-      <url>http://localhost:64037/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
-      <link>http://localhost:64037/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+      <url>http://localhost:1313/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>http://localhost:1313/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
     <generator>Hugo -- 0.140.2</generator>
     <language>en</language>
     <lastBuildDate>Sun, 20 Feb 2022 18:02:55 +0800</lastBuildDate>
-    <atom:link href="http://localhost:64037/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>由 append 引发的一个疑问</title>
-      <link>http://localhost:64037/posts/2022-02-20-golang-slice-question/</link>
+      <link>http://localhost:1313/posts/2022-02-20-golang-slice-question/</link>
       <pubDate>Sun, 20 Feb 2022 18:02:55 +0800</pubDate>
-      <guid>http://localhost:64037/posts/2022-02-20-golang-slice-question/</guid>
+      <guid>http://localhost:1313/posts/2022-02-20-golang-slice-question/</guid>
       <description>&lt;h4 id=&#34;由-append-引发的一个疑问&#34;&gt;由 append 引发的一个疑问&lt;/h4&gt;
 &lt;p&gt;我们先来看一个问题&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-Go&#34; data-lang=&#34;Go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;package&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;
@@ -62,9 +62,9 @@
     </item>
     <item>
       <title>golang 中提防竞态条件的产生</title>
-      <link>http://localhost:64037/posts/2022-02-09-go-race-data/</link>
+      <link>http://localhost:1313/posts/2022-02-09-go-race-data/</link>
       <pubDate>Wed, 09 Feb 2022 22:33:25 +0800</pubDate>
-      <guid>http://localhost:64037/posts/2022-02-09-go-race-data/</guid>
+      <guid>http://localhost:1313/posts/2022-02-09-go-race-data/</guid>
       <description>&lt;p&gt;我们来看下面这段代码：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-Go&#34; data-lang=&#34;Go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;package&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
@@ -103,9 +103,9 @@
     </item>
     <item>
       <title>控制 goroutine 执行顺序的一例</title>
-      <link>http://localhost:64037/posts/2022-02-08-go-alter-print/</link>
+      <link>http://localhost:1313/posts/2022-02-08-go-alter-print/</link>
       <pubDate>Tue, 08 Feb 2022 22:14:29 +0800</pubDate>
-      <guid>http://localhost:64037/posts/2022-02-08-go-alter-print/</guid>
+      <guid>http://localhost:1313/posts/2022-02-08-go-alter-print/</guid>
       <description>&lt;h3 id=&#34;依次打印&#34;&gt;依次打印&lt;/h3&gt;
 &lt;p&gt;题目：依次输出 dog、pig、sheep，并执行 100 次，每个输出都需要一个单独的 goroutine&lt;/p&gt;
 &lt;p&gt;这里我们通过有缓冲的容量为 1 的 channel 来标记状态，通过 for-select 结构来控制当前要输出哪一个单词，因为 select 在 channel 阻塞的时候不会执行对应的 case，我们可以通过这个特性来操作。&lt;/p&gt;
@@ -166,18 +166,18 @@
     </item>
     <item>
       <title>推荐两个学习 go 的网站</title>
-      <link>http://localhost:64037/posts/2022-01-22-study-go-website/</link>
+      <link>http://localhost:1313/posts/2022-01-22-study-go-website/</link>
       <pubDate>Sat, 22 Jan 2022 17:24:26 +0800</pubDate>
-      <guid>http://localhost:64037/posts/2022-01-22-study-go-website/</guid>
+      <guid>http://localhost:1313/posts/2022-01-22-study-go-website/</guid>
       <description>&lt;p&gt;一个就是 &lt;a href=&#34;https://exercism.org/&#34;&gt;exercism&lt;/a&gt;, 这里不光可以练习 go 的基本语法和常识，还可以选择其他的语言，大部分的编程语言都是可以学习的，通过一个个任务去完成来掌握一门编程语言，很有成就感。&lt;/p&gt;
 &lt;p&gt;在掌握了基本的语法后就需要项目来练手，但是不知道应该写些什么东西的时候可以参考&lt;a href=&#34;https://gophercises.com/&#34;&gt;gophercises&lt;/a&gt;这个网站，里面会有各种练手项目，比如如何生成一个短链接，如何制作一个文件重命名工具等等。&lt;/p&gt;
 &lt;p&gt;经过两个网站的学习，再加上一点点悟性，相信很快就可以上手了&lt;/p&gt;</description>
     </item>
     <item>
       <title>用 go 实现一个简易聊天室</title>
-      <link>http://localhost:64037/posts/2022-01-22-go-simple-chatroom/</link>
+      <link>http://localhost:1313/posts/2022-01-22-go-simple-chatroom/</link>
       <pubDate>Sat, 22 Jan 2022 16:27:33 +0800</pubDate>
-      <guid>http://localhost:64037/posts/2022-01-22-go-simple-chatroom/</guid>
+      <guid>http://localhost:1313/posts/2022-01-22-go-simple-chatroom/</guid>
       <description>&lt;h3 id=&#34;概述&#34;&gt;概述&lt;/h3&gt;
 &lt;p&gt;first，我们需要创建一个房间，可以使用 net 包直接启动一个常驻的 tcp 服务
 second，我们需要有用户的信息，用户通过访问 tcp 服务来进入房间
@@ -236,9 +236,9 @@ end，我们需要在用户进入/离开房间时对其他用户进行广播，�
     </item>
     <item>
       <title>将视频切割为均等的时间长度</title>
-      <link>http://localhost:64037/posts/2021-12-02-cut-video-avg/</link>
+      <link>http://localhost:1313/posts/2021-12-02-cut-video-avg/</link>
       <pubDate>Thu, 02 Dec 2021 14:48:45 +0800</pubDate>
-      <guid>http://localhost:64037/posts/2021-12-02-cut-video-avg/</guid>
+      <guid>http://localhost:1313/posts/2021-12-02-cut-video-avg/</guid>
       <description>&lt;h3 id=&#34;前情提要&#34;&gt;前情提要&lt;/h3&gt;
 &lt;p&gt;有时候在某些软件中将单次可发送的视频时长限制为 5 分钟或者 15 分钟, 总之就是一个固定的长度, 这样在我们发送超过时长的视频时会比较不方便.&lt;/p&gt;
 &lt;p&gt;所以写一段程序来自动按照传入的时间来等分视频.&lt;/p&gt;
@@ -252,9 +252,9 @@ end，我们需要在用户进入/离开房间时对其他用户进行广播，�
     </item>
     <item>
       <title>golang 编程陷阱---摘自《go 专家编程》</title>
-      <link>http://localhost:64037/posts/2021-11-02-golang-coding-trap/</link>
+      <link>http://localhost:1313/posts/2021-11-02-golang-coding-trap/</link>
       <pubDate>Tue, 02 Nov 2021 23:47:33 +0800</pubDate>
-      <guid>http://localhost:64037/posts/2021-11-02-golang-coding-trap/</guid>
+      <guid>http://localhost:1313/posts/2021-11-02-golang-coding-trap/</guid>
       <description>&lt;h3 id=&#34;关于切片扩容&#34;&gt;关于切片扩容&lt;/h3&gt;
 &lt;p&gt;在使用 append 向 slice 中追加元素时，如果 slice 容量不足以存储新元素，则会把当前切片扩容并产生一个新的切片。如下：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;package&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;
@@ -301,9 +301,9 @@ end，我们需要在用户进入/离开房间时对其他用户进行广播，�
     </item>
     <item>
       <title>php-tips</title>
-      <link>http://localhost:64037/posts/2021-08-16-php-tips/</link>
+      <link>http://localhost:1313/posts/2021-08-16-php-tips/</link>
       <pubDate>Mon, 16 Aug 2021 19:03:01 +0800</pubDate>
-      <guid>http://localhost:64037/posts/2021-08-16-php-tips/</guid>
+      <guid>http://localhost:1313/posts/2021-08-16-php-tips/</guid>
       <description>&lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;在 foreach 中不要使用 array_merge，不仅慢而且耗费内存，可以在 foreach 中对要合并的数组进行赋值，在 foreach 外部统一进行合并，具体性能差异可以参考这篇文章：&lt;a href=&#34;https://learnku.com/articles/25111&#34;&gt;不要在循环体中使用 array_merge()&lt;/a&gt;&lt;/p&gt;
@@ -328,9 +328,9 @@ end，我们需要在用户进入/离开房间时对其他用户进行广播，�
     </item>
     <item>
       <title>go-tips</title>
-      <link>http://localhost:64037/posts/2021-08-16-go-tips/</link>
+      <link>http://localhost:1313/posts/2021-08-16-go-tips/</link>
       <pubDate>Mon, 16 Aug 2021 18:40:38 +0800</pubDate>
-      <guid>http://localhost:64037/posts/2021-08-16-go-tips/</guid>
+      <guid>http://localhost:1313/posts/2021-08-16-go-tips/</guid>
       <description>&lt;ul&gt;
 &lt;li&gt;当把时间作为一个变量传递时，可能会导致的问题，比如：&lt;/li&gt;
 &lt;/ul&gt;
@@ -366,9 +366,9 @@ end，我们需要在用户进入/离开房间时对其他用户进行广播，�
     </item>
     <item>
       <title>一道go面试题</title>
-      <link>http://localhost:64037/posts/2021-01-18-go-question/</link>
+      <link>http://localhost:1313/posts/2021-01-18-go-question/</link>
       <pubDate>Mon, 18 Jan 2021 21:50:43 +0800</pubDate>
-      <guid>http://localhost:64037/posts/2021-01-18-go-question/</guid>
+      <guid>http://localhost:1313/posts/2021-01-18-go-question/</guid>
       <description>&lt;h1 id=&#34;一道-go-面试题&#34;&gt;一道 Go 面试题&lt;/h1&gt;
 &lt;p&gt;请问下面这两段代码分别输出什么?
 &lt;img loading=&#34;lazy&#34; src=&#34;https://img.fulitu.club/go-1.png&#34;&gt;
@@ -383,9 +383,9 @@ end，我们需要在用户进入/离开房间时对其他用户进行广播，�
     </item>
     <item>
       <title>i&#43;&#43;是原子操作吗?</title>
-      <link>http://localhost:64037/posts/2021-01-17-iplusplus/</link>
+      <link>http://localhost:1313/posts/2021-01-17-iplusplus/</link>
       <pubDate>Sun, 17 Jan 2021 09:47:29 +0800</pubDate>
-      <guid>http://localhost:64037/posts/2021-01-17-iplusplus/</guid>
+      <guid>http://localhost:1313/posts/2021-01-17-iplusplus/</guid>
       <description>&lt;h1 id=&#34;i-是原子操作吗&#34;&gt;i++ 是原子操作吗?&lt;/h1&gt;
 &lt;p&gt;不是, i++ 要完成的操作要先读取变量 i 的值, 对这个值加 1, 再把结果保存到 i 中. 所以不是原子操作.&lt;/p&gt;
 &lt;p&gt;我们来看下面的代码&lt;/p&gt;
@@ -395,9 +395,9 @@ end，我们需要在用户进入/离开房间时对其他用户进行广播，�
     </item>
     <item>
       <title>Gerrit概念说明及使用</title>
-      <link>http://localhost:64037/posts/2020-09-23-gerrit-desc/</link>
+      <link>http://localhost:1313/posts/2020-09-23-gerrit-desc/</link>
       <pubDate>Wed, 23 Sep 2020 18:35:52 +0800</pubDate>
-      <guid>http://localhost:64037/posts/2020-09-23-gerrit-desc/</guid>
+      <guid>http://localhost:1313/posts/2020-09-23-gerrit-desc/</guid>
       <description>&lt;h3 id=&#34;gerrit介绍&#34;&gt;Gerrit介绍&lt;/h3&gt;
 &lt;h4 id=&#34;gerrit简介&#34;&gt;Gerrit简介&lt;/h4&gt;
 &lt;p&gt;Gerrit, 一种开放源代码的代码审查软件, 使用网页界面. 利用网页浏览器, 同一个团队的软件开发者, 可以相互审阅彼此修改后的代码, 决定是否能够提交, 回退或是继续修改. 它使用版本控制系统Git作为底层.&lt;/p&gt;
@@ -428,9 +428,9 @@ end，我们需要在用户进入/离开房间时对其他用户进行广播，�
     </item>
     <item>
       <title>为什么没有使用索引?</title>
-      <link>http://localhost:64037/posts/2020-09-23-why-index-unuse/</link>
+      <link>http://localhost:1313/posts/2020-09-23-why-index-unuse/</link>
       <pubDate>Wed, 23 Sep 2020 11:41:43 +0800</pubDate>
-      <guid>http://localhost:64037/posts/2020-09-23-why-index-unuse/</guid>
+      <guid>http://localhost:1313/posts/2020-09-23-why-index-unuse/</guid>
       <description>&lt;h1 id=&#34;为什么没有用索引&#34;&gt;为什么没有用索引?&lt;/h1&gt;
 &lt;p&gt;已知表 a 数据总量是 40w, 根据时间范围过滤出最近 7 天的数据, 语句如下:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;explain SELECT
@@ -467,9 +467,9 @@ ORDER BY
     </item>
     <item>
       <title>在图片上添加文字或图片</title>
-      <link>http://localhost:64037/posts/2020-01-10-draw-someting-on-picture/</link>
+      <link>http://localhost:1313/posts/2020-01-10-draw-someting-on-picture/</link>
       <pubDate>Fri, 10 Jan 2020 15:43:41 +0800</pubDate>
-      <guid>http://localhost:64037/posts/2020-01-10-draw-someting-on-picture/</guid>
+      <guid>http://localhost:1313/posts/2020-01-10-draw-someting-on-picture/</guid>
       <description>&lt;h4 id=&#34;interventionimage&#34;&gt;intervention/image&lt;/h4&gt;
 &lt;p&gt;这是一个第三方扩展, 用来处理图片的, 功能特别强大, 可以 cover 我们这篇文章提到的需求&lt;/p&gt;
 &lt;p&gt;安装文档: &lt;a href=&#34;http://image.intervention.io/getting_started/installation&#34;&gt;http://image.intervention.io/getting_started/installation&lt;/a&gt;&lt;/p&gt;
@@ -520,9 +520,9 @@ public function deal()
     </item>
     <item>
       <title>比较两个字符串是否相等</title>
-      <link>http://localhost:64037/posts/2020-01-10-compare-two-string-equal/</link>
+      <link>http://localhost:1313/posts/2020-01-10-compare-two-string-equal/</link>
       <pubDate>Fri, 10 Jan 2020 15:34:56 +0800</pubDate>
-      <guid>http://localhost:64037/posts/2020-01-10-compare-two-string-equal/</guid>
+      <guid>http://localhost:1313/posts/2020-01-10-compare-two-string-equal/</guid>
       <description>&lt;p&gt;有时候, 当用户传入一个字符串时, 你可能会需要拿着这个字符串和最终结果相对比, 如果我们使用 == 号来比较两个字符串, 可能会产生时序攻击.&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;&amp;#39;abcdef&amp;#39; == $req-&amp;gt;code
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;也就是说, == 号在判断两个字符串相等时, 会一位一位的判断, 如果遇到哪一位不一样, 就返回错误, 这样根据服务器运算速度, 就可以一位一位的猜出最终的结果.&lt;/p&gt;
@@ -532,9 +532,9 @@ public function deal()
     </item>
     <item>
       <title>Homestead完整的切换php版本</title>
-      <link>http://localhost:64037/posts/2020-01-10-homestead-version-switch/</link>
+      <link>http://localhost:1313/posts/2020-01-10-homestead-version-switch/</link>
       <pubDate>Fri, 10 Jan 2020 15:14:46 +0800</pubDate>
-      <guid>http://localhost:64037/posts/2020-01-10-homestead-version-switch/</guid>
+      <guid>http://localhost:1313/posts/2020-01-10-homestead-version-switch/</guid>
       <description>&lt;p&gt;相信大多数人搜到的都是这篇文章
 &lt;a href=&#34;https://learnku.com/articles/16881&#34;&gt;https://learnku.com/articles/16881&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;文章中说, 使用 homestead 自带的工具 update-alternatives 进行切换就可以了, 但是我在使用后 php 的版本是切换了, 但是 pecl 安装扩展的时候安装的还是20170817目录, 这是 php7.2 的扩展包默认目录, 使用 php-config 看的时候也是 php7.2&lt;/p&gt;
@@ -548,9 +548,9 @@ sudo update-alternatives --set php-config /usr/bin/php-config7.1
     </item>
     <item>
       <title>mojave下使用pyenv安装python3出错的问题</title>
-      <link>http://localhost:64037/posts/2019-02-26-mojave%E4%B8%8B%E4%BD%BF%E7%94%A8pyenv%E5%AE%89%E8%A3%85python3%E5%87%BA%E9%94%99%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+      <link>http://localhost:1313/posts/2019-02-26-mojave%E4%B8%8B%E4%BD%BF%E7%94%A8pyenv%E5%AE%89%E8%A3%85python3%E5%87%BA%E9%94%99%E7%9A%84%E9%97%AE%E9%A2%98/</link>
       <pubDate>Tue, 26 Feb 2019 15:33:39 +0800</pubDate>
-      <guid>http://localhost:64037/posts/2019-02-26-mojave%E4%B8%8B%E4%BD%BF%E7%94%A8pyenv%E5%AE%89%E8%A3%85python3%E5%87%BA%E9%94%99%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+      <guid>http://localhost:1313/posts/2019-02-26-mojave%E4%B8%8B%E4%BD%BF%E7%94%A8pyenv%E5%AE%89%E8%A3%85python3%E5%87%BA%E9%94%99%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
       <description>&lt;h2 id=&#34;使用pyenv安装python3时出现如下报错&#34;&gt;使用pyenv安装python3时出现如下报错&lt;/h2&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://ws1.sinaimg.cn/large/60f1733aly1g0jo757rfnj21go0q8wnf.jpg&#34;&gt;
 按照提示来看,好像是在提示我没有安装zlib库,但是我已经装了,没办法,google一下吧.
@@ -569,9 +569,9 @@ sudo update-alternatives --set php-config /usr/bin/php-config7.1
     </item>
     <item>
       <title>redis中的SDS数据结构</title>
-      <link>http://localhost:64037/posts/2019-02-26-redis%E4%B8%AD%E7%9A%84sds%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</link>
+      <link>http://localhost:1313/posts/2019-02-26-redis%E4%B8%AD%E7%9A%84sds%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</link>
       <pubDate>Tue, 26 Feb 2019 15:31:32 +0800</pubDate>
-      <guid>http://localhost:64037/posts/2019-02-26-redis%E4%B8%AD%E7%9A%84sds%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</guid>
+      <guid>http://localhost:1313/posts/2019-02-26-redis%E4%B8%AD%E7%9A%84sds%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</guid>
       <description>&lt;h2 id=&#34;sdssimple-dynamic-string简单动态字符串&#34;&gt;SDS(Simple Dynamic String)简单动态字符串&lt;/h2&gt;
 &lt;p&gt;在Redis中可修改的字符串值都是采用的SDS数据结构, 而不可修改的都采用了C字符串&lt;/p&gt;
 &lt;h2 id=&#34;sds的结构&#34;&gt;SDS的结构&lt;/h2&gt;
@@ -606,18 +606,18 @@ sudo update-alternatives --set php-config /usr/bin/php-config7.1
     </item>
     <item>
       <title>rebase和merge的区别</title>
-      <link>http://localhost:64037/posts/2019-02-24-rebase%E5%92%8Cmerge%E7%9A%84%E5%8C%BA%E5%88%AB/</link>
+      <link>http://localhost:1313/posts/2019-02-24-rebase%E5%92%8Cmerge%E7%9A%84%E5%8C%BA%E5%88%AB/</link>
       <pubDate>Sun, 24 Feb 2019 15:36:37 +0800</pubDate>
-      <guid>http://localhost:64037/posts/2019-02-24-rebase%E5%92%8Cmerge%E7%9A%84%E5%8C%BA%E5%88%AB/</guid>
+      <guid>http://localhost:1313/posts/2019-02-24-rebase%E5%92%8Cmerge%E7%9A%84%E5%8C%BA%E5%88%AB/</guid>
       <description>&lt;h4 id=&#34;变基&#34;&gt;变基&lt;/h4&gt;
 &lt;p&gt;找了一大圈, 还是官方的解释最好, 贴出来自己看吧, &amp;ldquo;变基&amp;quot;这个名字起的很好, 文档中的&amp;quot;重新播放&amp;quot;的解释也相当生动&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://git-scm.com/book/zh/v2/Git-&#34;&gt;https://git-scm.com/book/zh/v2/Git-&lt;/a&gt;分支-变基&lt;/p&gt;</description>
     </item>
     <item>
       <title>cgi, fastcgi, php-cgi, php-fpm的关系</title>
-      <link>http://localhost:64037/posts/2019-02-21-cgi-fastcgi-php-cgi-php-fpm/</link>
+      <link>http://localhost:1313/posts/2019-02-21-cgi-fastcgi-php-cgi-php-fpm/</link>
       <pubDate>Thu, 21 Feb 2019 15:33:39 +0800</pubDate>
-      <guid>http://localhost:64037/posts/2019-02-21-cgi-fastcgi-php-cgi-php-fpm/</guid>
+      <guid>http://localhost:1313/posts/2019-02-21-cgi-fastcgi-php-cgi-php-fpm/</guid>
       <description>&lt;h4 id=&#34;cgi&#34;&gt;cgi&lt;/h4&gt;
 &lt;p&gt;通用网关接口, Common Gateway Interface, CGI是Web服务器运行时外部程序的规范, 按CGI编写的程序可以扩展服务器功能. 所以, 广义上的cgi是一种接口标准, 不是字面意义上的接口. 狭义上, cgi就是cgi程序, 运行在服务器上, 提供同客户端HTML页面的接口. 绝大多数的cgi程序被用来解释处理来自表单的输入信息, 并在服务器产生相应的处理, 或将相应的信息反馈给浏览器, cgi程序使网页具有交互功能.
 cgi程序处理步骤:&lt;/p&gt;
@@ -643,9 +643,9 @@ fastcgi程序处理步骤:&lt;/p&gt;
     </item>
     <item>
       <title>推荐两个实用好玩的网站</title>
-      <link>http://localhost:64037/posts/2019-02-21-%E6%8E%A8%E8%8D%90%E4%B8%A4%E4%B8%AA%E5%AE%9E%E7%94%A8%E5%A5%BD%E7%8E%A9%E7%9A%84%E7%BD%91%E7%AB%99/</link>
+      <link>http://localhost:1313/posts/2019-02-21-%E6%8E%A8%E8%8D%90%E4%B8%A4%E4%B8%AA%E5%AE%9E%E7%94%A8%E5%A5%BD%E7%8E%A9%E7%9A%84%E7%BD%91%E7%AB%99/</link>
       <pubDate>Thu, 21 Feb 2019 10:23:37 +0800</pubDate>
-      <guid>http://localhost:64037/posts/2019-02-21-%E6%8E%A8%E8%8D%90%E4%B8%A4%E4%B8%AA%E5%AE%9E%E7%94%A8%E5%A5%BD%E7%8E%A9%E7%9A%84%E7%BD%91%E7%AB%99/</guid>
+      <guid>http://localhost:1313/posts/2019-02-21-%E6%8E%A8%E8%8D%90%E4%B8%A4%E4%B8%AA%E5%AE%9E%E7%94%A8%E5%A5%BD%E7%8E%A9%E7%9A%84%E7%BD%91%E7%AB%99/</guid>
       <description>&lt;h3 id=&#34;在线绘图工具&#34;&gt;在线绘图工具&lt;/h3&gt;
 &lt;p&gt;有流程图，有类图，应有尽有，样式还很好看
 &lt;a href=&#34;https://www.draw.io/&#34;&gt;https://www.draw.io/&lt;/a&gt;&lt;/p&gt;
